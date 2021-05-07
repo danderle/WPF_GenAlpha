@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Color x:Key="Black">#000000</Color>
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}" />
+
+    <Color x:Key="White">#ffffff</Color>
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}" />
+
+    <Color x:Key="DarkWhite">#edf1f4</Color>
+    <SolidColorBrush x:Key="DarkWhiteBrush" Color="{StaticResource DarkWhite}" />
+
+    <Color x:Key="LightGray">#d9dde0</Color>
+    <SolidColorBrush x:Key="LightGrayBrush" Color="{StaticResource LightGray}" />
+
+    <Color x:Key="Gray">#848e98</Color>
+    <SolidColorBrush x:Key="GrayBrush" Color="{StaticResource Gray}" />
+    
+    <Color x:Key="GrayBlue">#3f5064</Color>
+    <SolidColorBrush x:Key="GrayBlueBrush" Color="{StaticResource GrayBlue}" />
+    
+    <Color x:Key="Green">#00a06e</Color>
+    <SolidColorBrush x:Key="GreenBrush" Color="{StaticResource Green}" />
+
+    <Color x:Key="VeryDarkBlue">#15273b</Color>
+    <SolidColorBrush x:Key="VeryDarkBlueBrush" Color="{StaticResource VeryDarkBlue}" />
+
+    <LinearGradientBrush x:Key="LightGreenMiddleGradient" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="{StaticResource Green}" Offset="0.0"/>
+        <GradientStop Color="{StaticResource White}" Offset="0.5"/>
+        <GradientStop Color="{StaticResource Green}" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LightGrayMiddleGradient" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="{StaticResource Gray}" Offset="0.0"/>
+        <GradientStop Color="{StaticResource White}" Offset="0.5"/>
+        <GradientStop Color="{StaticResource Gray}" Offset="1.0"/>
+    </LinearGradientBrush>
+</ResourceDictionary>
