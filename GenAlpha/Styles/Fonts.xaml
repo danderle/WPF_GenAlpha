@@ -16,12 +16,14 @@
     
     <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
         <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
-        <Setter Property="FontFamily" Value="{StaticResource LatoThin}" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
     </Style>
 
     <Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlockStyle">
         <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
-        <Setter Property="FontFamily" Value="{StaticResource LatoThin}" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
+        <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
     </Style>
     
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}" />
@@ -40,4 +42,5 @@
     <system:String x:Key="FontAwesomeSearch">&#xf002;</system:String>
     <system:String x:Key="FontAwesomeLock">&#xf023;</system:String>
     <system:String x:Key="FontAwesomeUnlock">&#xf09c;</system:String>
+    
 </ResourceDictionary>

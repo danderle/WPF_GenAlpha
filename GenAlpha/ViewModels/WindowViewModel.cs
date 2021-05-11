@@ -24,6 +24,21 @@ namespace GenAlpha
         #region Properties
 
         /// <summary>
+        /// The minimum size of the window width
+        /// </summary>
+        public double WindowMinimumWidth { get; set; } = 400;
+
+        /// <summary>
+        /// The minimum size of the window height
+        /// </summary>
+        public double WindowMinimumHeight { get; set; } = 400;
+
+        /// <summary>
+        /// Inner content padding
+        /// </summary>
+        public Thickness InnerContentPadding => new Thickness(ResizeBorder);
+
+        /// <summary>
         /// The size of the resize border around the window
         /// </summary>
         public int ResizeBorder { get; set; } = 6;
@@ -60,7 +75,7 @@ namespace GenAlpha
         /// <summary>
         /// The height of the title bar
         /// </summary>
-        public int TitleHeight { get; set; } = 42;
+        public int TitleHeight { get; set; } = 25;
 
         /// <summary>
         /// The height of the title bar
@@ -109,6 +124,8 @@ namespace GenAlpha
             MaximizeCommand = new RelayCommand(() => _window.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => _window.Close());
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(_window, GetMousePosition()));
+
+            var resizer = new WindowResizer(window);
         }
 
 
@@ -143,6 +160,5 @@ namespace GenAlpha
         }
 
         #endregion
-
     }
 }
