@@ -18,13 +18,19 @@
 
     <Color x:Key="Gray">#848e98</Color>
     <SolidColorBrush x:Key="GrayBrush" Color="{StaticResource Gray}" />
-    
+
     <Color x:Key="GrayBlue">#3f5064</Color>
     <SolidColorBrush x:Key="GrayBlueBrush" Color="{StaticResource GrayBlue}" />
+
+    <Color x:Key="PurpleRed">#ad2669</Color>
+    <SolidColorBrush x:Key="PurpleRedBrush" Color="{StaticResource PurpleRed}" />
     
-    <Color x:Key="Green">#00a06e</Color>
+    <Color x:Key="Green">#42b665</Color>
     <SolidColorBrush x:Key="GreenBrush" Color="{StaticResource Green}" />
 
+    <Color x:Key="BlueGreen">#00817c</Color>
+    <SolidColorBrush x:Key="BlueGreenBrush" Color="{StaticResource BlueGreen}" />
+    
     <Color x:Key="VeryDarkBlue">#15273b</Color>
     <SolidColorBrush x:Key="VeryDarkBlueBrush" Color="{StaticResource VeryDarkBlue}" />
 

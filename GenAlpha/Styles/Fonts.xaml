@@ -6,6 +6,8 @@
     <FontFamily x:Key="LatoRegular">/GenAlpha;component/Resources/Fonts/#Lato Regular</FontFamily>
     <FontFamily x:Key="LatoThin">/GenAlpha;component/Resources/Fonts/#Lato Thin</FontFamily>
     <FontFamily x:Key="LatoBold">/GenAlpha;Component/Resources/Fonts/#Lato Bold</FontFamily>
+    <FontFamily x:Key="FontAwesomeSolid">/GenAlpha;Component/Resources/Fonts/#Font Awesome 5 Free Solid</FontFamily>
+    <FontFamily x:Key="FontAwesomeRegular">/GenAlpha;Component/Resources/Fonts/#Font Awesome 5 Free Regular</FontFamily>
 
     <system:Double x:Key="FontSizeSmallest">10</system:Double>
     <system:Double x:Key="FontSizeSmall">12</system:Double>
@@ -17,20 +19,20 @@
     <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
         <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
         <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
-        <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource DarkWhiteBrush}" />
     </Style>
 
     <Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlockStyle">
         <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
         <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
-        <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource DarkWhiteBrush}" />
     </Style>
-    
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}" />
-    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseStyle}" />
-    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}" />
-    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}" />
-    <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseStyle}" />
+
+    <Style TargetType="{x:Type Button}" x:Key="BaseButtonStyle">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolid}" />
+        <Setter Property="Foreground" Value="{StaticResource DarkWhiteBrush}" />
+    </Style>
 
     <system:String x:Key="FontAwesomeAngleLeft">&#xf104;</system:String>
     <system:String x:Key="FontAwesomeAngleRight">&#xf105;</system:String>
@@ -42,5 +44,25 @@
     <system:String x:Key="FontAwesomeSearch">&#xf002;</system:String>
     <system:String x:Key="FontAwesomeLock">&#xf023;</system:String>
     <system:String x:Key="FontAwesomeUnlock">&#xf09c;</system:String>
+    <system:String x:Key="FontAwesomeUserSecret">&#xf21b;</system:String>
+    
+    <system:String x:Key="FontAwesomeAmbulance">&#xf0f9;</system:String>
+    <system:String x:Key="FontAwesomeAnchor">&#xf13d;</system:String>
+    <system:String x:Key="FontAwesomeAutomobile">&#xf1b9;</system:String>
+    <system:String x:Key="FontAwesomeBank">&#xf19c;</system:String>
+    <system:String x:Key="FontAwesomeBed">&#xf236;</system:String>
+    <system:String x:Key="FontAwesomeBell">&#xf0f3;</system:String>
+    <system:String x:Key="FontAwesomeBicycle">&#xf236;</system:String>
+    <system:String x:Key="FontAwesomeBomb">&#xf1e2;</system:String>
+    <system:String x:Key="FontAwesomeBitcoin">&#xf15a;</system:String>
+    <system:String x:Key="FontAwesomeBolt">&#xf0e7;</system:String>
+    <system:String x:Key="FontAwesomeBug">&#xf188;</system:String>
+    <system:String x:Key="FontAwesomeUniversity">&#xf19c;</system:String>
+    <system:String x:Key="FontAwesomeTruck">&#xf0d1;</system:String>
+    <system:String x:Key="FontAwesomeTint">&#xf043;</system:String>
+    <system:String x:Key="FontAwesomeSpaceShuttle">&#xf197;</system:String>
+    <system:String x:Key="FontAwesomeDiamond">&#xf219;</system:String>
+    
+    
     
 </ResourceDictionary>
