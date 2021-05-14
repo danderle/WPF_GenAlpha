@@ -1,0 +1,77 @@
+﻿<Page x:Class="GenAlpha.MemoryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GenAlpha"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MemoryPage">
+    
+    <Grid Background="{StaticResource VeryDarkBlueBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Grid.ColumnSpan="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                
+                <Button Content="{StaticResource FontAwesomeAngleLeft}" 
+                        Command="{Binding ToGameSelectionCommand}"/>
+                <TextBlock Grid.Column="1" Text="Player 1"/>
+                <StackPanel Grid.Column="2" 
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                    <Button Style="{StaticResource TextButton}" Content="{StaticResource FontAwesomeUserSecret}" />
+                    <Button Style="{StaticResource TextButton}" Content="{StaticResource FontAwesomeUserSecret}" />
+                    <Button Style="{StaticResource TextButton}" Content="{StaticResource FontAwesomeUserSecret}" />    
+                </StackPanel>
+                
+            </Grid>
+        </Border>
+        
+        <Button Tag="Test" Content="Main" Grid.Row="1" Grid.Column="0" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="1" Grid.Column="3" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="1" Grid.Column="4" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="2" Grid.Column="3" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="2" Grid.Column="4" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="3" Grid.Column="0" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="3" Grid.Column="1" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="3" Grid.Column="2" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="3" Grid.Column="3" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="3" Grid.Column="4" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="4" Grid.Column="0" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="4" Grid.Column="1" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="4" Grid.Column="2" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="4" Grid.Column="3" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="4" Grid.Column="4" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="5" Grid.Column="0" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="5" Grid.Column="1" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="5" Grid.Column="2" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="5" Grid.Column="3" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+        <Button Grid.Row="5" Grid.Column="4" Style="{StaticResource MemoryButton}" Command="{Binding RevealCommand}"/>
+    </Grid>
+</Page>
