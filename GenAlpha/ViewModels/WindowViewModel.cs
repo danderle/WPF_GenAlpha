@@ -23,6 +23,8 @@ namespace GenAlpha
 
         #region Properties
 
+        public bool Borderless => (_window.WindowState == WindowState.Maximized);
+
         /// <summary>
         /// The minimum size of the window width
         /// </summary>
@@ -36,12 +38,12 @@ namespace GenAlpha
         /// <summary>
         /// Inner content padding
         /// </summary>
-        public Thickness InnerContentPadding => new Thickness(ResizeBorder);
+        public Thickness InnerContentPadding => new Thickness(0);
 
         /// <summary>
         /// The size of the resize border around the window
         /// </summary>
-        public int ResizeBorder { get; set; } = 6;
+        public int ResizeBorder => Borderless ? 0 : 6;
 
         /// <summary>
         /// The size of the resize border around the window
@@ -81,6 +83,11 @@ namespace GenAlpha
         /// The height of the title bar
         /// </summary>
         public GridLength TitleHeightGridLength => new GridLength(TitleHeight + ResizeBorder);
+
+        /// <summary>
+        /// The current page of the application
+        /// </summary>
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Memory;
 
         #endregion
 
@@ -125,10 +132,9 @@ namespace GenAlpha
             CloseCommand = new RelayCommand(() => _window.Close());
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(_window, GetMousePosition()));
 
+            //Fix window resize issues
             var resizer = new WindowResizer(window);
         }
-
-
 
         #endregion
 
