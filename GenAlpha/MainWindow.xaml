@@ -26,7 +26,7 @@
 
                                 <!--Opacity Mask for corners on grid-->
                                 <Border x:Name="Container"
-                                        Background="{StaticResource VeryDarkBlueBrush}"
+                                        Background="{StaticResource GrayBlueBrush}"
                                         CornerRadius="{Binding WindowCornerRadius}"/>
 
                                 <!--Main Window with the resizable outline margin-->
@@ -71,9 +71,18 @@
                                             </Button>
 
                                             <!--Title-->
-                                            <Viewbox Grid.Column="1">
-                                                <TextBlock Style="{StaticResource HeaderText}" 
-                                                           Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
+                                            <Viewbox Grid.Column="0"
+                                                     Grid.ColumnSpan="3">
+                                                <StackPanel>
+                                                    <TextBlock Style="{StaticResource HeaderText}">
+                                                        <Run Text="Gen" Foreground="{StaticResource GreenBrush}"/><Run Text="Alpha" Foreground="{StaticResource LightGrayBrush}"/>
+                                                    </TextBlock>
+                                                    <TextBlock FontFamily="{StaticResource LatoThin}"
+                                                               FontSize="{StaticResource FontSizeSmallest}"
+                                                               Margin="0 -5 0 0"
+                                                               HorizontalAlignment="Center"
+                                                               Text="by danderle" />
+                                                </StackPanel>
                                             </Viewbox>
                                             
                                             <!--Window Buttons-->
@@ -125,7 +134,8 @@
     </WindowChrome.WindowChrome>
 
     <Grid>
-        <Button Content="Test"/>
+        <Frame x:Name="MainFrame"
+               Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
     </Grid>
     
 </Window>
