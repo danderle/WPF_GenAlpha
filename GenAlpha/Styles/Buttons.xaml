@@ -184,7 +184,7 @@
     <!--Memory Button-->
     <Style TargetType="{x:Type Button}" x:Key="MemoryButton" BasedOn="{StaticResource BaseButtonStyle}">
         <Setter Property="Background" Value="{StaticResource LightGrayBrush}" />
-        <Setter Property="Foreground" Value="{StaticResource VeryDarkBlueBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PurpleRedBrush}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="Margin" Value="5" />

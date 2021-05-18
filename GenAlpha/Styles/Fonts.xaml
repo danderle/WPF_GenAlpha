@@ -34,6 +34,7 @@
         <Setter Property="Foreground" Value="{StaticResource DarkWhiteBrush}" />
     </Style>
 
+    <!--Buttons-->
     <system:String x:Key="FontAwesomeAngleLeft">&#xf104;</system:String>
     <system:String x:Key="FontAwesomeAngleRight">&#xf105;</system:String>
     <system:String x:Key="FontAwesomeFileImport">&#xf56f;</system:String>
@@ -46,22 +47,44 @@
     <system:String x:Key="FontAwesomeUnlock">&#xf09c;</system:String>
     <system:String x:Key="FontAwesomeUserSecret">&#xf21b;</system:String>
     
+    <!--unused-->
+    <system:String x:Key="FontAwesomeBitcoin">&#xf15a;</system:String>
+    <system:String x:Key="FontAwesomeDiamond">&#xf219;</system:String>
+    
+    <!--Memory Cards-->
     <system:String x:Key="FontAwesomeAmbulance">&#xf0f9;</system:String>
     <system:String x:Key="FontAwesomeAnchor">&#xf13d;</system:String>
     <system:String x:Key="FontAwesomeAutomobile">&#xf1b9;</system:String>
     <system:String x:Key="FontAwesomeBank">&#xf19c;</system:String>
     <system:String x:Key="FontAwesomeBed">&#xf236;</system:String>
     <system:String x:Key="FontAwesomeBell">&#xf0f3;</system:String>
-    <system:String x:Key="FontAwesomeBicycle">&#xf236;</system:String>
+    <system:String x:Key="FontAwesomeBicycle">&#xf206;</system:String>
     <system:String x:Key="FontAwesomeBomb">&#xf1e2;</system:String>
-    <system:String x:Key="FontAwesomeBitcoin">&#xf15a;</system:String>
     <system:String x:Key="FontAwesomeBolt">&#xf0e7;</system:String>
     <system:String x:Key="FontAwesomeBug">&#xf188;</system:String>
-    <system:String x:Key="FontAwesomeUniversity">&#xf19c;</system:String>
+    <system:String x:Key="FontAwesomePaw">&#xf1b0;</system:String>
     <system:String x:Key="FontAwesomeTruck">&#xf0d1;</system:String>
     <system:String x:Key="FontAwesomeTint">&#xf043;</system:String>
     <system:String x:Key="FontAwesomeSpaceShuttle">&#xf197;</system:String>
-    <system:String x:Key="FontAwesomeDiamond">&#xf219;</system:String>
+    <system:String x:Key="FontAwesomeSnowflake">&#xf2dc;</system:String>
+    
+    <ResourceDictionary x:Key="MemoryCards">
+        <system:String x:Key="FontAwesomeAmbulance">&#xf0f9;</system:String>
+        <system:String x:Key="FontAwesomeAnchor">&#xf13d;</system:String>
+        <system:String x:Key="FontAwesomeAutomobile">&#xf1b9;</system:String>
+        <system:String x:Key="FontAwesomeBank">&#xf19c;</system:String>
+        <system:String x:Key="FontAwesomeBed">&#xf236;</system:String>
+        <system:String x:Key="FontAwesomeBell">&#xf0f3;</system:String>
+        <system:String x:Key="FontAwesomeBicycle">&#xf236;</system:String>
+        <system:String x:Key="FontAwesomeBomb">&#xf1e2;</system:String>
+        <system:String x:Key="FontAwesomeBolt">&#xf0e7;</system:String>
+        <system:String x:Key="FontAwesomeBug">fef</system:String>
+        <system:String x:Key="FontAwesomePaw">ef</system:String>
+        <system:String x:Key="FontAwesomeTruck">&#xf0d1;</system:String>
+        <system:String x:Key="FontAwesomeTint">&#xf043;</system:String>
+        <system:String x:Key="FontAwesomeSpaceShuttle">&#xf197;</system:String>
+        <system:String x:Key="FontAwesomeSnowflake">&#xf2dc;</system:String>
+    </ResourceDictionary>
     
     
     
