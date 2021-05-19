@@ -1,4 +1,4 @@
-﻿<Page x:Class="GenAlpha.MemoryPage"
+﻿<local:BasePage x:Class="GenAlpha.MemoryPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -23,7 +23,8 @@
                 </Grid.ColumnDefinitions>
                 
                 <Button Content="{StaticResource FontAwesomeAngleLeft}" 
-                        Command="{Binding ToGameSelectionCommand}"/>
+                        Command="{Binding ToGameSelectionCommand}"
+                        />
                 <TextBlock Grid.Column="1" Text="Player 1"/>
                 <StackPanel Grid.Column="2" 
                             Orientation="Horizontal"
@@ -37,8 +38,7 @@
         </Border>
 
         <Grid Grid.Row="1"
-              local:ShuffleGridProperty.Value="True"
-              >
+              local:ShuffleMemoryGridProperty.Value="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -87,4 +87,4 @@
             <Button Grid.Row="4" Grid.Column="5" Style="{StaticResource MemoryButton}" />
         </Grid>
     </Grid>
-</Page>
+</local:BasePage>
