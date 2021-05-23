@@ -7,8 +7,18 @@ namespace GenAlpha
     /// <summary>
     /// A base page for all pages to gain base functionality
     /// </summary>
-    public class BasePage : Page
+    public class BasePage<VM> : Page
+        where VM : BaseViewModel, new()
     {
+        #region Private Fields
+
+        /// <summary>
+        /// The View model for this page
+        /// </summary>
+        private VM _viewModel;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -26,6 +36,25 @@ namespace GenAlpha
         /// </summary>
         public float SlidesSeconds { get; set; } = 0.8f;
 
+        /// <summary>
+        /// The View model for this page
+        /// </summary>
+        public VM ViewModel 
+        { 
+            get => _viewModel;
+            set
+            {
+                //if value changed
+                if(_viewModel != value)
+                {
+                    //Set view model
+                    _viewModel = value;
+                    //Bind the viewmodel to this page
+                    DataContext = _viewModel;
+                }
+            }
+        }
+        
         #endregion
 
         #region Constructor
@@ -43,6 +72,9 @@ namespace GenAlpha
 
             //listen out for the page loading
             Loaded += BasePage_Loaded;
+
+            //Create a default view model
+            ViewModel = new VM();
         }
 
         #endregion
