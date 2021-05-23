@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace GenAlpha.ViewModels.Base
+namespace GenAlpha
 {
     /// <summary>
     /// A basic command that runs an Action

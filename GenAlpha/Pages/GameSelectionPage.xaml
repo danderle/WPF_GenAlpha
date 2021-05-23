@@ -1,4 +1,5 @@
-﻿<local:BasePage x:Class="GenAlpha.GameSelectionPage"
+﻿<local:BasePage x:TypeArguments="local:GameSelectionViewModel"
+                x:Class="GenAlpha.GameSelectionPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
