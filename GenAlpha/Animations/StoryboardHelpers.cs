@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media.Animation;
-
+using System.Windows.Media;
 namespace GenAlpha
 {
     /// <summary>
@@ -69,10 +69,9 @@ namespace GenAlpha
         /// </summary>
         /// <param name="storyboard">The storyboard to add the animation to</param>
         /// <param name="seconds">The time the animation will take</param>
-        /// <param name="deceleration">The rate of deceleration</param>
         public static void AddFadeIn(this Storyboard storyboard, float seconds)
         {
-            //Create the margin animate from right
+            //Create the fade in opacity
             var animation = new DoubleAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
@@ -92,10 +91,9 @@ namespace GenAlpha
         /// </summary>
         /// <param name="storyboard">The storyboard to add the animation to</param>
         /// <param name="seconds">The time the animation will take</param>
-        /// <param name="deceleration">The rate of deceleration</param>
         public static void AddFadeOut(this Storyboard storyboard, float seconds)
         {
-            //Create the margin animate from right
+            //Create the fade out opacity
             var animation = new DoubleAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
@@ -109,6 +107,166 @@ namespace GenAlpha
             //Add to the storyboard
             storyboard.Children.Add(animation);
         }
+
+        #endregion
+
+        #region Rotation
+
+        /// <summary>
+        /// Adds a fade out to the storyboard
+        /// </summary>
+        /// <param name="storyboard">The storyboard to add the animation to</param>
+        /// <param name="seconds">The time the animation will take</param>
+        public static void AddRotation(this Storyboard storyboard, float seconds, float begin = 0, int transformGroupChild = -1)
+        {
+            //Create the margin animate from right
+            var animation = new DoubleAnimation
+            {
+                Duration = new Duration(TimeSpan.FromSeconds(seconds)),
+                From = 0,
+                To = 720,
+                BeginTime = TimeSpan.FromSeconds(begin)
+            };
+
+            if (transformGroupChild > -1)
+            {
+                //Set the target property name
+                Storyboard.SetTargetProperty(animation, new PropertyPath($"RenderTransform.Children[{transformGroupChild}].Angle"));
+            }
+            else
+            {
+                //Set the target property name
+                Storyboard.SetTargetProperty(animation, new PropertyPath("(UIElement.RenderTransform).(RotateTransform.Angle)"));
+            }
+
+            //Add to the storyboard
+            storyboard.Children.Add(animation);
+        }
+
+        #endregion
+
+        #region Scale X / Y
+
+        /// <summary>
+        /// Adds a scale y out to the storyboard
+        /// </summary>
+        /// <param name="storyboard">The storyboard to add the animation to</param>
+        /// <param name="seconds">The time the animation will take</param>
+        public static void AddScaleYout(this Storyboard storyboard, float seconds, float begin = 0, int transformGroupChild = -1)
+        {
+            //Create the margin animate from right
+            var animation = new DoubleAnimation
+            {
+                Duration = new Duration(TimeSpan.FromSeconds(seconds)),
+                From = 1,
+                To = 0,
+                BeginTime = TimeSpan.FromSeconds(begin)
+            };
+
+            if (transformGroupChild > -1)
+            {
+                //Set the target property name
+                Storyboard.SetTargetProperty(animation, new PropertyPath($"RenderTransform.Children[{transformGroupChild}].ScaleY"));
+            }
+            else
+            {
+                //Set the target property name
+                Storyboard.SetTargetProperty(animation, new PropertyPath("(UIElement.RenderTransform).(ScaleTransform.ScaleY)"));
+            }
+
+            //Add to the storyboard
+            storyboard.Children.Add(animation);
+        }
+
+        /// <summary>
+        /// Adds a scale x out to the storyboard
+        /// </summary>
+        /// <param name="storyboard">The storyboard to add the animation to</param>
+        /// <param name="seconds">The time the animation will take</param>
+        public static void AddScaleXout(this Storyboard storyboard, float seconds, float begin = 0, int transformGroupChild = -1)
+        {
+            //Create the margin animate from right
+            var animation = new DoubleAnimation
+            {
+                Duration = new Duration(TimeSpan.FromSeconds(seconds)),
+                From = 1,
+                To = 0,
+                BeginTime = TimeSpan.FromSeconds(begin)
+            };
+
+            if(transformGroupChild > -1)
+            {
+                //Set the target property name
+                Storyboard.SetTargetProperty(animation, new PropertyPath($"RenderTransform.Children[{transformGroupChild}].ScaleX"));
+            }
+            else
+            {
+                //Set the target property name
+                Storyboard.SetTargetProperty(animation, new PropertyPath("(UIElement.RenderTransform).(ScaleTransform.ScaleX)"));
+            }
+
+            //Add to the storyboard
+            storyboard.Children.Add(animation);
+        }
+
+        /// <summary>
+        /// Adds a scale x out to the storyboard
+        /// </summary>
+        /// <param name="storyboard">The storyboard to add the animation to</param>
+        /// <param name="seconds">The time the animation will take</param>
+        public static void AddScaleXCover(this Storyboard storyboard, float seconds, float begin = 0, int transformGroupChild = -1)
+        {
+            //Create the margin animate from right
+            var animation = new DoubleAnimation
+            {
+                Duration = new Duration(TimeSpan.FromSeconds(seconds)),
+                From = 1,
+                To = -1,
+                BeginTime = TimeSpan.FromSeconds(begin)
+            };
+
+            if (transformGroupChild > -1)
+            {
+                //Set the target property name
+                Storyboard.SetTargetProperty(animation, new PropertyPath($"RenderTransform.Children[{transformGroupChild}].ScaleX"));
+            }
+            else
+            {
+                //Set the target property name
+                Storyboard.SetTargetProperty(animation, new PropertyPath("(UIElement.RenderTransform).(ScaleTransform.ScaleX)"));
+            }
+
+            //Add to the storyboard
+            storyboard.Children.Add(animation);
+        }
+
+        #endregion
+
+        #region Color
+
+        /// <summary>
+        /// Adds a scale x out to the storyboard
+        /// </summary>
+        /// <param name="storyboard">The storyboard to add the animation to</param>
+        /// <param name="seconds">The time the animation will take</param>
+        public static void AddForegroundColor(this Storyboard storyboard, Color color, float seconds, float begin = 0)
+        {
+            //Create the margin animate from right
+            var animation = new ColorAnimation
+            {
+                Duration = new Duration(TimeSpan.FromSeconds(seconds)),
+                From = (Color)Application.Current.Resources["PurpleRed"],
+                To = color,
+                BeginTime = TimeSpan.FromSeconds(begin)
+            };
+
+            //Set the target property name
+            Storyboard.SetTargetProperty(animation, new PropertyPath("Foreground.Color"));
+
+            //Add to the storyboard
+            storyboard.Children.Add(animation);
+        }
+
         #endregion
     }
 }
