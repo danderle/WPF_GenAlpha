@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace GenAlpha
 {
@@ -54,8 +57,7 @@ namespace GenAlpha
         }
 
         #endregion
-
-
+        
         #region Private Helpers
 
         private void FillGridFromList(Grid grid, List<Button> list)
@@ -119,4 +121,74 @@ namespace GenAlpha
 
         #endregion
     }
+
+    public class CheckRevealedCardsMatchProperty : BaseAttachedProperties<CheckRevealedCardsMatchProperty, bool>
+    {
+        public static async void CheckIfCardsMatch(DependencyObject d)
+        {
+            //Get the caller
+            var grid = d as Grid;
+
+            //Make sure it is a grid
+            if (grid == null)
+                return;
+
+            var list = new List<Button>();
+            foreach (Button button in grid.Children)
+            {
+                if (IsRevealedProperty.IsRevealed(button))
+                {
+                    list.Add(button);
+                }
+            }
+
+            if(list.Count == 2)
+            {
+                var card1 = list[0];
+                var card2 = list[1];
+                card1.RenderTransformOrigin = new Point(0.5f, 0.5f);
+                card2.RenderTransformOrigin = new Point(0.5f, 0.5f);
+                float seconds = 1f;
+                float beginTime = 2f;
+                if (card1.Content == card2.Content)
+                {
+                    await ButtonAnimations.SpinAndScaleOutAsync(card1, card2, seconds);
+                }
+                else
+                {
+                    await ButtonAnimations.FlipAndColorAsync(card1, card2, seconds, beginTime);
+                }
+
+                ResetCardsRevealedProperty.ExecuteCommand(grid);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Will reset the cards revealed counter
+    /// </summary>
+    public class ResetCardsRevealedProperty : BaseAttachedProperties<ResetCardsRevealedProperty, ICommand>
+    {
+        private static ICommand command;
+
+        public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            //Get the caller
+            var grid = sender as Grid;
+
+            //Make sure it is a grid
+            if (grid == null)
+                return;
+
+            command = (ICommand)e.NewValue;
+        }
+
+        public static void ExecuteCommand(DependencyObject sender)
+        {
+
+            command.Execute((Grid)sender);
+        }
+
+    }
+
 }
