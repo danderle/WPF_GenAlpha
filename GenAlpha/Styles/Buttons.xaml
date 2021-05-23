@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:GenAlpha">
 
     <ResourceDictionary.MergedDictionaries>
         <!--The order is important-->
@@ -105,7 +106,6 @@
                                 <Storyboard>
                                     <ColorAnimation To="{StaticResource Red}" 
                                         Duration="0:0:0.3" 
-                                        Storyboard.TargetName="border"
                                         Storyboard.TargetProperty="Background.Color"/>
                                 </Storyboard>
                             </BeginStoryboard>
@@ -115,7 +115,6 @@
                                 <Storyboard>
                                     <ColorAnimation To="Transparent" 
                                                     Duration="0:0:0.3" 
-                                                    Storyboard.TargetName="border"
                                                     Storyboard.TargetProperty="Background.Color"/>
                                 </Storyboard>
                             </BeginStoryboard>
@@ -206,26 +205,9 @@
 
                     </Border>
                     <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation To="{StaticResource Green}" 
-                                                    Duration="0:0:0.3" 
-                                                    Storyboard.TargetName="border"
-                                                    Storyboard.TargetProperty="Background.Color"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation To="Transparent" 
-                                                    Duration="0:0:0.3" 
-                                                    Storyboard.TargetName="border"
-                                                    Storyboard.TargetProperty="Background.Color"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
+                        <Trigger Property="IsMouseOver" Value="True" >
+                            <Setter Property="Foreground" Value="{StaticResource GreenBrush}" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -235,10 +217,11 @@
     <!--Memory Button-->
     <Style TargetType="{x:Type Button}" x:Key="MemoryButton" BasedOn="{StaticResource BaseButtonStyle}">
         <Setter Property="Background" Value="{StaticResource LightGrayBrush}" />
-        <Setter Property="Foreground" Value="{StaticResource PurpleRedBrush}" />
+        <Setter Property="Foreground" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="Margin" Value="5" />
+        <Setter Property="local:IsRevealedProperty.Value" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -247,7 +230,11 @@
                             Background="{TemplateBinding Background}"
                             BorderThickness="{TemplateBinding BorderThickness}" 
                             BorderBrush="{TemplateBinding BorderBrush}" 
-                            SnapsToDevicePixels="true">
+                            SnapsToDevicePixels="true"
+                            RenderTransformOrigin="0.5 0.5">
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="Scale" ScaleX="-1" ScaleY="1" />
+                        </Border.RenderTransform>
                         <Grid>
                             <Viewbox>
                                 <TextBlock Text="{TemplateBinding Content}"
@@ -267,6 +254,7 @@
                                        HorizontalAlignment="Center" />
                         </Grid>
                     </Border>
+
                     <ControlTemplate.Triggers>
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
@@ -285,6 +273,23 @@
                                                     Duration="0:0:0.3" 
                                                     Storyboard.TargetName="border"
                                                     Storyboard.TargetProperty="Background.Color"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Scale"
+                                                     Storyboard.TargetProperty="(ScaleTransform.ScaleX)" 
+                                                     From="-1"
+                                                     To="1" 
+                                                     Duration="0:0:1" />
+                                    <ColorAnimation BeginTime="0:0:0.5" To="{StaticResource PurpleRed}" 
+                                                    Duration="0:0:0.5" 
+                                                    Storyboard.TargetProperty="Foreground.Color"/>
+                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(local:IsRevealedProperty.Value)">
+                                        <DiscreteBooleanKeyFrame KeyTime="0:0:1" Value="True" />
+                                    </BooleanAnimationUsingKeyFrames>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
