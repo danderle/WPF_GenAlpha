@@ -1,11 +1,9 @@
-﻿using System.Windows.Controls;
-
-namespace GenAlpha
+﻿namespace GenAlpha
 {
     /// <summary>
     /// Interaction logic for MemoryPage.xaml
     /// </summary>
-    public partial class MemoryPage : BasePage
+    public partial class MemoryPage : BasePage<MemoryViewModel>
     {
         public MemoryPage()
         {
