@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -18,57 +17,91 @@ namespace GenAlpha
         /// <param name="page"></param>
         /// <param name="seconds"></param>
         /// <returns></returns>
-        public static async Task SpinAndScaleOutAsync(Button button1, Button button2, float seconds)
+        public static async Task SpinAndScaleOutAsync(Button button, float seconds, float beginTime = 0)
         {
             //Create storyboard
             var sb = new Storyboard();
 
             //scales x out animation
-            sb.AddScaleXout(seconds, 2, 0);
+            sb.AddScaleXout(seconds, beginTime, 0);
 
             //scales y out animation
-            sb.AddScaleYout(seconds, 2, 0);
+            sb.AddScaleYout(seconds, beginTime, 0);
 
             //rotate animation
-            sb.AddRotation(seconds, 2, 1);
+            sb.AddRotation(seconds, beginTime, 1);
 
             var groupTransform = new TransformGroup();
             var scale = new ScaleTransform();
             var rotate = new RotateTransform();
+            var origin = new Point(0.5f, 0.5f);
+            button.RenderTransformOrigin = origin;
             groupTransform.Children.Add(scale);
             groupTransform.Children.Add(rotate);
-            
+
             //Sets the transforms to the button
-            button1.RenderTransform = groupTransform;
-            button2.RenderTransform = groupTransform;
+            button.RenderTransform = groupTransform;
 
             //start animating
-            sb.Begin(button1);
-            sb.Begin(button2);
+            sb.Begin(button);
 
             //Wait for it to finish
             await Task.Delay((int)seconds * 1000);
         }
 
-        public static async Task FlipAndColorAsync(Button button1, Button button2, float seconds, float beginTime)
+        /// <summary>
+        /// Covers the revealed button animation
+        /// </summary>
+        /// <param name="button"></param>
+        /// <param name="seconds"></param>
+        /// <param name="begin"></param>
+        /// <returns></returns>
+        public static async Task CoverAsync(Button button, float seconds, float begin)
+        {
+            //Create storyboard
+            var sb = new Storyboard();
+
+            ////scales x out animation
+            sb.AddScaleXCover(seconds, begin);
+
+            //makes font transparent
+            sb.AddForegroundColor((Color)Application.Current.Resources["PurpleRed"], Colors.Transparent, seconds / 2, begin + seconds / 2);
+
+            //Sets the transforms to the button
+            var scale = new ScaleTransform();
+            button.RenderTransform = scale;
+
+            //start animating
+            sb.Begin(button);
+
+            //Wait for it to finish
+            await Task.Delay((int)seconds * 1000);
+        }
+
+        /// <summary>
+        /// Reveales a covered button animation
+        /// </summary>
+        /// <param name="button"></param>
+        /// <param name="seconds"></param>
+        /// <returns></returns>
+        public static async Task Reveal(Button button, float seconds)
         {
             //Create storyboard
             var sb = new Storyboard();
 
             //scales x out animation
-            sb.AddScaleXCover(seconds, beginTime);
+            sb.AddScaleUncover(seconds);
 
             //makes font transparent
-            sb.AddForegroundColor(Colors.Transparent, seconds/2f, beginTime);
+            sb.AddForegroundColor(Colors.Transparent, (Color)Application.Current.Resources["PurpleRed"], seconds / 2f, seconds / 2f);
 
             //Sets the transforms to the button
             var scale = new ScaleTransform();
-            button1.RenderTransform = scale;
-            button2.RenderTransform = scale;
+            button.RenderTransform = scale;
+            button.RenderTransformOrigin = new Point(0.5, 0.5);
 
             //start animating
-            sb.Begin(button1);
-            sb.Begin(button2);
+            sb.Begin(button);
 
             //Wait for it to finish
             await Task.Delay((int)seconds * 1000);

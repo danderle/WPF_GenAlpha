@@ -220,8 +220,8 @@ namespace GenAlpha
             var animation = new DoubleAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = 1,
-                To = -1,
+                From = -1,
+                To = 1,
                 BeginTime = TimeSpan.FromSeconds(begin)
             };
 
@@ -240,6 +240,36 @@ namespace GenAlpha
             storyboard.Children.Add(animation);
         }
 
+        /// <summary>
+        /// Adds a scale x out to the storyboard
+        /// </summary>
+        /// <param name="storyboard">The storyboard to add the animation to</param>
+        /// <param name="seconds">The time the animation will take</param>
+        public static void AddScaleUncover(this Storyboard storyboard, float seconds, float begin = 0, int transformGroupChild = -1)
+        {
+            //Create the margin animate from right
+            var animation = new DoubleAnimation
+            {
+                Duration = new Duration(TimeSpan.FromSeconds(seconds)),
+                From = -1,
+                To = 1,
+                BeginTime = TimeSpan.FromSeconds(begin)
+            };
+
+            if (transformGroupChild > -1)
+            {
+                //Set the target property name
+                Storyboard.SetTargetProperty(animation, new PropertyPath($"RenderTransform.Children[{transformGroupChild}].ScaleX"));
+            }
+            else
+            {
+                //Set the target property name
+                Storyboard.SetTargetProperty(animation, new PropertyPath("(UIElement.RenderTransform).(ScaleTransform.ScaleX)"));
+            }
+
+            //Add to the storyboard
+            storyboard.Children.Add(animation);
+        }
         #endregion
 
         #region Color
@@ -249,14 +279,14 @@ namespace GenAlpha
         /// </summary>
         /// <param name="storyboard">The storyboard to add the animation to</param>
         /// <param name="seconds">The time the animation will take</param>
-        public static void AddForegroundColor(this Storyboard storyboard, Color color, float seconds, float begin = 0)
+        public static void AddForegroundColor(this Storyboard storyboard,Color from, Color to, float seconds, float begin = 0)
         {
             //Create the margin animate from right
             var animation = new ColorAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = (Color)Application.Current.Resources["PurpleRed"],
-                To = color,
+                From = from,
+                To = to,
                 BeginTime = TimeSpan.FromSeconds(begin)
             };
 
