@@ -219,7 +219,7 @@
         <Setter Property="Background" Value="{StaticResource LightGrayBrush}" />
         <Setter Property="Foreground" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Padding" Value="4" />
+        <Setter Property="Padding" Value="3" />
         <Setter Property="Margin" Value="5" />
         <Setter Property="FontFamily" Value="{StaticResource LatoBold}" />
         <Setter Property="Template">
@@ -231,24 +231,16 @@
                             BorderThickness="{TemplateBinding BorderThickness}" 
                             BorderBrush="{TemplateBinding BorderBrush}" 
                             SnapsToDevicePixels="true">
-                        <Grid>
                             <Viewbox>
                                 <TextBlock Text="{TemplateBinding Content}"
-                                   FontFamily="{TemplateBinding FontFamily}"
-                                           Foreground="{TemplateBinding Foreground}"
-                                   FontSize="{TemplateBinding FontSize}"
-                                   Focusable="False" 
-                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                   Margin="{TemplateBinding Padding}" 
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                            FontFamily="{TemplateBinding FontFamily}"
+                                            Foreground="{TemplateBinding Foreground}"
+                                           Focusable="False" 
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                           Margin="{TemplateBinding Padding}" 
+                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Viewbox>
-                            <TextBlock Text="{TemplateBinding Tag}"
-                                       Foreground="{TemplateBinding Foreground}"
-                                       FontSize="{StaticResource FontSizeSmallest}"
-                                       VerticalAlignment="Bottom"
-                                       HorizontalAlignment="Center" />
-                        </Grid>
                     </Border>
 
                     <ControlTemplate.Triggers>
