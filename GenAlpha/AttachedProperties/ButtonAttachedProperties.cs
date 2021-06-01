@@ -54,7 +54,7 @@ namespace GenAlpha
 
             //the time to animateand begin
             float seconds = 1f;
-            float begin = 2f;
+            float begin = 1.5f;
             switch (animation)
             {
                 case ButtonAnimationTypes.Reveal:

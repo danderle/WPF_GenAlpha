@@ -220,8 +220,8 @@ namespace GenAlpha
             var animation = new DoubleAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = -1,
-                To = 1,
+                From = 1,
+                To = -1,
                 BeginTime = TimeSpan.FromSeconds(begin)
             };
 

@@ -65,7 +65,7 @@ namespace GenAlpha
             sb.AddScaleXCover(seconds, begin);
 
             //makes font transparent
-            sb.AddForegroundColor((Color)Application.Current.Resources["PurpleRed"], Colors.Transparent, seconds / 2, begin + seconds / 2);
+            sb.AddForegroundColor((Color)Application.Current.Resources["PurpleRed"], Colors.Transparent, seconds / 2, begin);
 
             //Sets the transforms to the button
             var scale = new ScaleTransform();
