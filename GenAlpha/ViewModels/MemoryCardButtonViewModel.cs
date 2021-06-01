@@ -84,8 +84,8 @@ namespace GenAlpha
         /// Copy constructor
         /// </summary>
         public MemoryCardButtonViewModel(MemoryCardButtonViewModel src)
-            : base()
         {
+            InitializeCommands();
             Content = src.Content;
         }
 

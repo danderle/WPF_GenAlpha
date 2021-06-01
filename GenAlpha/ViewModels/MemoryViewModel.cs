@@ -10,7 +10,17 @@ namespace GenAlpha
     /// </summary>
     public class MemoryViewModel : BaseViewModel
     {
+        #region Private Fields
+
+        private string chars = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        private List<char> usedChars = new List<char>();
+
+        #endregion
+
         #region Properties
+
+        public bool GameOver { get; set; } = false;
 
         /// <summary>
         /// A flag to let us know if we can reveal another card
@@ -78,11 +88,20 @@ namespace GenAlpha
         /// </summary>
         private void ResetRevealed()
         {
+            var matchList = new List<bool>();
             foreach (var card in MemoryCards)
             {
                 card.IsRevealed = false;
+                if(card.IsMatched)
+                {
+                    matchList.Add(true);
+                }
             }
             RevealedCounter = 0;
+            if(matchList.Count == MemoryCards.Count)
+            {
+                GameOver = true;
+            }
         }
 
         /// <summary>
@@ -164,8 +183,9 @@ namespace GenAlpha
             while (MemoryCards.Count < (NumberOfRows * NumberOfColumns))
             {
                 var card = new MemoryCardButtonViewModel();
-                //Right now gets a letter in increasing order
-                card.Content = Convert.ToString(Convert.ToChar('a' + count));
+                //Gets a random char
+                card.Content = GetRandomChar().ToString();
+
                 //Hooks into the action calls
                 card.CardRevealed = CardRevealed;
                 card.ResetRevealed = ResetRevealed;
@@ -180,6 +200,26 @@ namespace GenAlpha
                 MemoryCards.Add(match);
             }
         }
+
+        /// <summary>
+        /// Generates random chars and adds them to a used list so none will repeat
+        /// </summary>
+        /// <returns></returns>
+        private char GetRandomChar()
+        {
+            char randomChar;
+            var rand = new Random();
+            do
+            {
+                var num = rand.Next(0, chars.Length);
+                randomChar = chars[num];
+            }
+            while (usedChars.Contains(randomChar));
+
+            usedChars.Add(randomChar);
+            return randomChar;
+        }
+
 
         /// <summary>
         /// Shuffles the memory cards
@@ -199,5 +239,6 @@ namespace GenAlpha
         }
 
         #endregion
+
     }
 }
