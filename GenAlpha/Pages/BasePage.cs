@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -64,6 +65,10 @@ namespace GenAlpha
         /// </summary>
         public BasePage()
         {
+            if(DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
             //Hide at begin of animatioon
             if(PageLoadAnimation != PageAnimationTypes.None)
             {
