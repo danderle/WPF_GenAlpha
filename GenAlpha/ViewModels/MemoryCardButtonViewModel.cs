@@ -26,6 +26,11 @@ namespace GenAlpha
         public bool IsAnimating { get; set; } = false;
 
         /// <summary>
+        /// The rgb in hex string format
+        /// </summary>
+        public string RgbHexString { get; set; }
+
+        /// <summary>
         /// The content for this cards
         /// </summary>
         public string Content { get; set; }
@@ -37,7 +42,7 @@ namespace GenAlpha
 
         #endregion
 
-        #region MyRegion
+        #region Actions
 
         /// <summary>
         /// The action to execute when revealing
@@ -78,6 +83,7 @@ namespace GenAlpha
         public MemoryCardButtonViewModel()
         {
             InitializeCommands();
+            InitializeProperties();
         }
 
         /// <summary>
@@ -87,6 +93,16 @@ namespace GenAlpha
         {
             InitializeCommands();
             Content = src.Content;
+            RgbHexString = src.RgbHexString;
+        }
+
+        private void InitializeProperties()
+        {
+            var rand = new Random();
+            int min = 0;
+            int max = 175;
+            byte[] rgb = new byte[] { Convert.ToByte(rand.Next(min, max)), Convert.ToByte(rand.Next(min, max)) , Convert.ToByte(rand.Next(min, max)) };
+            RgbHexString += BitConverter.ToString(rgb).Replace("-","");
         }
 
         #endregion
@@ -125,7 +141,6 @@ namespace GenAlpha
                     break;
                 //if there was a match set the match flag and reset the revealed
                 case ButtonAnimationTypes.Match:
-                    IsMatched = true;
                     ResetRevealed();
                     break;
                 //if there was no match just reset the revealed
@@ -146,6 +161,7 @@ namespace GenAlpha
         public void Match()
         {
             IsAnimating = true;
+            IsMatched = true;
             Animation = ButtonAnimationTypes.Match;
         }
 
