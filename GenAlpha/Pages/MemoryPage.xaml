@@ -52,10 +52,16 @@
                             DataContext="{Binding }" 
                             Content="{Binding Content}"
                             local:IsAnimatingProperty.Value="{Binding Animation}"
-                            local:FinishedAnimationProperty.Value="{Binding FinishedAnimatingCommand}" 
+                            local:FinishedAnimationProperty.Value="{Binding FinishedAnimatingCommand}"
+                            local:RgbProperty.Value="{Binding RgbHexString}"
                             Command="{Binding ClickCommand}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        <Button Grid.Row="1"
+                Style="{StaticResource RestartButton}"
+                Content="{StaticResource FontAwesomeRotateLeft}"
+                Visibility="{Binding GameOver, Converter={local:BoolToVisibilityValueConverter}}"
+                Command="{Binding RestartGameCommand}"/>
     </Grid>
 </local:BasePage>

@@ -56,7 +56,7 @@ namespace GenAlpha
         /// <param name="seconds"></param>
         /// <param name="begin"></param>
         /// <returns></returns>
-        public static async Task CoverAsync(Button button, float seconds, float begin)
+        public static async Task CoverAsync(Button button, Color fromColor, float seconds, float begin)
         {
             //Create storyboard
             var sb = new Storyboard();
@@ -65,7 +65,7 @@ namespace GenAlpha
             sb.AddScaleXCover(seconds, begin);
 
             //makes font transparent
-            sb.AddForegroundColor((Color)Application.Current.Resources["PurpleRed"], Colors.Transparent, seconds / 2, begin);
+            sb.AddForegroundColor(fromColor, Colors.Transparent, seconds / 2, begin);
 
             //Sets the transforms to the button
             var scale = new ScaleTransform();
@@ -84,7 +84,7 @@ namespace GenAlpha
         /// <param name="button"></param>
         /// <param name="seconds"></param>
         /// <returns></returns>
-        public static async Task Reveal(Button button, float seconds)
+        public static async Task Reveal(Button button, Color ToColor, float seconds)
         {
             //Create storyboard
             var sb = new Storyboard();
@@ -93,7 +93,7 @@ namespace GenAlpha
             sb.AddScaleUncover(seconds);
 
             //makes font transparent
-            sb.AddForegroundColor(Colors.Transparent, (Color)Application.Current.Resources["PurpleRed"], seconds / 2f, seconds / 2f);
+            sb.AddForegroundColor(Colors.Transparent, ToColor, seconds / 2f, seconds / 2f);
 
             //Sets the transforms to the button
             var scale = new ScaleTransform();
