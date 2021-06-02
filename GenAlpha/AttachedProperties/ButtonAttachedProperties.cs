@@ -1,11 +1,33 @@
 ﻿using System;
+using System.Media;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace GenAlpha
 {
+    /// <summary>
+    /// Attached property which is the rgb value for the foreground color
+    /// </summary>
+    public class RgbProperty : BaseAttachedProperties<RgbProperty, string>
+    {
+        public static Color GetColor(DependencyObject d)
+        {
+            //make sure we have a button
+            var button = d as Button;
+            if (button == null)
+                return Color.FromRgb(0,0,0);
+
+            var rgbString = GetValue(button);
+            byte r = Convert.ToByte(rgbString.Substring(0, 2), 16);
+            byte g = Convert.ToByte(rgbString.Substring(2, 2), 16);
+            byte b = Convert.ToByte(rgbString.Substring(4, 2), 16);
+            return Color.FromRgb(r, g, b);
+        }
+    }
+
     /// <summary>
     /// Attached property which executes a command when an animation is finished
     /// </summary>
@@ -52,13 +74,15 @@ namespace GenAlpha
             if (animation == ButtonAnimationTypes.None)
                 return;
 
-            //the time to animateand begin
+            //the time to animate and begin
             float seconds = 1f;
             float begin = 1.5f;
+            Color cardColor = RgbProperty.GetColor(button);
             switch (animation)
             {
                 case ButtonAnimationTypes.Reveal:
-                    await ButtonAnimations.Reveal(button, seconds);
+                    
+                    await ButtonAnimations.Reveal(button, cardColor, seconds);
                     await FinishedAnimationProperty.ExecuteCommand(button, 0);
                     break;
                 case ButtonAnimationTypes.Match:
@@ -66,7 +90,7 @@ namespace GenAlpha
                     await FinishedAnimationProperty.ExecuteCommand(button, Convert.ToInt16(begin));
                     break;
                 case ButtonAnimationTypes.NoMatch:
-                    await ButtonAnimations.CoverAsync(button, seconds, begin);
+                    await ButtonAnimations.CoverAsync(button, cardColor, seconds, begin);
                     await FinishedAnimationProperty.ExecuteCommand(button, Convert.ToInt16(begin));
                     break;
             }
