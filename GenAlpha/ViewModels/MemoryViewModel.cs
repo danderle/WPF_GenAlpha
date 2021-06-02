@@ -66,6 +66,11 @@ namespace GenAlpha
         /// </summary>
         public ICommand ResetCardsRevealedCommand { get; set; }
 
+        /// <summary>
+        /// The command to restart the game
+        /// </summary>
+        public ICommand RestartGameCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -77,6 +82,21 @@ namespace GenAlpha
         {
             InitializeCommands();
             InitializeProperties();
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Creates new memory cards and restarts game
+        /// </summary>
+        private void RestartGame()
+        {
+            GameOver = false;
+            MemoryCards.Clear();
+            CreateMemoryCards();
+            ShuffleMemoryCards();
         }
 
         #endregion
@@ -162,6 +182,7 @@ namespace GenAlpha
         {
             CardRevealedCommand = new RelayCommand(() => CardsRevealed++);
             ResetCardsRevealedCommand = new RelayCommand(() => CardsRevealed = 0);
+            RestartGameCommand = new RelayCommand(RestartGame);
         }
 
         /// <summary>
