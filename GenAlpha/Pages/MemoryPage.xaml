@@ -27,14 +27,10 @@
                         Command="{Binding ToGameSelectionCommand}"
                         />
                 <TextBlock Grid.Column="1" Text="Player 1"/>
-                <StackPanel Grid.Column="2" 
-                            Orientation="Horizontal"
-                            HorizontalAlignment="Center">
-                    <Button Style="{StaticResource TextButton}" Content="{StaticResource FontAwesomeUserSecret}" />
-                    <Button Style="{StaticResource TextButton}" Content="{StaticResource FontAwesomeUserSecret}" />
-                    <Button Style="{StaticResource TextButton}" Content="{StaticResource FontAwesomeUserSecret}" />    
-                </StackPanel>
-                
+                <Button Grid.Column="2" Content="{StaticResource FontAwesomeBomb}" 
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        Command="{Binding ShowSideMenuCommand}"/>
+
             </Grid>
         </Border>
 
@@ -63,5 +59,6 @@
                 Content="{StaticResource FontAwesomeRotateLeft}"
                 Visibility="{Binding GameOver, Converter={local:BoolToVisibilityValueConverter}}"
                 Command="{Binding RestartGameCommand}"/>
+        <local:SideMenuControl DataContext="{Binding SideMenu}" Grid.Row="1" HorizontalAlignment="Right"/>
     </Grid>
 </local:BasePage>
