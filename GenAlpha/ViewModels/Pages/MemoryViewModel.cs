@@ -47,6 +47,8 @@ namespace GenAlpha
         /// </summary>
         public static int RevealedCounter { get; private set; } = 0;
 
+        public SideMenuViewModel SideMenu { get; set; } = new SideMenuViewModel();
+
         /// <summary>
         /// The list of all the memory cards
         /// </summary>

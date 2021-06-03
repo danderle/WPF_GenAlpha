@@ -96,15 +96,6 @@ namespace GenAlpha
             RgbHexString = src.RgbHexString;
         }
 
-        private void InitializeProperties()
-        {
-            var rand = new Random();
-            int min = 0;
-            int max = 175;
-            byte[] rgb = new byte[] { Convert.ToByte(rand.Next(min, max)), Convert.ToByte(rand.Next(min, max)) , Convert.ToByte(rand.Next(min, max)) };
-            RgbHexString += BitConverter.ToString(rgb).Replace("-","");
-        }
-
         #endregion
 
         #region Command Methods
@@ -182,6 +173,15 @@ namespace GenAlpha
         {
             ClickCommand = new RelayCommand(Click);
             FinishedAnimatingCommand = new RelayCommand(FinishedAnimating);
+        }
+
+        private void InitializeProperties()
+        {
+            var rand = new Random();
+            int min = 0;
+            int max = 175;
+            byte[] rgb = new byte[] { Convert.ToByte(rand.Next(min, max)), Convert.ToByte(rand.Next(min, max)), Convert.ToByte(rand.Next(min, max)) };
+            RgbHexString += BitConverter.ToString(rgb).Replace("-", "");
         }
 
         #endregion
