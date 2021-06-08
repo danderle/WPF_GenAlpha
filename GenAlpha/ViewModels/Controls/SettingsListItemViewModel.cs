@@ -31,13 +31,20 @@ namespace GenAlpha
         /// The command to decrease the increment value
         /// </summary>
         public ICommand DecreaseCommand { get; set; }
-        
+
         #endregion
 
         #region Constructor
 
         /// <summary>
         /// Default constructor
+        /// </summary>
+        public SettingsListItemViewModel()
+        {
+        }
+
+        /// <summary>
+        /// Parameterized constructor
         /// </summary>
         public SettingsListItemViewModel(string settingName, SettingTypes settingType, int incrementValue = 0)
         {

@@ -95,6 +95,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="UserControls\SettingsListControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Update="Styles\CheckBoxes.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
@@ -108,6 +114,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\Colors.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\SettingsListControl.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
