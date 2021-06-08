@@ -4,37 +4,42 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GenAlpha"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             MinWidth="300"
              d:DesignHeight="100" d:DesignWidth="300">
     
     <Grid Background="{StaticResource VeryDarkBlueBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="{Binding SettingName}" FontFamily="{StaticResource LatoBold}" Margin="15 0" HorizontalAlignment="Left"/>
         
-        <StackPanel Grid.Column="1" 
+        <StackPanel Grid.Column="1"
                     Orientation="Horizontal" 
                     HorizontalAlignment="Center"
                     Visibility="{Binding SettingType, Converter={local:SettingTypeToVisibilityValueConverter}, ConverterParameter=Increment}">
             <Button Content="+"
                     VerticalAlignment="Center"
+                    Padding="10 2"
                     FontFamily="{StaticResource LatoBold}"
                     Command="{Binding IncreaseCommand}"/>
-            <TextBlock Text="{Binding IncrementValue}" 
-                       Margin="15 0"/>
+            <TextBlock Text="{Binding IncrementValue, FallbackValue=1}" 
+                       Margin="5 0"
+                       Width="20"
+                       TextAlignment="Center"/>
             <Button Content="-" 
                     VerticalAlignment="Center"
+                    Padding="10 2"
                     FontFamily="{StaticResource LatoBold}"
                     Command="{Binding DecreaseCommand}"/>
         </StackPanel>
 
-        <CheckBox Grid.Column="1" 
-                    Width="80"
-                    Height="30"
-                  Margin="15"
+        <CheckBox Grid.Column="1"
+                  Padding="8 2"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"
                     Style="{StaticResource ToggleSwitchCheckBox}" 
                     IsChecked="{Binding IsChecked}"
                     Visibility="{Binding SettingType, Converter={local:SettingTypeToVisibilityValueConverter}, ConverterParameter=Toggle}"/>
