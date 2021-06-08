@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-
-namespace GenAlpha
+﻿namespace GenAlpha
 {
     /// <summary>
     /// The view model for the side menu control
@@ -10,14 +7,8 @@ namespace GenAlpha
     {
         #region Properties
 
-        public SettingsListItemViewModel SettingItem1 { get; set; }
-        public SettingsListItemViewModel SettingItem2 { get; set; }
+        public SettingsListViewModel SettingsList { get; set; } = new SettingsListViewModel();
 
-        #endregion
-
-        #region Commands
-
-        
         #endregion
 
         #region Constructor
@@ -27,26 +18,12 @@ namespace GenAlpha
         /// </summary>
         public SideMenuViewModel()
         {
-            SettingItem1 = new SettingsListItemViewModel("Players", SettingTypes.Increment, 1);
-            SettingItem2 = new SettingsListItemViewModel("Use lowercase letters", SettingTypes.Toggle);
-            InitializeCommands();
-        }
-
-        #endregion
-
-        #region Command Methods
-
-
-        #endregion
-
-        #region Public Methods
-
-        #endregion
-
-        #region Private Helpers Methods
-
-        private void InitializeCommands()
-        {
+            SettingsList.SettingItems.Add(new SettingsListItemViewModel("Players", SettingTypes.Increment, 1));
+            SettingsList.SettingItems.Add(new SettingsListItemViewModel("Number of cards", SettingTypes.Increment, 16));
+            SettingsList.SettingItems.Add(new SettingsListItemViewModel("Use lowercase letters", SettingTypes.Toggle));
+            SettingsList.SettingItems.Add(new SettingsListItemViewModel("Use uppercase letters", SettingTypes.Toggle));
+            SettingsList.SettingItems.Add(new SettingsListItemViewModel("Use numbers", SettingTypes.Toggle));
+            SettingsList.SettingItems.Add(new SettingsListItemViewModel("Use special characters", SettingTypes.Toggle));
         }
 
         #endregion
