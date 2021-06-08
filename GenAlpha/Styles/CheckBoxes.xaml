@@ -3,6 +3,7 @@
 
     <!--Toggle Switch-->
     <Style x:Key="ToggleSwitchCheckBox" TargetType="{x:Type CheckBox}">
+        <Setter Property="Margin" Value="5" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
@@ -13,8 +14,8 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="ON" Foreground="{StaticResource DarkWhiteBrush}" FontFamily="{StaticResource LatoBold}"/>
-                            <TextBlock Grid.Column="1" Text="OFF" Foreground="{StaticResource DarkWhiteBrush}" FontFamily="{StaticResource LatoBold}"/>
+                            <TextBlock Grid.Column="0" Text="ON" Margin="{TemplateBinding Padding}" Foreground="{StaticResource DarkWhiteBrush}" FontFamily="{StaticResource LatoBold}"/>
+                            <TextBlock Grid.Column="1" Text="OFF" Margin="{TemplateBinding Padding}" Foreground="{StaticResource DarkWhiteBrush}" FontFamily="{StaticResource LatoBold}"/>
                             <Border x:Name="Switch" Grid.Column="0" Background="{StaticResource VeryDarkBlueBrush}" BorderBrush="{StaticResource BlueGreenBrush}" BorderThickness="3" CornerRadius="2"/>
                         </Grid>
                     </Grid>

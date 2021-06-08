@@ -8,25 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="400">
 
     <Grid Background="{StaticResource VeryDarkBlueBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <StackPanel>
-            <TextBlock Text="Players" HorizontalAlignment="Left"/>
-            <TextBlock Text="Use lowercase letter" HorizontalAlignment="Left"/>
-            <TextBlock Text="Use uppercase letters" HorizontalAlignment="Left"/>
-            <TextBlock Text="Use numbers" HorizontalAlignment="Left"/>
-            <TextBlock Text="Use special characters" HorizontalAlignment="Left"/>
-            <TextBlock Text="Number of cards" HorizontalAlignment="Left" />
-        </StackPanel>
-        <StackPanel Grid.ColumnSpan="2"
-                    VerticalAlignment="Center">
-
-            <local:SettingsListItemControl DataContext="{Binding SettingItem1}"/>
-            <local:SettingsListItemControl DataContext="{Binding SettingItem2}"/>
-
-        </StackPanel>
+        <local:SettingsListControl DataContext="{Binding SettingsList}"
+                                    Margin="0 25"/>
     </Grid>
 </UserControl>
