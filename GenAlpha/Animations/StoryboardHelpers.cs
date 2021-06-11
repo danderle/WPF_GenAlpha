@@ -60,6 +60,31 @@ namespace GenAlpha
             //Add to the storyboard
             storyboard.Children.Add(animation);
         }
+
+        /// <summary>
+        /// Adds a slide out animation to the storyboard
+        /// </summary>
+        /// <param name="storyboard">The storyboard to add the animation to</param>
+        /// <param name="seconds">The time the animation will take</param>
+        /// <param name="offset">The distance to the right to start from</param>
+        /// <param name="deceleration">The rate of deceleration</param>
+        public static void AddSlideOutToRight(this Storyboard storyboard, float seconds, double offset, float deceleration = 0.9f)
+        {
+            //Create the margin animate from right
+            var animation = new ThicknessAnimation
+            {
+                Duration = new Duration(TimeSpan.FromSeconds(seconds)),
+                From = new Thickness(0),
+                To = new Thickness(offset, 0, -offset, 0),
+                DecelerationRatio = deceleration,
+            };
+
+            //Set the target property for animation
+            Storyboard.SetTargetProperty(animation, new PropertyPath("Margin"));
+
+            //Add to the storyboard
+            storyboard.Children.Add(animation);
+        }
         #endregion
 
         #region Fade in / out
