@@ -6,16 +6,21 @@
              xmlns:local="clr-namespace:GenAlpha"
              mc:Ignorable="d"
              MinWidth="300"
-             d:DesignHeight="100" d:DesignWidth="300">
+             d:DesignHeight="100" d:DesignWidth="400">
     
-    <Grid Background="{StaticResource VeryDarkBlueBrush}">
+    <!--The main grid for this control-->
+    <Grid Background="{StaticResource VeryDarkBlueBrush}"
+          d:DataContext="{x:Static local:SettingsListItemDesignModel.Instance}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="{Binding SettingName}" FontFamily="{StaticResource LatoBold}" Margin="15 0" HorizontalAlignment="Left"/>
+        <!--The name or description of this item-->
+        <TextBlock Text="{Binding Name}" FontFamily="{StaticResource LatoBold}" Margin="15 0" HorizontalAlignment="Left"/>
         
+        <!--2nd column-->
+        <!--Increment option, is visible if the type of setting is an increment type-->
         <StackPanel Grid.Column="1"
                     Orientation="Horizontal" 
                     HorizontalAlignment="Center"
@@ -36,6 +41,7 @@
                     Command="{Binding DecreaseCommand}"/>
         </StackPanel>
 
+        <!--The toggle switch option, is visible if the setting is a toggle type-->
         <CheckBox Grid.Column="1"
                   Padding="8 2"
                   VerticalAlignment="Center"

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-
-namespace GenAlpha
+﻿namespace GenAlpha
 {
     /// <summary>
     /// The design time model for a settings items list
@@ -11,6 +7,9 @@ namespace GenAlpha
     {
         #region Singleton
 
+        /// <summary>
+        /// The single instance of the design model
+        /// </summary>
         public static SettingsListItemDesignModel Instance { get; set; } = new SettingsListItemDesignModel();
 
         #endregion
@@ -22,9 +21,9 @@ namespace GenAlpha
         /// </summary>
         public SettingsListItemDesignModel()
         {
-            SettingName = "Players";
+            Name = "Players";
             SettingType = SettingTypes.Increment;
-            IncrementValue = 2;
+            CurrentValue = 2;
         }
 
         #endregion

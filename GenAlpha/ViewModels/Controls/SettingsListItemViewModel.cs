@@ -8,14 +8,36 @@ namespace GenAlpha
     /// </summary>
     public class SettingsListItemViewModel : BaseViewModel
     {
+        #region Private Fields
+
+        private const int MIN_PLAYERS = 1;
+        
+        private const int MAX_PLAYERS = 3;
+        
+        private readonly int[] CARDS = { 2, 4, 12, 16, 20, 30, 36 };
+
+        #endregion
+
         #region Properties
 
-        public bool IsChecked { get; set; } = true;
+        /// <summary>
+        /// Flag for letting us know if a checkbox is checked
+        /// </summary>
+        public bool IsChecked { get; set; } = false;
 
-        public string SettingName { get; set; }
+        /// <summary>
+        /// The Setting name/description text
+        /// </summary>
+        public string Name { get; set; }
 
-        public int IncrementValue { get; set; }
+        /// <summary>
+        /// The items current value
+        /// </summary>
+        public int CurrentValue { get; set; }
 
+        /// <summary>
+        /// The type of setting for this item
+        /// </summary>
         public SettingTypes SettingType { get; set; }
 
         #endregion
@@ -46,11 +68,11 @@ namespace GenAlpha
         /// <summary>
         /// Parameterized constructor
         /// </summary>
-        public SettingsListItemViewModel(string settingName, SettingTypes settingType, int incrementValue = 0)
+        public SettingsListItemViewModel(string name, SettingTypes settingType, int currentValue = 0)
         {
-            SettingName = settingName;
+            Name = name;
             SettingType = settingType;
-            IncrementValue = incrementValue;
+            CurrentValue = currentValue;
             InitializeCommands();
         }
 
@@ -58,10 +80,42 @@ namespace GenAlpha
 
         #region Command Methods
 
+        /// <summary>
+        /// Decreases the items current value
+        /// </summary>
+        private void Decrease()
+        {
+            if (Name.Contains("Players"))
+            {
+                CurrentValue--;
+                CurrentValue = CurrentValue < MIN_PLAYERS ? MIN_PLAYERS : CurrentValue;
+            }
+            else if (Name.Contains("Number of cards"))
+            {
+                int index = Array.FindIndex(CARDS, x => x == CurrentValue);
+                index = --index >= 0 ? index : ++index;
+                CurrentValue = CARDS[index];
+            }
+        }
 
-        #endregion
+        /// <summary>
+        /// Increases the items current value
+        /// </summary>
+        private void Increase()
+        {
+            if (Name.Contains("Players"))
+            {
+                CurrentValue++;
+                CurrentValue = CurrentValue > MAX_PLAYERS ? MAX_PLAYERS : CurrentValue;
+            }
+            else if (Name.Contains("Number of cards"))
+            {
+                int index = Array.FindIndex(CARDS, x => x == CurrentValue);
+                index = ++index >= CARDS.Length ? --index : index;
+                CurrentValue = CARDS[index];
+            }
 
-        #region Public Methods
+        }
 
         #endregion
 
@@ -69,8 +123,8 @@ namespace GenAlpha
 
         private void InitializeCommands()
         {
-            IncreaseCommand = new RelayCommand(() => IncrementValue++);
-            DecreaseCommand = new RelayCommand(() => IncrementValue--);
+            IncreaseCommand = new RelayCommand(Increase);
+            DecreaseCommand = new RelayCommand(Decrease);
         }
 
         #endregion
