@@ -1,4 +1,8 @@
-﻿namespace GenAlpha
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+
+namespace GenAlpha
 {
     /// <summary>
     /// The design time model for a settings items list

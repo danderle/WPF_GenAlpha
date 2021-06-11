@@ -23,6 +23,7 @@ namespace GenAlpha
         /// </summary>
         public SettingsListViewModel()
         {
+
         }
 
         #endregion
