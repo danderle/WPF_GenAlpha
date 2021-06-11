@@ -9,12 +9,15 @@
                   d:DesignHeight="450" d:DesignWidth="800"
                   Title="MemoryPage">
     
-    <Grid Background="{StaticResource VeryDarkBlueBrush}">
+    <!--Page layout definition-->
+    <Grid Background="{StaticResource VeryDarkBlueBrush}"
+          ClipToBounds="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <!--Top Row-->
         <Border Grid.Row="0">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -26,14 +29,41 @@
                 <Button Content="{StaticResource FontAwesomeAngleLeft}" 
                         Command="{Binding ToGameSelectionCommand}"
                         />
-                <TextBlock Grid.Column="1" Text="Player 1"/>
-                <Button Grid.Column="2" Content="{StaticResource FontAwesomeBomb}" 
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="1"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="Player 1" 
+                               Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player1}"/>
+                    <TextBlock Margin="5 0 30 0">
+                        <Run Text="Score:" />
+                        <Run Text="{Binding ScorePlayer1}" />
+                    </TextBlock>
+                    <TextBlock Text="Player 2"
+                               Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player2}"
+                               Visibility="{Binding Player2, Converter={local:BoolToVisibilityValueConverter}}"/>
+                    <TextBlock Margin="5 0 30 0"
+                               Visibility="{Binding Player2, Converter={local:BoolToVisibilityValueConverter}}">
+                        <Run Text="Score:" />
+                        <Run Text="{Binding ScorePlayer2}" />
+                    </TextBlock>
+                    <TextBlock Text="Player 3" 
+                               Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player3}"
+                               Visibility="{Binding Player3, Converter={local:BoolToVisibilityValueConverter}}"/>
+                    <TextBlock Margin="5 "
+                               Visibility="{Binding Player3, Converter={local:BoolToVisibilityValueConverter}}">
+                        <Run Text="Score:" />
+                        <Run Text="{Binding ScorePlayer3}" />
+                    </TextBlock>
+                </StackPanel>
+                <Button Grid.Column="2"
+                        Content="{StaticResource FontAwesomeCog}" 
                         FontFamily="{StaticResource FontAwesomeSolid}"
-                        Command="{Binding ShowSideMenuCommand}"/>
+                        Command="{Binding ToggleSideMenuCommand}"/>
 
             </Grid>
         </Border>
 
+        <!--Game field Main Page content-->
         <ItemsControl Grid.Row="1"
                       ItemsSource="{Binding MemoryCards}">
             <ItemsControl.ItemsPanel>
@@ -54,11 +84,21 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        
+        <!--Replay game button, only visible when game over-->
         <Button Grid.Row="1"
                 Style="{StaticResource RestartButton}"
                 Content="{StaticResource FontAwesomeRotateLeft}"
                 Visibility="{Binding GameOver, Converter={local:BoolToVisibilityValueConverter}}"
                 Command="{Binding RestartGameCommand}"/>
-        <local:SideMenuControl DataContext="{Binding SideMenu}" Grid.Row="1" HorizontalAlignment="Right"/>
+        
+        <!--Side Menu/Game settings menu-->
+        <local:SideMenuControl Grid.Row="1" 
+                               HorizontalAlignment="Right"
+                               Visibility="Collapsed"
+                               MinWidth="300"
+                               DataContext="{Binding SideMenu}" 
+                               local:SlideAndFadeInOutFromRightProperty.Value="{Binding ShowSideMenu}"
+                               />
     </Grid>
 </local:BasePage>

@@ -12,7 +12,15 @@ namespace GenAlpha
     {
         #region Private Fields
 
-        private string chars = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private string lowercase = "abcdefghijklmnopqrstuvwxyz";
+
+        private string uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        private string numbers = "1234567890";
+
+        private string specialCharacters = "!&?()#%=-_";
+
+        private List<char> randomCardValues = new List<char>();
 
         private List<char> usedChars = new List<char>();
 
@@ -20,12 +28,45 @@ namespace GenAlpha
 
         #region Properties
 
+        /// <summary>
+        /// Flag to let us know if the game has ended
+        /// </summary>
         public bool GameOver { get; set; } = false;
+
+        /// <summary>
+        /// Flag to let us know if player 2 is playing
+        /// </summary>
+        public bool Player2 { get; set; } = false;
+
+        /// <summary>
+        /// Flag to let us know if player 3 is playing
+        /// </summary>
+        public bool Player3 { get; set; } = false;
 
         /// <summary>
         /// A flag to let us know if we can reveal another card
         /// </summary>
         public bool CanReveal => CardsRevealed < 2;
+
+        /// <summary>
+        /// The score of player 1
+        /// </summary>
+        public int ScorePlayer1 { get; set; } = 0;
+
+        /// <summary>
+        /// The score of player 2
+        /// </summary>
+        public int ScorePlayer2 { get; set; } = 0;
+
+        /// <summary>
+        /// The score of player 3
+        /// </summary>
+        public int ScorePlayer3 { get; set; } = 0;
+
+        /// <summary>
+        /// The current players turn
+        /// </summary>
+        public PlayerTurn CurrentPlayer { get; set; } = PlayerTurn.Player1;
 
         /// <summary>
         /// A counter for the number of cards revealed
@@ -35,18 +76,21 @@ namespace GenAlpha
         /// <summary>
         /// Rows for the Memmory field
         /// </summary>
-        public int NumberOfRows { get; set; } = 4;
+        public int NumberOfRows { get; set; } = 0;
 
         /// <summary>
         /// Columns for the memory field
         /// </summary>
-        public int NumberOfColumns { get; set; } = 4;
+        public int NumberOfColumns { get; set; } = 0;
 
         /// <summary>
         /// A counter for the current revealed cards
         /// </summary>
         public static int RevealedCounter { get; private set; } = 0;
 
+        /// <summary>
+        /// The side menu view model
+        /// </summary>
         public SideMenuViewModel SideMenu { get; set; } = new SideMenuViewModel();
 
         /// <summary>
@@ -73,6 +117,11 @@ namespace GenAlpha
         /// </summary>
         public ICommand RestartGameCommand { get; set; }
 
+        /// <summary>
+        /// The command to show/hidew the side menu
+        /// </summary>
+        public ICommand ToggleSideMenuCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -96,9 +145,25 @@ namespace GenAlpha
         private void RestartGame()
         {
             GameOver = false;
+            usedChars.Clear();
+            randomCardValues.Clear();
             MemoryCards.Clear();
+            ResetPlayers();
+            GetGameSettings();
             CreateMemoryCards();
             ShuffleMemoryCards();
+        }
+
+        /// <summary>
+        /// The command method to show / hide the side menu
+        /// </summary>
+        private void ToggleSideMenu()
+        {
+            SideMenu.ShowSideMenu = !SideMenu.ShowSideMenu;
+            if (!SideMenu.ShowSideMenu)
+            {
+                RestartGame();
+            }
         }
 
         #endregion
@@ -159,12 +224,14 @@ namespace GenAlpha
 
                     if (card1.Content.Equals(card2.Content))
                     {
+                        IncreaseScore();
                         //Match animation
                         card1.Match();
                         card2.Match();
                     }
                     else
                     {
+                        NextPlayer();
                         //no match animation
                         card1.NoMatch();
                         card2.NoMatch();
@@ -185,6 +252,7 @@ namespace GenAlpha
             CardRevealedCommand = new RelayCommand(() => CardsRevealed++);
             ResetCardsRevealedCommand = new RelayCommand(() => CardsRevealed = 0);
             RestartGameCommand = new RelayCommand(RestartGame);
+            ToggleSideMenuCommand = new RelayCommand(ToggleSideMenu);
         }
 
         /// <summary>
@@ -192,8 +260,89 @@ namespace GenAlpha
         /// </summary>
         private void InitializeProperties()
         {
-            CreateMemoryCards();
-            ShuffleMemoryCards();
+            RestartGame();
+        }
+
+        /// <summary>
+        /// Increases the current players score
+        /// </summary>
+        private void IncreaseScore()
+        {
+            switch (CurrentPlayer)
+            {
+                case PlayerTurn.Player1:
+                    ScorePlayer1++;
+                    break;
+                case PlayerTurn.Player2:
+                    ScorePlayer2++;
+                    break;
+                case PlayerTurn.Player3:
+                    ScorePlayer3++;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Gets the current game settings
+        /// </summary>
+        private void GetGameSettings()
+        {
+            foreach(var item in SideMenu.SettingsList.SettingItems)
+            {
+                if (item.Name.Contains("Players"))
+                {
+                    switch(item.CurrentValue)
+                    {
+                        case 1:
+                            Player2 = false;
+                            break;
+                        case 2:
+                            Player2 = true;
+                            Player3 = false;
+                            break;
+                        case 3:
+                            Player2 = true;
+                            Player3 = true;
+                            break;
+                    }
+                }
+                else if (item.Name.Contains("cards"))
+                {
+                    var numberOfCards = item.CurrentValue;
+                    NumberOfRows = 1;
+                    NumberOfColumns = 1;
+                    while (NumberOfRows * NumberOfColumns != numberOfCards)
+                    {
+                        if (NumberOfRows == NumberOfColumns)
+                        {
+                            NumberOfRows++;
+                        }
+                        else
+                        {
+                            NumberOfColumns++;
+                        }
+                    }
+                }
+                else if (item.IsChecked)
+                {
+                    if (item.Name.Contains("lowercase"))
+                    {
+                        randomCardValues.AddRange(lowercase);
+                    }
+                    else if (item.Name.Contains("uppercase"))
+                    {
+                        randomCardValues.AddRange(uppercase);
+                    }
+                    else if (item.Name.Contains("numbers"))
+                    {
+                        randomCardValues.AddRange(numbers);
+                    }
+                    else if (item.Name.Contains("special"))
+                    {
+                        randomCardValues.AddRange(specialCharacters);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -234,8 +383,8 @@ namespace GenAlpha
             var rand = new Random();
             do
             {
-                var num = rand.Next(0, chars.Length);
-                randomChar = chars[num];
+                var num = rand.Next(0, randomCardValues.Count);
+                randomChar = randomCardValues[num];
             }
             while (usedChars.Contains(randomChar));
 
@@ -259,6 +408,37 @@ namespace GenAlpha
                 MemoryCards[rnd] = MemoryCards[i];
                 MemoryCards[i] = value;
             }
+        }
+
+        /// <summary>
+        /// Sets the next player as current player
+        /// </summary>
+        private void NextPlayer()
+        {
+            switch(CurrentPlayer)
+            {
+                case PlayerTurn.Player1:
+                    if(Player2)
+                        CurrentPlayer = PlayerTurn.Player2;
+                    break;
+                case PlayerTurn.Player2:
+                    CurrentPlayer = PlayerTurn.Player3;
+                    break;
+                case PlayerTurn.Player3:
+                    CurrentPlayer = PlayerTurn.Player1;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Resets player scores and current player
+        /// </summary>
+        private void ResetPlayers()
+        {
+            CurrentPlayer = PlayerTurn.Player1;
+            ScorePlayer1 = 0;
+            ScorePlayer2 = 0;
+            ScorePlayer3 = 0;
         }
 
         #endregion
