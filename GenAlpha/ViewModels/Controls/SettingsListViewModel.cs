@@ -9,6 +9,9 @@ namespace GenAlpha
     {
         #region Properties
 
+        /// <summary>
+        /// The list of setting items
+        /// </summary>
         public ObservableCollection<SettingsListItemViewModel> SettingItems { get; set; } = new ObservableCollection<SettingsListItemViewModel>();
 
         #endregion
@@ -20,7 +23,6 @@ namespace GenAlpha
         /// </summary>
         public SettingsListViewModel()
         {
-
         }
 
         #endregion
