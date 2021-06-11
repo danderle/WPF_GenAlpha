@@ -21,10 +21,10 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter Property="Grid.Column" TargetName="Switch" Value="1" />
+                            <Setter Property="Grid.Column" TargetName="Switch" Value="0" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Grid.Column" TargetName="Switch" Value="0" />
+                            <Setter Property="Grid.Column" TargetName="Switch" Value="1" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -47,6 +47,7 @@
     <system:String x:Key="FontAwesomeLock">&#xf023;</system:String>
     <system:String x:Key="FontAwesomeUnlock">&#xf09c;</system:String>
     <system:String x:Key="FontAwesomeUserSecret">&#xf21b;</system:String>
+    <system:String x:Key="FontAwesomeCog">&#xf013;</system:String>
     
     <!--unused-->
     <system:String x:Key="FontAwesomeBitcoin">&#xf15a;</system:String>
