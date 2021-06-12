@@ -14,9 +14,9 @@ namespace GenAlpha
         {
             if(value.ToString() == parameter.ToString())
             {
-                return new SolidColorBrush((Color)Application.Current.FindResource("PurpleRed"));
+                return new SolidColorBrush((Color)Application.Current.FindResource("Green"));
             }
-            return new SolidColorBrush((Color)Application.Current.FindResource("GrayBlue"));
+            return new SolidColorBrush((Color)Application.Current.FindResource("Gray"));
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
