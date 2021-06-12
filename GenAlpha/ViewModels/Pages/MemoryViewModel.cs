@@ -64,6 +64,11 @@ namespace GenAlpha
         public int ScorePlayer3 { get; set; } = 0;
 
         /// <summary>
+        /// The winner score
+        /// </summary>
+        public int WinnerScore { get; set; } = 0;
+
+        /// <summary>
         /// The current players turn
         /// </summary>
         public PlayerTurn CurrentPlayer { get; set; } = PlayerTurn.Player1;
@@ -187,6 +192,7 @@ namespace GenAlpha
             RevealedCounter = 0;
             if(matchList.Count == MemoryCards.Count)
             {
+                SetWinnerScore();
                 GameOver = true;
             }
         }
@@ -441,6 +447,24 @@ namespace GenAlpha
             ScorePlayer3 = 0;
         }
 
+        /// <summary>
+        /// Sets the winner score
+        /// </summary>
+        private void SetWinnerScore()
+        {
+            switch (CurrentPlayer)
+            {
+                case PlayerTurn.Player1:
+                    WinnerScore = ScorePlayer1;
+                    break;
+                case PlayerTurn.Player2:
+                    WinnerScore = ScorePlayer2;
+                    break;
+                case PlayerTurn.Player3:
+                    WinnerScore = ScorePlayer3;
+                    break;
+            }
+        }
         #endregion
 
     }

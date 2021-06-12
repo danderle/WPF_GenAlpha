@@ -30,26 +30,31 @@
                         Command="{Binding ToGameSelectionCommand}"
                         />
                 <StackPanel Orientation="Horizontal"
-                            Grid.Column="1"
+                            Grid.ColumnSpan="3"
                             HorizontalAlignment="Center">
-                    <TextBlock Text="Player 1" 
+                    <TextBlock Text="Player1" 
                                Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player1}"/>
-                    <TextBlock Margin="5 0 30 0">
+                    <TextBlock Margin="5 0 0 0"
+                               Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player1}">
                         <Run Text="Score:" />
                         <Run Text="{Binding ScorePlayer1}" />
                     </TextBlock>
-                    <TextBlock Text="Player 2"
+                    <TextBlock Text="Player2"
+                               Margin="30 0 0 0"
                                Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player2}"
                                Visibility="{Binding Player2, Converter={local:BoolToVisibilityValueConverter}}"/>
-                    <TextBlock Margin="5 0 30 0"
+                    <TextBlock Margin="5 0 0 0"
+                               Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player2}"
                                Visibility="{Binding Player2, Converter={local:BoolToVisibilityValueConverter}}">
                         <Run Text="Score:" />
                         <Run Text="{Binding ScorePlayer2}" />
                     </TextBlock>
-                    <TextBlock Text="Player 3" 
+                    <TextBlock Text="Player3" 
+                               Margin="30 0 0 0"
                                Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player3}"
                                Visibility="{Binding Player3, Converter={local:BoolToVisibilityValueConverter}}"/>
                     <TextBlock Margin="5 "
+                               Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player3}"
                                Visibility="{Binding Player3, Converter={local:BoolToVisibilityValueConverter}}">
                         <Run Text="Score:" />
                         <Run Text="{Binding ScorePlayer3}" />
@@ -64,8 +69,10 @@
         </Border>
 
         <!--Game field Main Page content-->
+        <!--The Memory cards-->
         <ItemsControl Grid.Row="1"
                       ItemsSource="{Binding MemoryCards}">
+            <!--Defining the panel to place the memory cards in-->
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="{Binding NumberOfColumns}"
@@ -74,6 +81,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
+                    <!--Each Card Binding to the MemoryCardViewModel-->
                     <Button Style="{StaticResource MemoryButton}" 
                             DataContext="{Binding }" 
                             Content="{Binding Content}"
@@ -85,13 +93,29 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         
-        <!--Replay game button, only visible when game over-->
-        <Button Grid.Row="1"
-                Style="{StaticResource RestartButton}"
+        <!--The game over grid layout-->
+        <Grid Grid.Row="1"
+                Visibility="{Binding GameOver, Converter={local:BoolToVisibilityValueConverter}}">
+            <!--Winner and score-->
+            <TextBlock VerticalAlignment="Top"
+                        TextAlignment="Center"
+                       Margin="100 25"
+                       FontFamily="{StaticResource LatoBold}"
+                       Foreground="{StaticResource GoldBrush}"
+                       FontSize="{StaticResource FontSizeXXLarge}">
+                <Run Text="{Binding CurrentPlayer}" />
+                <Run Text="Winner" />
+                <LineBreak />
+                <Run Text="Score: "/>
+                <Run Text="{Binding WinnerScore}"/>
+            </TextBlock>
+
+            <!--Replay game button, only visible when game over-->
+            <Button Style="{StaticResource RestartButton}"
                 Content="{StaticResource FontAwesomeRotateLeft}"
-                Visibility="{Binding GameOver, Converter={local:BoolToVisibilityValueConverter}}"
                 Command="{Binding RestartGameCommand}"/>
-        
+
+        </Grid>        
         <!--Side Menu/Game settings menu-->
         <local:SideMenuControl Grid.Row="1" 
                                HorizontalAlignment="Right"
