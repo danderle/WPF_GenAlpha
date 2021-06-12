@@ -10,7 +10,9 @@
         AllowsTransparency="True"
         x:Name="MainAppWindow"
         Title="GenAlpha" 
-        Height="450" 
+        MinHeight="500"
+        MinWidth="500"
+        Height="500"
         Width="800">
 
     <Window.Resources>
