@@ -30,7 +30,7 @@
                     Padding="10 2"
                     FontFamily="{StaticResource LatoBold}"
                     Command="{Binding IncreaseCommand}"/>
-            <TextBlock Text="{Binding IncrementValue, FallbackValue=1}" 
+            <TextBlock Text="{Binding CurrentValue}" 
                        Margin="5 0"
                        Width="20"
                        TextAlignment="Center"/>
