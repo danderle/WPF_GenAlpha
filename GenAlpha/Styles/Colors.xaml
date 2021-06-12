@@ -24,6 +24,9 @@
 
     <Color x:Key="PurpleRed">#ad2669</Color>
     <SolidColorBrush x:Key="PurpleRedBrush" Color="{StaticResource PurpleRed}" />
+
+    <Color x:Key="Gold">#ffd700</Color>
+    <SolidColorBrush x:Key="GoldBrush" Color="{StaticResource Gold}" />
     
     <Color x:Key="Green">#42b665</Color>
     <SolidColorBrush x:Key="GreenBrush" Color="{StaticResource Green}" />
