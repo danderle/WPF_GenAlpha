@@ -76,21 +76,23 @@ namespace GenAlpha
 
             //the time to animate and begin
             float seconds = 1f;
-            float begin = 1.5f;
+            float begin = 1f;
             Color cardColor = RgbProperty.GetColor(button);
             switch (animation)
             {
                 case ButtonAnimationTypes.Reveal:
-                    
+                    Sound.Play(SoundTypes.CardFlip);
                     await ButtonAnimations.Reveal(button, cardColor, seconds);
                     await FinishedAnimationProperty.ExecuteCommand(button, 0);
                     break;
                 case ButtonAnimationTypes.Match:
                     await ButtonAnimations.SpinAndScaleOutAsync(button, seconds, begin);
+                    Sound.Play(SoundTypes.CardSpinOut);
                     await FinishedAnimationProperty.ExecuteCommand(button, Convert.ToInt16(begin));
                     break;
                 case ButtonAnimationTypes.NoMatch:
                     await ButtonAnimations.CoverAsync(button, cardColor, seconds, begin);
+                    Sound.Play(SoundTypes.CardFlip);
                     await FinishedAnimationProperty.ExecuteCommand(button, Convert.ToInt16(begin));
                     break;
             }

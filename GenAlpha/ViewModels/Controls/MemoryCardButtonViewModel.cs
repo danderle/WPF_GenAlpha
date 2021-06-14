@@ -3,6 +3,7 @@ using System.Windows.Input;
 
 namespace GenAlpha
 {
+
     /// <summary>
     /// The view model for the memory card buttons
     /// </summary>
@@ -28,12 +29,12 @@ namespace GenAlpha
         /// <summary>
         /// The rgb in hex string format
         /// </summary>
-        public string RgbHexString { get; set; }
+        public string RgbHexString { get; set; } = string.Empty;
 
         /// <summary>
         /// The content for this cards
         /// </summary>
-        public string Content { get; set; }
+        public string Content { get; set; } = string.Empty;
 
         /// <summary>
         /// The current animation to run on value changed
@@ -153,15 +154,17 @@ namespace GenAlpha
         {
             IsAnimating = true;
             IsMatched = true;
+            Sound.Play(SoundTypes.CardMatch);
             Animation = ButtonAnimationTypes.Match;
         }
 
         /// <summary>
-        /// Starts thhe no match animation
+        /// Starts the no match animation
         /// </summary>
         public void NoMatch()
         {
             IsAnimating = true;
+            Sound.Play(SoundTypes.CardNoMatch);
             Animation = ButtonAnimationTypes.NoMatch;
         }
 
@@ -183,7 +186,7 @@ namespace GenAlpha
             byte[] rgb = new byte[] { Convert.ToByte(rand.Next(min, max)), Convert.ToByte(rand.Next(min, max)), Convert.ToByte(rand.Next(min, max)) };
             RgbHexString += BitConverter.ToString(rgb).Replace("-", "");
         }
-
+            
         #endregion
     }
 }
