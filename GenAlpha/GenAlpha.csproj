@@ -29,6 +29,26 @@
     <None Remove="Resources\Lato-SemiboldItalic.ttf" />
     <None Remove="Resources\Lato-Thin.ttf" />
     <None Remove="Resources\Lato-ThinItalic.ttf" />
+    <None Remove="Resources\Sounds\CardFlip.wav" />
+    <None Remove="Resources\Sounds\CardSpinOut.mp3" />
+    <None Remove="Resources\Sounds\CardSpinOut.wav" />
+    <None Remove="Resources\Sounds\Fail.wav" />
+    <None Remove="Resources\Sounds\Pass.mp3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Sounds\CardFlip.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\CardSpinOut.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Fail.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Pass.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
