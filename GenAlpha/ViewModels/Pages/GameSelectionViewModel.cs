@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace GenAlpha
@@ -10,37 +11,20 @@ namespace GenAlpha
     {
         #region Private Members
 
-        
-
         #endregion
 
         #region Properties
 
-        
+        public List<string> Games { get; set; } = new List<string>();
 
         #endregion
 
         #region Commands
 
         /// <summary>
-        /// The command to minimize the window
+        /// 
         /// </summary>
-        public ICommand MinimizeCommand { get; set; }
-
-        /// <summary>
-        /// The command to maximize the window
-        /// </summary>
-        public ICommand MaximizeCommand { get; set; }
-
-        /// <summary>
-        /// The command to close the window
-        /// </summary>
-        public ICommand CloseCommand { get; set; }
-
-        /// <summary>
-        /// The command to open the system menu the window
-        /// </summary>
-        public ICommand MenuCommand { get; set; }
+        public ICommand ClickCommand { get; set; }
 
         #endregion
 
@@ -51,12 +35,22 @@ namespace GenAlpha
         /// </summary>
         public GameSelectionViewModel()
         {
-            
+            Games.Add("Memory Game");
+            Games.Add("Keyboard Shooter");
+            Games.Add("Game 3");
+            Games.Add("Game 4");
+            Games.Add("Game 5");
+
+            ClickCommand = new RelayCommand(Click);
+        }
+
+        private void Click()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
 
-       
         #region Private Helpers
 
         #endregion

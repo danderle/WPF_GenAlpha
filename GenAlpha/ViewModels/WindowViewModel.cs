@@ -87,7 +87,7 @@ namespace GenAlpha
         /// <summary>
         /// The current page of the application
         /// </summary>
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Memory;
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.GameSelection;
 
         #endregion
 

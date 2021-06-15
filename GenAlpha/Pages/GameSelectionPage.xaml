@@ -1,19 +1,33 @@
 ﻿<local:BasePage x:TypeArguments="local:GameSelectionViewModel"
                 x:Class="GenAlpha.GameSelectionPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:GenAlpha"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="GameSelectionPage">
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                  xmlns:local="clr-namespace:GenAlpha"
+                  mc:Ignorable="d" 
+                  d:DesignHeight="450" d:DesignWidth="800"
+                  Title="GameSelectionPage"
+                d:DataContext="{x:Static local:GameSelectionDesignModel.Instance}">
 
-    <UniformGrid>
-        <Button Content="Memory"/>
-        <Button Content="Game2"/>
-        <Button Content="Game3"/>
-        <Button Content="Game4"/>
-        <Button Content="Game5"/>
-    </UniformGrid>
+    <!--The game selcection page-->
+    <ItemsControl 
+                  Grid.Row="1"
+                    ItemsSource="{Binding Games}">
+        <!--Defining the panel to place the game selection items in-->
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <UniformGrid Columns="3"
+                             Rows="3"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <!--Each game button-->
+                <Button Content="{Binding }"
+                        Command="{Binding ClickCommand}"
+                        FontFamily="{StaticResource LatoBold}"/>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
 </local:BasePage>
