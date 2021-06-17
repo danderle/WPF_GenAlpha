@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Input;
 
-namespace GenAlpha
+namespace GenAlpha.Core
 {
     /// <summary>
     /// The view model for the <see cref="GameSelectionPage"/>

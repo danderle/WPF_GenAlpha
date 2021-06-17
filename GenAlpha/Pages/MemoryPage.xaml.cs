@@ -1,4 +1,6 @@
-﻿namespace GenAlpha
+﻿using GenAlpha.Core;
+
+namespace GenAlpha
 {
     /// <summary>
     /// Interaction logic for MemoryPage.xaml

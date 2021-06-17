@@ -1,4 +1,4 @@
-﻿namespace GenAlpha
+﻿namespace GenAlpha.Core
 {
     /// <summary>
     /// The sound types

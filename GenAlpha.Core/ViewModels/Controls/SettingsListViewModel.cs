@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace GenAlpha
+namespace GenAlpha.Core
 {
     /// <summary>
     /// The view model for a settings list

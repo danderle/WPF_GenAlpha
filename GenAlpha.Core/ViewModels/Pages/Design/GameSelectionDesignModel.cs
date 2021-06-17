@@ -1,4 +1,4 @@
-﻿namespace GenAlpha
+﻿namespace GenAlpha.Core
 {
     /// <summary>
     /// The design model for design time binding

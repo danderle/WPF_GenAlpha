@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace GenAlpha
+namespace GenAlpha.Core
 {
     /// <summary>
     /// The view model for the <see cref="MemoryPage"/>

@@ -1,4 +1,4 @@
-﻿namespace GenAlpha
+﻿namespace GenAlpha.Core
 {
     /// <summary>
     /// The design time model for a settings items list

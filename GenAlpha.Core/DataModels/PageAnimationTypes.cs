@@ -1,4 +1,4 @@
-﻿namespace GenAlpha
+﻿namespace GenAlpha.Core
 {
     public enum PageAnimationTypes
     {

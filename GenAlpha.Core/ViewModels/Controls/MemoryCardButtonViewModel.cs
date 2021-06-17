@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace GenAlpha
+namespace GenAlpha.Core
 {
 
     /// <summary>

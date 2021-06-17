@@ -1,4 +1,4 @@
-﻿using System.Windows.Controls;
+﻿using GenAlpha.Core;
 
 namespace GenAlpha
 {

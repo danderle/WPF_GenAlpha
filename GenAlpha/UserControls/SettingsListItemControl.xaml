@@ -4,13 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GenAlpha"
+             xmlns:core="clr-namespace:GenAlpha.Core;assembly=GenAlpha.Core"
              mc:Ignorable="d"
              MinWidth="300"
              d:DesignHeight="100" d:DesignWidth="400">
     
     <!--The main grid for this control-->
     <Grid Background="{StaticResource VeryDarkBlueBrush}"
-          d:DataContext="{x:Static local:SettingsListItemDesignModel.Instance}">
+          d:DataContext="{x:Static core:SettingsListItemDesignModel.Instance}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="*" />

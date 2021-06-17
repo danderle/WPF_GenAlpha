@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace GenAlpha
+namespace GenAlpha.Core
 {
     public static class Sound
     {

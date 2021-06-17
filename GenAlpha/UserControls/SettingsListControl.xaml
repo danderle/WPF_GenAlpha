@@ -4,10 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GenAlpha"
+             xmlns:core="clr-namespace:GenAlpha.Core;assembly=GenAlpha.Core"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
 
-    <Border d:DataContext="{x:Static local:SettingsListDesignModel.Instance}">
+    <Border d:DataContext="{x:Static core:SettingsListDesignModel.Instance}">
         <ItemsControl ItemsSource="{Binding SettingItems}"
                   x:Name="TheItemsControl">
             <!--Items-->
