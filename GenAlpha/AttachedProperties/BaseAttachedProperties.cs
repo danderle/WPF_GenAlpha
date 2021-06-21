@@ -18,6 +18,11 @@ namespace GenAlpha
         /// </summary>
         public event Action<DependencyObject, DependencyPropertyChangedEventArgs> ValueChanged = (sender, e) => { };
 
+        /// <summary>
+        /// Fired when the value is updated
+        /// </summary>
+        public event Action<DependencyObject, object> ValueUpdated = (sender, e) => { };
+
         #endregion
 
         #region Public Properties
@@ -31,7 +36,13 @@ namespace GenAlpha
 
         #region Attached Property Definitions
 
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached("Value", typeof(Property), typeof(BaseAttachedProperties<Parent, Property>), new PropertyMetadata(new PropertyChangedCallback(OnValuePropertyChanged)));
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached("Value", 
+            typeof(Property), 
+            typeof(BaseAttachedProperties<Parent, Property>),
+            new UIPropertyMetadata(
+                default(Property),
+                new PropertyChangedCallback(OnValuePropertyChanged),
+                new CoerceValueCallback(OnValuePropertyUpdated)));
 
         /// <summary>
         /// The callback event when the <see cref="ValueProperty"/> is changed
@@ -45,6 +56,22 @@ namespace GenAlpha
 
             //call event listeners
             Instance.ValueChanged(d, e);
+        }
+
+        /// <summary>
+        /// The callback event when the <see cref="ValueProperty"/> is updated even if it is the same value
+        /// </summary>
+        /// <param name="d">The UI element that has its property updated</param>
+        /// <param name="e">The arguments for the event</param>
+        private static object OnValuePropertyUpdated(DependencyObject d, object value)
+        {
+            //Call the parent function
+            Instance.OnValueUpdated(d, value);
+
+            //call event listeners
+            Instance.ValueUpdated(d, value);
+
+            return value;
         }
 
         /// <summary>
@@ -71,6 +98,13 @@ namespace GenAlpha
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public virtual void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) { }
+
+        /// <summary>
+        /// The method that is called when any attached property of this type is updated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public virtual void OnValueUpdated(DependencyObject sender, object value) { }
 
         #endregion
     }
