@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using GenAlpha.Core;
+using System.Windows;
 
 namespace GenAlpha
 {
@@ -7,5 +8,17 @@ namespace GenAlpha
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            // Let the base application do what it needs
+            base.OnStartup(e);
+
+            // Setup Ioc
+            IoC.Setup();
+
+            // Show the main window
+            Current.MainWindow = new MainWindow();
+            Current.MainWindow.Show();
+        }
     }
 }

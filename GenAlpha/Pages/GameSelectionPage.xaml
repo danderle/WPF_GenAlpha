@@ -24,7 +24,7 @@
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <!--Each game button-->
-                <Button Content="{Binding }"
+                <Button Content="{Binding Content}"
                         Command="{Binding ClickCommand}"
                         FontFamily="{StaticResource LatoBold}"/>
             </DataTemplate>

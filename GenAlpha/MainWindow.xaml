@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GenAlpha"
+        xmlns:core="clr-namespace:GenAlpha.Core;assembly=GenAlpha.Core"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -137,7 +138,9 @@
 
     <Grid>
         <Frame x:Name="MainFrame"
-               Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
+               Content="{Binding ApplicationViewModel.CurrentPage, 
+            Source={x:Static local:ViewModelLocator.Instance}, 
+            Converter={local:ApplicationPageValueConverter}}"/>
     </Grid>
     
 </Window>
