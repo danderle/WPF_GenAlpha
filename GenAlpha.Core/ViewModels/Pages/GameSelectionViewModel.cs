@@ -15,16 +15,7 @@ namespace GenAlpha.Core
 
         #region Properties
 
-        public List<string> Games { get; set; } = new List<string>();
-
-        #endregion
-
-        #region Commands
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICommand ClickCommand { get; set; }
+        public List<GameSelectionButtonViewModel> Games { get; set; } = new List<GameSelectionButtonViewModel>();
 
         #endregion
 
@@ -35,23 +26,12 @@ namespace GenAlpha.Core
         /// </summary>
         public GameSelectionViewModel()
         {
-            Games.Add("Memory Game");
-            Games.Add("Keyboard Shooter");
-            Games.Add("Game 3");
-            Games.Add("Game 4");
-            Games.Add("Game 5");
-
-            ClickCommand = new RelayCommand(Click);
+            Games.Add(new GameSelectionButtonViewModel("Memory Game", ApplicationPage.Memory));
+            Games.Add(new GameSelectionButtonViewModel("Keyboard shooter", ApplicationPage.Memory));
+            Games.Add(new GameSelectionButtonViewModel("Game 3", ApplicationPage.Memory));
+            Games.Add(new GameSelectionButtonViewModel("Game 4", ApplicationPage.Memory));
+            Games.Add(new GameSelectionButtonViewModel("Game 5", ApplicationPage.Memory));
         }
-
-        private void Click()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region Private Helpers
 
         #endregion
     }
