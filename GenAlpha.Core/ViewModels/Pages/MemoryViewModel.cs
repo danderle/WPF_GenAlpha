@@ -126,6 +126,11 @@ namespace GenAlpha.Core
         /// The command to show/hidew the side menu
         /// </summary>
         public ICommand ToggleSideMenuCommand { get; set; }
+        
+        /// <summary>
+        /// The command to go back to the game selection menu
+        /// </summary>
+        public ICommand ToGameSelectionCommand { get; set; }
 
         #endregion
 
@@ -259,6 +264,7 @@ namespace GenAlpha.Core
             ResetCardsRevealedCommand = new RelayCommand(() => CardsRevealed = 0);
             RestartGameCommand = new RelayCommand(RestartGame);
             ToggleSideMenuCommand = new RelayCommand(ToggleSideMenu);
+            ToGameSelectionCommand = new RelayCommand(() => IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.GameSelection);
         }
 
         /// <summary>
