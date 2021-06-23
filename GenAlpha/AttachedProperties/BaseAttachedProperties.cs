@@ -9,7 +9,7 @@ namespace GenAlpha
     /// <typeparam name="Parent">The parent class to be attached property</typeparam>
     /// <typeparam name="Property">The type of this attached property</typeparam>
     public abstract class BaseAttachedProperties<Parent, Property>
-        where Parent : BaseAttachedProperties<Parent, Property>, new()
+        where Parent : new()
     {
         #region Public Events
 
@@ -52,10 +52,10 @@ namespace GenAlpha
         private static void OnValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             //Call the parent function
-            Instance.OnValueChanged(d, e);
+            (Instance as BaseAttachedProperties<Parent, Property>)?.OnValueChanged(d, e);
 
             //call event listeners
-            Instance.ValueChanged(d, e);
+            (Instance as BaseAttachedProperties<Parent, Property>)?.ValueChanged(d, e);
         }
 
         /// <summary>
@@ -66,10 +66,10 @@ namespace GenAlpha
         private static object OnValuePropertyUpdated(DependencyObject d, object value)
         {
             //Call the parent function
-            Instance.OnValueUpdated(d, value);
+            (Instance as BaseAttachedProperties<Parent, Property>)?.OnValueUpdated(d, value);
 
             //call event listeners
-            Instance.ValueUpdated(d, value);
+            (Instance as BaseAttachedProperties<Parent, Property>)?.ValueUpdated(d, value);
 
             return value;
         }

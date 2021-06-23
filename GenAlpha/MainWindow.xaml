@@ -136,7 +136,7 @@
                       CornerRadius="0"/>
     </WindowChrome.WindowChrome>
 
-    <Grid>
+    <Grid ClipToBounds="True">
         <Frame x:Name="MainFrame"
                Content="{Binding ApplicationViewModel.CurrentPage, 
             Source={x:Static local:ViewModelLocator.Instance}, 
