@@ -10,7 +10,7 @@ namespace GenAlpha
     public static class StoryboardHelpers
     {
         #region Slide left / right
-        
+
         /// <summary>
         /// Adds a slide in animation to the storyboard
         /// </summary>
@@ -18,13 +18,14 @@ namespace GenAlpha
         /// <param name="seconds">The time the animation will take</param>
         /// <param name="offset">The distance to the right to start from</param>
         /// <param name="deceleration">The rate of deceleration</param>
-        public static void AddSlideInFromRight(this Storyboard storyboard, float seconds, double offset, float deceleration = 0.9f)
+        /// <param name="keepMargin">Wether toi keep the element at the same width during animation</param>
+        public static void AddSlideInFromRight(this Storyboard storyboard, float seconds, double offset, float deceleration = 0.9f, bool keepMargin = true)
         {
             //Create the margin animate from right
             var animation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = new Thickness(offset, 0, -offset, 0),
+                From = new Thickness(keepMargin ? offset : 0, 0, -offset, 0),
                 To = new Thickness(0),
                 DecelerationRatio = deceleration,
             };
@@ -43,14 +44,15 @@ namespace GenAlpha
         /// <param name="seconds">The time the animation will take</param>
         /// <param name="offset">The distance to the right to start from</param>
         /// <param name="deceleration">The rate of deceleration</param>
-        public static void AddSlideOutToLeft(this Storyboard storyboard, float seconds, double offset, float deceleration = 0.9f)
+        /// <param name="keepMargin">Wether toi keep the element at the same width during animation</param>
+        public static void AddSlideOutToLeft(this Storyboard storyboard, float seconds, double offset, float deceleration = 0.9f, bool keepMargin = true)
         {
             //Create the margin animate from right
             var animation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
                 From = new Thickness(0),
-                To = new Thickness(-offset, 0, offset, 0),
+                To = new Thickness(-offset, 0, keepMargin ? offset : 0, 0),
                 DecelerationRatio = deceleration,
             };
 
@@ -68,14 +70,15 @@ namespace GenAlpha
         /// <param name="seconds">The time the animation will take</param>
         /// <param name="offset">The distance to the right to start from</param>
         /// <param name="deceleration">The rate of deceleration</param>
-        public static void AddSlideOutToRight(this Storyboard storyboard, float seconds, double offset, float deceleration = 0.9f)
+        /// <param name="keepMargin">Wether toi keep the element at the same width during animation</param>
+        public static void AddSlideOutToRight(this Storyboard storyboard, float seconds, double offset, float deceleration = 0.9f, bool keepMargin = true)
         {
             //Create the margin animate from right
             var animation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
                 From = new Thickness(0),
-                To = new Thickness(offset, 0, -offset, 0),
+                To = new Thickness(keepMargin ? offset : 0, 0, -offset, 0),
                 DecelerationRatio = deceleration,
             };
 
