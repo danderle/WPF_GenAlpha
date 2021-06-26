@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace GenAlpha.Core
@@ -264,7 +265,14 @@ namespace GenAlpha.Core
             ResetCardsRevealedCommand = new RelayCommand(() => CardsRevealed = 0);
             RestartGameCommand = new RelayCommand(RestartGame);
             ToggleSideMenuCommand = new RelayCommand(ToggleSideMenu);
-            ToGameSelectionCommand = new RelayCommand(() => IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.GameSelection);
+            ToGameSelectionCommand = new RelayCommand(GoToGameSelctionAsync);
+        }
+
+        private async void GoToGameSelctionAsync()
+        {
+            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GameSelection);
+
+            await Task.Delay(1);
         }
 
         /// <summary>

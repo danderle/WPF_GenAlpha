@@ -60,7 +60,7 @@ namespace GenAlpha.Core
         /// </summary>
         private void Click()
         {
-            IoC.Get<ApplicationViewModel>().CurrentPage = GamePage;
+            IoC.Get<ApplicationViewModel>().GoToPage(GamePage);
         }
 
         #endregion
