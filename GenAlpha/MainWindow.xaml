@@ -137,10 +137,10 @@
     </WindowChrome.WindowChrome>
 
     <Grid ClipToBounds="True">
-        <Frame x:Name="MainFrame"
-               Content="{Binding ApplicationViewModel.CurrentPage, 
-            Source={x:Static local:ViewModelLocator.Instance}, 
-            Converter={local:ApplicationPageValueConverter}}"/>
+        <local:PageHost DataContext="{Binding ApplicationViewModel.CurrentPage, 
+                                    Source={x:Static local:ViewModelLocator.Instance}, 
+                                    Converter={local:ApplicationPageValueConverter}}"
+                        CurrentPage="{Binding}"/>
     </Grid>
     
 </Window>
