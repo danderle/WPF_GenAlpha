@@ -7,5 +7,6 @@
     {
         GameSelection,
         Memory,
+        KeyboardShooter,
     }
 }

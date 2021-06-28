@@ -177,6 +177,16 @@ namespace GenAlpha.Core
             }
         }
 
+        /// <summary>
+        /// Switches the page to return to the game selection page
+        /// </summary>
+        private async void GoToGameSelctionAsync()
+        {
+            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GameSelection);
+
+            await Task.Delay(1);
+        }
+
         #endregion
 
         #region Card Actions
@@ -266,13 +276,6 @@ namespace GenAlpha.Core
             RestartGameCommand = new RelayCommand(RestartGame);
             ToggleSideMenuCommand = new RelayCommand(ToggleSideMenu);
             ToGameSelectionCommand = new RelayCommand(GoToGameSelctionAsync);
-        }
-
-        private async void GoToGameSelctionAsync()
-        {
-            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GameSelection);
-
-            await Task.Delay(1);
         }
 
         /// <summary>

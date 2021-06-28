@@ -120,15 +120,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Pages\KeyboardShooterPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="UserControls\PageHost.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="UserControls\SettingsListControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UserControls\TopBarControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Pages\KeyboardShooterPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Styles\CheckBoxes.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
@@ -150,6 +160,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\SettingsListControl.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\TopBarControl.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

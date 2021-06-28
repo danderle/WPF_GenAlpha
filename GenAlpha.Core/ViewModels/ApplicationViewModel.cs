@@ -8,7 +8,7 @@
         /// <summary>
         /// The current page of the application
         /// </summary>
-        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.GameSelection;
+        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.KeyboardShooter;
 
         /// <summary>
         /// Navigates to the specified page

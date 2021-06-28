@@ -43,6 +43,12 @@ namespace GenAlpha
         /// </summary>
         public BasePage()
         {
+            // If we are in desing time do not do anything
+            if (DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
+
             //Hide at begin of animatioon
             if (PageLoadAnimation != PageAnimationTypes.None)
             {
@@ -160,11 +166,6 @@ namespace GenAlpha
         /// </summary>
         public BasePage()
         {
-            if(DesignerProperties.GetIsInDesignMode(this))
-            {
-                return;
-            }
-            
             //Create a default view model
             ViewModel = new VM();
         }

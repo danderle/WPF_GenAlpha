@@ -19,6 +19,8 @@ namespace GenAlpha
                     return new GameSelectionPage();
                 case ApplicationPage.Memory:
                     return new MemoryPage();
+                case ApplicationPage.KeyboardShooter:
+                    return new KeyboardShooterPage();
                 default:
                     Debugger.Break();
                     return null;

@@ -137,7 +137,8 @@
     </WindowChrome.WindowChrome>
 
     <Grid ClipToBounds="True">
-        <local:PageHost DataContext="{Binding ApplicationViewModel.CurrentPage, 
+        <local:PageHost d:DataContext=""
+                        DataContext="{Binding ApplicationViewModel.CurrentPage, 
                                     Source={x:Static local:ViewModelLocator.Instance}, 
                                     Converter={local:ApplicationPageValueConverter}}"
                         CurrentPage="{Binding}"/>
