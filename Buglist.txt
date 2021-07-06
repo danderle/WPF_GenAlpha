@@ -1,0 +1,2 @@
+- During Memory game if the number of cards to play with is changed, sometimes it will not allow more than one card to flip
+- During Memory game if the settings menu is open, it is still possible to uncover/select cards
