@@ -22,11 +22,34 @@
         <local:TopBarControl DataContext="{Binding TopBar}" />
 
         <!--Side Menu/Game settings menu-->
-        <local:SideMenuControl Grid.Row="1" 
+        <local:SideMenuControl Grid.Row="0" 
                                HorizontalAlignment="Right"
                                MinWidth="300"
                                DataContext="{Binding SideMenu}" 
                                local:AnimateSlideInFromRightProperty.Value="{Binding ShowSideMenu}"
                                />
+        
+        <!--Main Content-->
+        <Grid Grid.Row="1"
+              x:Name="CanvasContainer">
+            <Canvas Height="{Binding ElementName=CanvasContainer, Path=ActualHeight}"
+                    Width="{Binding ElementName=CanvasContainer, Path=ActualWidth}"
+                    local:SpawnItem.Value="{Binding ItemSpawned}"
+                    local:ItemsMoved.Value="{Binding MoveItems}"
+                    local:TextObjects.Value="{Binding FallingTexts}"
+                    local:KeyboardInput.Value="{Binding KeyboardInputCommand}"
+                    local:ActualHeightProperty.Value="{Binding CanvasHeight, Mode=TwoWay}"
+                    local:ActualWidthProperty.Value="{Binding CanvasWidth, Mode=TwoWay}"
+                    >
+                <Button Grid.Row="1"
+                       Background="Red"
+                        Command="{Binding AddItemToCanvasCommand}"
+                       Width="40"
+                       Height="40"
+                       Canvas.Left="360"
+                       Canvas.Bottom="0"/>
+            </Canvas>
+        </Grid>
+        
     </Grid>
 </local:BasePage>

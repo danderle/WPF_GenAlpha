@@ -2,6 +2,8 @@
 
 namespace GenAlpha
 {
+    #region Animation Properties
+
     /// <summary>
     /// A base class to run any animation method when a boolean is set to true
     /// and a reverse animation when set to false
@@ -70,6 +72,9 @@ namespace GenAlpha
         protected virtual void DoAnimation(FrameworkElement element, bool value) { }
     }
 
+    /// <summary>
+    /// Animates elements in from the right and back out to the right
+    /// </summary>
     public class AnimateSlideInFromRightProperty : AnimateBaseProperty<AnimateSlideInFromRightProperty>
     {
         protected override async void DoAnimation(FrameworkElement element, bool value)
@@ -82,6 +87,48 @@ namespace GenAlpha
             else
                 // Animate out
                 await element.SlideOutToRightAsync(FirstLoad ? 0 : 0.3f, false);
+        }
+    }
+
+    #endregion
+
+    /// <summary>
+    /// Gets the actual height after element is loaded
+    /// </summary>
+    public class ActualHeightProperty: BaseAttachedProperties<ActualHeightProperty, double>
+    {
+        public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            if(sender is FrameworkElement element)
+            {
+                element.Loaded += Element_Loaded;
+            }
+        }
+
+        private void Element_Loaded(object sender, RoutedEventArgs e)
+        {
+            var element = sender as FrameworkElement;
+            SetValue(element, element.Height);
+        }
+    }
+
+    /// <summary>
+    /// Gets the actual width after element is loaded
+    /// </summary>
+    public class ActualWidthProperty : BaseAttachedProperties<ActualWidthProperty, double>
+    {
+        public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (sender is FrameworkElement element)
+            {
+                element.Loaded += Element_Loaded;
+            }
+        }
+
+        private void Element_Loaded(object sender, RoutedEventArgs e)
+        {
+            var element = sender as FrameworkElement;
+            SetValue(element, element.Width);
         }
     }
 }
