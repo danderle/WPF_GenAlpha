@@ -14,19 +14,6 @@ namespace GenAlpha.Core
 
         private readonly object FallingTextsLock = new object();
 
-        public class FallingText
-        {
-            public FallingText(string text, int xPosition)
-            {
-                Text = text;
-                Xposition = xPosition;
-                Yposition = 0;
-            }
-            public string Text { get; set; }
-            public int Xposition { get; private set; }
-            public int Yposition { get; set; }
-        }
-
         private Timer SpawnTimer = new();
         private Timer MoveTimer = new();
         private bool spwanTimerIsRunning;
