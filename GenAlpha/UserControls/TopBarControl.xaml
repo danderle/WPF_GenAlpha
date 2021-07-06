@@ -18,11 +18,11 @@
             </Grid.ColumnDefinitions>
 
             <Button Content="{StaticResource FontAwesomeAngleLeft}" 
-                        Command="{Binding ToGameSelectionCommand}"
-                        />
+                    Command="{Binding ToGameSelectionCommand}"
+                    />
             <StackPanel Orientation="Horizontal"
-                            Grid.ColumnSpan="3"
-                            HorizontalAlignment="Center">
+                        Grid.ColumnSpan="3"
+                        HorizontalAlignment="Center">
                 <TextBlock>
                         <Run Text="Score:" />
                         <Run Text="{Binding Score}" />
