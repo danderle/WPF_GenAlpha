@@ -13,7 +13,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// The action to run
         /// </summary>
-        private Action<object> mAction;
+        private Action<object> _action;
 
         #endregion
 
@@ -33,7 +33,7 @@ namespace GenAlpha.Core
         /// </summary>
         public RelayParameterizedCommand(Action<object> action)
         {
-            mAction = action;
+            _action = action;
         }
 
         #endregion
@@ -56,7 +56,7 @@ namespace GenAlpha.Core
         /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
-            mAction(parameter);
+            _action(parameter);
         }
 
         #endregion

@@ -24,7 +24,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// The side menu view model
         /// </summary>
-        public SideMenuViewModel SideMenu { get; private set; }
+        public SideMenuViewModel SideMenu { get; private set; } = new SideMenuViewModel();
 
         #endregion
 
