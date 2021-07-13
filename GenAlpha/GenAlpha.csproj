@@ -32,8 +32,11 @@
     <None Remove="Resources\Sounds\CardFlip.wav" />
     <None Remove="Resources\Sounds\CardSpinOut.mp3" />
     <None Remove="Resources\Sounds\CardSpinOut.wav" />
+    <None Remove="Resources\Sounds\DryFire.wav" />
     <None Remove="Resources\Sounds\Fail.wav" />
+    <None Remove="Resources\Sounds\Hit.wav" />
     <None Remove="Resources\Sounds\Pass.mp3" />
+    <None Remove="Resources\Sounds\Shot.wav" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,11 +46,20 @@
     <Content Include="Resources\Sounds\CardSpinOut.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Sounds\DryFire.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Sounds\Fail.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Sounds\Hit.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Sounds\Pass.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\Shot.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
