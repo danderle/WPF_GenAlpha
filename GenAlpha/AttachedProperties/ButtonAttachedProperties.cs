@@ -8,6 +8,8 @@ using System.Windows.Media;
 
 namespace GenAlpha
 {
+    #region RgbProperty
+
     /// <summary>
     /// Attached property which is the rgb value for the foreground color
     /// </summary>
@@ -18,7 +20,7 @@ namespace GenAlpha
             //make sure we have a button
             var button = d as Button;
             if (button == null)
-                return Color.FromRgb(0,0,0);
+                return Color.FromRgb(0, 0, 0);
 
             var rgbString = GetValue(button);
             byte r = Convert.ToByte(rgbString.Substring(0, 2), 16);
@@ -27,6 +29,10 @@ namespace GenAlpha
             return Color.FromRgb(r, g, b);
         }
     }
+
+    #endregion
+
+    #region FinishedAnimationProperty
 
     /// <summary>
     /// Attached property which executes a command when an animation is finished
@@ -51,6 +57,10 @@ namespace GenAlpha
             GetValue(d).Execute(d);
         }
     }
+
+    #endregion
+
+    #region IsAnimatingProperty
 
     /// <summary>
     /// Attached property for setting and starting an animation of type <see cref="ButtonAnimationTypes"/>
@@ -81,22 +91,32 @@ namespace GenAlpha
             switch (animation)
             {
                 case ButtonAnimationTypes.Reveal:
-                    Sound.Play(SoundTypes.CardFlip);
+                    PlaySoundAsync(SoundTypes.CardFlip);
                     await ButtonAnimations.Reveal(button, cardColor, seconds);
                     await FinishedAnimationProperty.ExecuteCommand(button, 0);
                     break;
                 case ButtonAnimationTypes.Match:
                     await ButtonAnimations.SpinAndScaleOutAsync(button, seconds, begin);
-                    Sound.Play(SoundTypes.CardSpinOut);
+                    PlaySoundAsync(SoundTypes.CardSpinOut);
                     await FinishedAnimationProperty.ExecuteCommand(button, Convert.ToInt16(begin));
                     break;
                 case ButtonAnimationTypes.NoMatch:
                     await ButtonAnimations.CoverAsync(button, cardColor, seconds, begin);
-                    Sound.Play(SoundTypes.CardFlip);
+                    PlaySoundAsync(SoundTypes.CardFlip);
                     await FinishedAnimationProperty.ExecuteCommand(button, Convert.ToInt16(begin));
                     break;
             }
         }
+
+        /// <summary>
+        /// Plays a given sound asynchronously
+        /// </summary>
+        /// <param name="sound"> The <see cref="SoundTypes"/> to play</param>
+        private async void PlaySoundAsync(SoundTypes sound)
+        {
+            await Sound.PlayAsync(sound);
+        }
     }
 
+    #endregion
 }

@@ -3,7 +3,6 @@ using System.Windows.Input;
 
 namespace GenAlpha.Core
 {
-
     /// <summary>
     /// The view model for the memory card buttons
     /// </summary>
@@ -154,7 +153,7 @@ namespace GenAlpha.Core
         {
             IsAnimating = true;
             IsMatched = true;
-            Sound.Play(SoundTypes.CardMatch);
+            PlaySoundAsync(SoundTypes.CardMatch);
             Animation = ButtonAnimationTypes.Match;
         }
 
@@ -164,7 +163,7 @@ namespace GenAlpha.Core
         public void NoMatch()
         {
             IsAnimating = true;
-            Sound.Play(SoundTypes.CardNoMatch);
+            PlaySoundAsync(SoundTypes.CardNoMatch);
             Animation = ButtonAnimationTypes.NoMatch;
         }
 
@@ -172,12 +171,27 @@ namespace GenAlpha.Core
 
         #region Private Helpers Methods
 
+        /// <summary>
+        /// Plays a given sound asynchronously
+        /// </summary>
+        /// <param name="sound"> The <see cref="SoundTypes"/> to play</param>
+        private async void PlaySoundAsync(SoundTypes sound)
+        {
+            await Sound.PlayAsync(sound);
+        }
+
+        /// <summary>
+        /// Initializes all the commands
+        /// </summary>
         private void InitializeCommands()
         {
             ClickCommand = new RelayCommand(Click);
             FinishedAnimatingCommand = new RelayCommand(FinishedAnimating);
         }
 
+        /// <summary>
+        /// Initializes all the properties
+        /// </summary>
         private void InitializeProperties()
         {
             var rand = new Random();
