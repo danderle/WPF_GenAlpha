@@ -5,12 +5,23 @@
     /// </summary>
     public class FallingText
     {
+        #region Constants
+
+        private const int DEFAULT_SPEED = 1;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
         /// The actual text
         /// </summary>
         public string Text { get; set; }
+
+        /// <summary>
+        /// The displayed text
+        /// </summary>
+        public string DisplayedText { get; set; }
 
         /// <summary>
         /// The x position of the text
@@ -34,10 +45,22 @@
         public FallingText(string text, int xSartPosition)
         {
             Text = text;
+            DisplayedText = text;
             Xposition = xSartPosition;
             Yposition = 0;
         }
 
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Moves the text at its spedd
+        /// </summary>
+        public void Move()
+        {
+            Yposition += DEFAULT_SPEED;
+        } 
         #endregion
     }
 }
