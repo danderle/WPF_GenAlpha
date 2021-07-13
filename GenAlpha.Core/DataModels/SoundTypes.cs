@@ -9,6 +9,9 @@
         CardMatch,
         CardNoMatch,
         CardSpinOut,
+        Shot,
+        Hit,
+        DryFire,
     }
 
 }
