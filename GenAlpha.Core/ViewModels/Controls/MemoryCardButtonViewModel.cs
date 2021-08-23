@@ -153,7 +153,7 @@ namespace GenAlpha.Core
         {
             IsAnimating = true;
             IsMatched = true;
-            PlaySoundAsync(SoundTypes.CardMatch);
+            Sound.PlayAsync(SoundTypes.CardMatch);
             Animation = ButtonAnimationTypes.Match;
         }
 
@@ -163,22 +163,13 @@ namespace GenAlpha.Core
         public void NoMatch()
         {
             IsAnimating = true;
-            PlaySoundAsync(SoundTypes.CardNoMatch);
+            Sound.PlayAsync(SoundTypes.CardNoMatch);
             Animation = ButtonAnimationTypes.NoMatch;
         }
 
         #endregion
 
         #region Private Helpers Methods
-
-        /// <summary>
-        /// Plays a given sound asynchronously
-        /// </summary>
-        /// <param name="sound"> The <see cref="SoundTypes"/> to play</param>
-        private async void PlaySoundAsync(SoundTypes sound)
-        {
-            await Sound.PlayAsync(sound);
-        }
 
         /// <summary>
         /// Initializes all the commands

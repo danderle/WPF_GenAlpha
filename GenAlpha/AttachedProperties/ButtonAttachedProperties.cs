@@ -91,30 +91,21 @@ namespace GenAlpha
             switch (animation)
             {
                 case ButtonAnimationTypes.Reveal:
-                    PlaySoundAsync(SoundTypes.CardFlip);
+                    Sound.PlayAsync(SoundTypes.CardFlip); 
                     await ButtonAnimations.Reveal(button, cardColor, seconds);
                     await FinishedAnimationProperty.ExecuteCommand(button, 0);
                     break;
                 case ButtonAnimationTypes.Match:
                     await ButtonAnimations.SpinAndScaleOutAsync(button, seconds, begin);
-                    PlaySoundAsync(SoundTypes.CardSpinOut);
+                    Sound.PlayAsync(SoundTypes.CardSpinOut);
                     await FinishedAnimationProperty.ExecuteCommand(button, Convert.ToInt16(begin));
                     break;
                 case ButtonAnimationTypes.NoMatch:
                     await ButtonAnimations.CoverAsync(button, cardColor, seconds, begin);
-                    PlaySoundAsync(SoundTypes.CardFlip);
+                    Sound.PlayAsync(SoundTypes.CardFlip);
                     await FinishedAnimationProperty.ExecuteCommand(button, Convert.ToInt16(begin));
                     break;
             }
-        }
-
-        /// <summary>
-        /// Plays a given sound asynchronously
-        /// </summary>
-        /// <param name="sound"> The <see cref="SoundTypes"/> to play</param>
-        private async void PlaySoundAsync(SoundTypes sound)
-        {
-            await Sound.PlayAsync(sound);
         }
     }
 

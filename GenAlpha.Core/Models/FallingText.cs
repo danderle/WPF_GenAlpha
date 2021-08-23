@@ -14,6 +14,11 @@
         #region Properties
 
         /// <summary>
+        /// Flag to let us knwow if this text is targeted
+        /// </summary>
+        public bool Targeted { get; set; }
+
+        /// <summary>
         /// The actual text
         /// </summary>
         public string Text { get; set; }
