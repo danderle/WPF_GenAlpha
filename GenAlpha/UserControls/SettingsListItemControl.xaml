@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:GenAlpha"
              xmlns:core="clr-namespace:GenAlpha.Core;assembly=GenAlpha.Core"
              mc:Ignorable="d"
-             MinWidth="300"
-             d:DesignHeight="100" d:DesignWidth="400">
+             MinWidth="300">
     
     <!--The main grid for this control-->
     <Grid Background="{StaticResource VeryDarkBlueBrush}"
@@ -30,10 +29,11 @@
                     VerticalAlignment="Center"
                     Padding="10 2"
                     FontFamily="{StaticResource LatoBold}"
-                    Command="{Binding IncreaseCommand}"/>
+                    Command="{Binding IncreaseCommand}"
+                    />
             <TextBlock Text="{Binding CurrentValue}" 
-                       Margin="5 0"
-                       Width="20"
+                       Margin="10 0"
+                       Width="40"
                        TextAlignment="Center"/>
             <Button Content="-" 
                     VerticalAlignment="Center"
@@ -44,9 +44,9 @@
 
         <!--The toggle switch option, is visible if the setting is a toggle type-->
         <CheckBox Grid.Column="1"
-                  Padding="8 2"
+                  Padding="3"
+                  Width="123"
                   VerticalAlignment="Center"
-                  HorizontalAlignment="Center"
                     Style="{StaticResource ToggleSwitchCheckBox}" 
                     IsChecked="{Binding IsChecked}"
                     Visibility="{Binding SettingType, Converter={local:SettingTypeToVisibilityValueConverter}, ConverterParameter=Toggle}"/>

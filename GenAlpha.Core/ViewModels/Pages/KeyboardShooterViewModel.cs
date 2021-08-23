@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Timers;
 using System.Windows.Input;
 
@@ -12,25 +14,15 @@ namespace GenAlpha.Core
     {
         #region Constants
 
-        private const int SPAWN_TIMER_INTERVAL = 2000;
-
-        private const int MOVE_TIMER_INTERVAL = 25;
-
-        private int maxTextLength = 50;
+        private bool useSpawnTimer;
+        private int wordSpawnInterval;
+        private int wordMoveInterval;
+        private int wordLength;
+        private string wordTxtFilePath = @"Resources\TextFiles\20kWords.txt";
 
         #endregion
 
         #region Private Members
-
-        /// <summary>
-        /// Locks the <see cref="FallingText"/> and <see cref="Bullets"/> lists
-        /// </summary>
-        private readonly object MovelLock = new ();
-
-        /// <summary>
-        /// Locks the <see cref="FallingText"/> and <see cref="Bullets"/> lists
-        /// </summary>
-        private readonly object InputLock = new();
 
         /// <summary>
         /// The timer to spawn a new <see cref="FallingText"/> item
@@ -46,6 +38,11 @@ namespace GenAlpha.Core
         /// A flag for letting us know if the spawn timer is runnning
         /// </summary>
         private bool spwanTimerIsRunning;
+
+        /// <summary>
+        /// the list of words to create falling texts from
+        /// </summary>
+        public List<string> words = new List<string>();
 
         #endregion
 
@@ -94,7 +91,12 @@ namespace GenAlpha.Core
         /// <summary>
         /// The view model for the top bar
         /// </summary>
-        public TopBarViewModel TopBar { get; set; } = new();
+        public TopBarViewModel TopBar { get; set; } = new TopBarViewModel();
+
+        /// <summary>
+        /// The side menu view model
+        /// </summary>
+        public SideMenuViewModel SideMenu { get; private set; } = new SideMenuViewModel();
 
         #endregion
 
@@ -119,9 +121,35 @@ namespace GenAlpha.Core
         /// </summary>
         public KeyboardShooterViewModel()
         {
-            InitializeTimers();
-            InitializeCommands();
             Sound.InitializeSounds();
+
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Word length", SettingTypes.Increment, 1));
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use spawn timer", SettingTypes.Toggle, 0));
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Word spawn time (ms)", SettingTypes.Increment, 5000));
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Word move time (ms)", SettingTypes.Increment, 100));
+
+            TopBar.ToggelSettingsMenu = ToggleSettingsMenu;
+            InitializeCommands();
+            InitializeTimers();
+            RestartGame();
+        }
+
+        #endregion
+
+        #region Action Methods
+
+        private void ToggleSettingsMenu()
+        {
+            SideMenu.ShowSideMenu = !SideMenu.ShowSideMenu;
+            if (!SideMenu.ShowSideMenu)
+            {
+                RestartGame();
+                AddItemToCanvas();
+            }
+            else
+            {
+                StopTimers();
+            }
         }
 
         #endregion
@@ -135,7 +163,8 @@ namespace GenAlpha.Core
         private void KeyboardInput(object obj)
         {
             bool shot = false;
-            var letter = obj.ToString();
+            string letter = obj.ToString();
+
             if (CurrentTextTarget != string.Empty)
             {
                 var item = FallingTexts.Find(t => t.Text == CurrentTextTarget);
@@ -146,27 +175,54 @@ namespace GenAlpha.Core
             }
             else
             {
-                lock(InputLock)
+                for(int i = 0; i < FallingTexts.Count; i++)
                 {
-                    for(int i = 0; i < FallingTexts.Count; i++)
+                    FallingText item = FallingTexts[i];
+                    if (item != null && item.Text != string.Empty)
                     {
-                        var item = FallingTexts[i];
-                        if (item.Text != string.Empty)
+                        shot = FireBulletIfInputMatches(item, letter[0]);
+                        if(shot)
                         {
-                            shot = FireBulletIfInputMatches(item, letter[0]);
                             break;
                         }
-                    } 
+                    }
                 }
             }
 
             if(shot)
             {
-                PlaySoundAsync(SoundTypes.Shot);
+                TopBar.Score++;
+                Sound.PlayAsync(SoundTypes.Shot);
             }
             else
             {
-                PlaySoundAsync(SoundTypes.DryFire);
+                Sound.PlayAsync(SoundTypes.DryFire);
+            }
+        }
+
+        /// <summary>
+        /// Adds <see cref="FallingText"/> items to the list
+        /// </summary>
+        private void AddItemToCanvas()
+        {
+            if (!useSpawnTimer)
+            {
+                SpawnTimer_Elapsed(this, null);
+                MoveTimer.Start();
+            }
+            // If timer not running start the timers
+            else if (!spwanTimerIsRunning)
+            {
+                SpawnTimer_Elapsed(this, null);
+                SpawnFallingTextTimer.Start();
+                MoveTimer.Start();
+                spwanTimerIsRunning = true;
+            }
+            else if (spwanTimerIsRunning)
+            {
+                MoveTimer.Stop();
+                SpawnFallingTextTimer.Stop();
+                spwanTimerIsRunning = false;
             }
         }
 
@@ -183,16 +239,13 @@ namespace GenAlpha.Core
         private void MoveTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             bool textHit;
-            lock (MovelLock)
-            {
-                MoveAllTexts();
+            MoveAllTexts();
 
-                textHit = MoveAllBulletsAndCheckForHit();
-            }
-            MoveItems ^= true;
+            textHit = MoveAllBulletsAndCheckForHit();
+            MoveItems = !MoveItems;
             if (textHit)
             {
-                PlaySoundAsync(SoundTypes.Hit);
+                Sound.PlayAsync(SoundTypes.Hit);
             }
         }
 
@@ -205,15 +258,72 @@ namespace GenAlpha.Core
         private void SpawnTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             var random = new Random();
-            var randomNum = random.Next(0, CanvasWidth-maxTextLength);
-
-            FallingTexts.Add(new FallingText("AB", randomNum));
+            var randomNum = random.Next(0, CanvasWidth);
+            FallingTexts.Add(new FallingText(words.Last(), randomNum));
+            words.RemoveAt(words.Count - 1);
+            if(words.Count ==  0)
+            {
+                words = GetAllWordsWithLength();
+            }
             FallingTextItemSpawned ^= true;
         }
 
         #endregion
 
         #region Private Methods
+
+        private void GetGameSettings()
+        {
+            foreach(var setting in SideMenu.SettingsList.SettingItems)
+            {
+                if(setting.Name.Contains("Word length"))
+                {
+                    wordLength = setting.CurrentValue;
+                }
+                else if(setting.Name.Contains("Use spawn"))
+                {
+                    useSpawnTimer = setting.CurrentValue > 0;
+                }
+                else if (setting.Name.Contains("Word spawn time"))
+                {
+                    wordSpawnInterval = setting.CurrentValue;
+                }
+                else if (setting.Name.Contains("Word move time"))
+                {
+                    wordMoveInterval = setting.CurrentValue;
+                }
+            }
+        }
+
+        private List<string> GetAllWordsWithLength()
+        {
+            var sortedWords = new List<string>();
+            foreach (var word in File.ReadAllLines(wordTxtFilePath).ToList())
+            {
+                if (wordLength >= word.Length)
+                {
+                    sortedWords.Add(word.ToUpper());
+                }
+            }
+            return sortedWords.Shuffle();
+        }
+
+        /// <summary>
+        /// Restarts game
+        /// </summary>
+        private void RestartGame()
+        {
+            CurrentTextTarget = string.Empty;
+            Bullets.Clear();
+            FallingTexts.Clear();
+            GetGameSettings();
+            if (File.Exists(wordTxtFilePath))
+            {
+                words = GetAllWordsWithLength();
+            }
+            MoveTimer.Interval = wordMoveInterval;
+            SpawnFallingTextTimer.Interval = wordSpawnInterval;
+        }
 
         /// <summary>
         /// Fires a bullet if input letter matches item letter
@@ -229,12 +339,18 @@ namespace GenAlpha.Core
                 Bullets.Add(new Bullet(item.Xposition, CanvasHeight - 40, item));
                 if (item.Text.Length > 1)
                 {
+                    item.Targeted = true;
                     item.Text = item.Text.Substring(1);
                     CurrentTextTarget = item.Text;
                 }
                 else
                 {
                     item.Text = string.Empty;
+                    CurrentTextTarget = string.Empty;
+                    if(!useSpawnTimer)
+                    {
+                        SpawnTimer_Elapsed(this, null);
+                    }
                 }
             }
             return shot;
@@ -263,12 +379,11 @@ namespace GenAlpha.Core
                     else
                     {
                         FallingTexts.Remove(item);
-                        CurrentTextTarget = string.Empty;
                     }
                     Bullets.Remove(bullet);
                     i--;
-                    TextShot ^= true;
                     textHit = true;
+                    MoveItems ^= true;
                 }
             }
             return textHit;
@@ -282,43 +397,29 @@ namespace GenAlpha.Core
             for (int i = 0; i < FallingTexts.Count; i++)
             {
                 var item = FallingTexts[i];
+                if (item == null)
+                {
+                    continue;
+                }
+
                 item.Move();
                 if (item.Yposition > CanvasHeight)
                 {
-                    CurrentTextTarget = string.Empty;
+                    if(CurrentTextTarget == item.Text)
+                    {
+                        CurrentTextTarget = string.Empty;
+                    }
                     FallingTexts.RemoveAt(i);
                     --i;
                 }
             }
         }
 
-        /// <summary>
-        /// Plays sounds asynchronously
-        /// </summary>
-        /// <param name="sound"></param>
-        private async void PlaySoundAsync(SoundTypes sound)
+        private void StopTimers()
         {
-            await Sound.PlayAsync(sound);
-        }
-
-        /// <summary>
-        /// Adds <see cref="FallingText"/> items to the list
-        /// </summary>
-        private void AddItemToCanvas()
-        {
-            // If timer not running start the timers
-            if (!spwanTimerIsRunning)
-            {
-                SpawnFallingTextTimer.Start();
-                MoveTimer.Start();
-                spwanTimerIsRunning = true;
-            }
-            else
-            {
-                MoveTimer.Stop();
-                SpawnFallingTextTimer.Stop();
-                spwanTimerIsRunning = false;
-            }
+            SpawnFallingTextTimer.Stop();
+            MoveTimer.Stop();
+            spwanTimerIsRunning = false;
         }
 
         /// <summary>
@@ -335,10 +436,8 @@ namespace GenAlpha.Core
         /// </summary>
         private void InitializeTimers()
         {
-            MoveTimer.Interval = MOVE_TIMER_INTERVAL;
             MoveTimer.Elapsed += MoveTimer_Elapsed;
             SpawnFallingTextTimer.Elapsed += SpawnTimer_Elapsed;
-            SpawnFallingTextTimer.Interval = SPAWN_TIMER_INTERVAL;
         }
 
         #endregion
