@@ -61,8 +61,6 @@ namespace GenAlpha.Core
                 foreach (var sound in soundPaths)
                 {
                     var mediaPlayer = new MediaPlayer();
-                    mediaPlayer.Open(Path(sound.Key));
-                    mediaPlayer.Stop();
                     mediaPlayers.Add(sound.Key, mediaPlayer);
                 }
                 initialized = true;
@@ -74,16 +72,22 @@ namespace GenAlpha.Core
         /// </summary>
         /// <param name="sound">the <see cref="SoundTypes"/> type of sound to play</param>
         /// <returns></returns>
-        public static async Task PlayAsync(SoundTypes sound)
+        public static async void PlayAsync(SoundTypes sound)
         {
             MediaPlayer mediaPlayer;
             int milliseconds = 1;
             mediaPlayers.TryGetValue(sound, out mediaPlayer);
             mediaPlayer.Dispatcher.Invoke(() =>
             {
+                mediaPlayer.Open(Path(sound));
                 mediaPlayer.Position = TimeSpan.Zero;
                 mediaPlayer.Play();
-                milliseconds = Convert.ToInt32(mediaPlayer.NaturalDuration.TimeSpan.TotalMilliseconds);
+                if(mediaPlayer.NaturalDuration.HasTimeSpan)
+                    milliseconds = Convert.ToInt32(mediaPlayer.NaturalDuration.TimeSpan.TotalMilliseconds);
+                else
+                {
+                    milliseconds = 250;
+                }
             });
             await Task.Delay(milliseconds);
         }
