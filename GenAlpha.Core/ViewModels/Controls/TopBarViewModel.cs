@@ -21,10 +21,11 @@ namespace GenAlpha.Core
         /// </summary>
         public int Score { get; set; } = 0;
 
-        /// <summary>
-        /// The side menu view model
-        /// </summary>
-        public SideMenuViewModel SideMenu { get; private set; } = new SideMenuViewModel();
+        #endregion
+
+        #region Actions
+
+        public Action ToggelSettingsMenu;
 
         #endregion
 
@@ -62,11 +63,7 @@ namespace GenAlpha.Core
         /// </summary>
         private void ToggleSideMenu()
         {
-            SideMenu.ShowSideMenu = !SideMenu.ShowSideMenu;
-            if (!SideMenu.ShowSideMenu)
-            {
-                RestartGame();
-            }
+            ToggelSettingsMenu();
         }
 
         /// <summary>
@@ -86,7 +83,7 @@ namespace GenAlpha.Core
 
         private void RestartGame()
         {
-            throw new NotImplementedException();
+            
         }
 
         private void InitializeCommands()
