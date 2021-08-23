@@ -21,17 +21,17 @@ namespace GenAlpha
             if (canvas == null)
                 return;
 
-            var texts = TextObjects.Get(canvas);
-            if (texts == null || texts.Count == 0)
-                return;
-
             var childrenCount = canvas.Children.Count;
             if (childrenCount > 1)
             {
                 canvas.Children.RemoveRange(1, childrenCount - 1);
             }
 
-            lock(fallingTexts)
+            var texts = TextObjects.Get(canvas);
+            if (texts == null || texts.Count == 0)
+                return;
+
+            lock (fallingTexts)
             {
                 TextObjects.AddTextsToCanvas(texts, canvas);
             }
@@ -55,7 +55,12 @@ namespace GenAlpha
             foreach (var text in texts)
             {
                 var textBlock = new TextBlock();
+                textBlock.FontSize = (double)Application.Current.FindResource("FontSizeXLarge");
                 textBlock.Text = text.DisplayedText;
+                if(text.Targeted)
+                {
+                    textBlock.Foreground = (Brush)Application.Current.FindResource("GoldBrush");
+                }
                 Canvas.SetLeft(textBlock, text.Xposition);
                 Canvas.SetTop(textBlock, text.Yposition);
                 canvas.Children.Add(textBlock);
@@ -107,15 +112,15 @@ namespace GenAlpha
             if (canvas == null)
                 return;
 
-            var texts = TextObjects.Get(canvas);
-            if (texts == null || texts.Count == 0)
-                return;
-
             var childrenCount = canvas.Children.Count;
             if (childrenCount > 1)
             {
-                canvas.Children.RemoveRange(1, childrenCount - 1);
+                canvas.Children.RemoveRange(1, childrenCount-1);
             }
+
+            var texts = TextObjects.Get(canvas);
+            if (texts == null || texts.Count == 0)
+                return;
 
             TextObjects.AddTextsToCanvas(texts, canvas);
 
@@ -151,7 +156,10 @@ namespace GenAlpha
 
         private void Element_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            command.Execute(e.Key);
+            if(e.Key >= Key.A && e.Key <= Key.Z)
+            {
+                command.Execute(e.Key);
+            }
         }
     }
 
