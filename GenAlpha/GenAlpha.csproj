@@ -37,6 +37,7 @@
     <None Remove="Resources\Sounds\Hit.wav" />
     <None Remove="Resources\Sounds\Pass.mp3" />
     <None Remove="Resources\Sounds\Shot.wav" />
+    <None Remove="Resources\TextFiles\20kWords.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -65,7 +66,9 @@
 
   <ItemGroup>
     <PackageReference Include="Ninject" Version="3.3.4" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -129,6 +132,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Images\logo-flat.png" />
+    <Content Include="Resources\TextFiles\20kWords.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
