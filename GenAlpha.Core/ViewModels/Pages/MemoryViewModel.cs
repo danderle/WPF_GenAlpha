@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -283,6 +284,13 @@ namespace GenAlpha.Core
         /// </summary>
         private void InitializeProperties()
         {
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Players", SettingTypes.Increment, 1));
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Number of cards", SettingTypes.Increment, 16));
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use lowercase letters", SettingTypes.Toggle) { IsChecked = true });
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use uppercase letters", SettingTypes.Toggle));
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use numbers", SettingTypes.Toggle));
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use special characters", SettingTypes.Toggle));
+            SideMenu.ShowSideMenu = false;
             RestartGame();
         }
 
@@ -421,16 +429,7 @@ namespace GenAlpha.Core
         /// </summary>
         private void ShuffleMemoryCards()
         {
-            Random random = new Random();
-
-            for (int i = MemoryCards.Count - 1; i > 1; i--)
-            {
-                int rnd = random.Next(i + 1);
-                var value = MemoryCards[rnd];
-
-                MemoryCards[rnd] = MemoryCards[i];
-                MemoryCards[i] = value;
-            }
+            MemoryCards = new ObservableCollection<MemoryCardButtonViewModel>(MemoryCards.ToList().Shuffle());
         }
 
         /// <summary>

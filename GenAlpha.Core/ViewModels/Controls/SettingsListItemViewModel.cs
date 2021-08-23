@@ -10,10 +10,18 @@ namespace GenAlpha.Core
     {
         #region Private Fields
 
-        private const int MIN_PLAYERS = 1;
-        
-        private const int MAX_PLAYERS = 3;
-        
+        private readonly int MIN_PLAYERS = 1;
+        private readonly int MAX_PLAYERS = 3;
+
+        private readonly int MIN_WORD_LENGTH = 1;
+        private readonly int MAX_WORD_LENGTH = 20;
+
+        private readonly int MIN_WORD_SPAWN_INTERVAL = 1000;
+        private readonly int MAX_WORD_SPAWN_INTERVAL = 5000;
+
+        private readonly int MIN_WORD_MOVE_INTERVAL = 70;
+        private readonly int MAX_WORD_MOVE_INTERVAL = 1000;
+
         private readonly int[] CARDS = { 2, 4, 12, 16, 20, 30, 36 };
 
         #endregion
@@ -96,6 +104,26 @@ namespace GenAlpha.Core
                 index = --index >= 0 ? index : ++index;
                 CurrentValue = CARDS[index];
             }
+            else if (Name.Contains("Word length"))
+            {
+                CurrentValue--;
+                CurrentValue = CurrentValue > MIN_WORD_LENGTH ? CurrentValue : 1;
+            }
+            else if (Name.Contains("Use spawn"))
+            {
+                CurrentValue--;
+                CurrentValue = CurrentValue <= 0 ? 0 : 1;
+            }
+            else if (Name.Contains("Word spawn time"))
+            {
+                CurrentValue -= 100;
+                CurrentValue = CurrentValue < MIN_WORD_SPAWN_INTERVAL ? MIN_WORD_SPAWN_INTERVAL : CurrentValue;
+            }
+            else if (Name.Contains("Word move time"))
+            {
+                CurrentValue -= 10;
+                CurrentValue = CurrentValue < MIN_WORD_MOVE_INTERVAL ? MIN_WORD_MOVE_INTERVAL : CurrentValue;
+            }
         }
 
         /// <summary>
@@ -113,6 +141,26 @@ namespace GenAlpha.Core
                 int index = Array.FindIndex(CARDS, x => x == CurrentValue);
                 index = ++index >= CARDS.Length ? --index : index;
                 CurrentValue = CARDS[index];
+            }
+            else if(Name.Contains("Word length"))
+            {
+                CurrentValue++;
+                CurrentValue = CurrentValue > MAX_WORD_LENGTH ? MAX_WORD_LENGTH : CurrentValue;
+            }
+            else if (Name.Contains("Use spawn"))
+            {
+                CurrentValue++;
+                CurrentValue = CurrentValue >= 1 ? 1 : 0;
+            }
+            else if (Name.Contains("Word spawn time"))
+            {
+                CurrentValue +=100;
+                CurrentValue = CurrentValue > MAX_WORD_SPAWN_INTERVAL ? MAX_WORD_SPAWN_INTERVAL : CurrentValue;
+            }
+            else if (Name.Contains("Word move time"))
+            {
+                CurrentValue += 10;
+                CurrentValue = CurrentValue > MAX_WORD_MOVE_INTERVAL ? MAX_WORD_MOVE_INTERVAL : CurrentValue;
             }
 
         }

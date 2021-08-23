@@ -44,12 +44,23 @@
         /// </summary>
         public SideMenuViewModel()
         {
-            SettingsList.SettingItems.Add(new SettingsListItemViewModel("Players", SettingTypes.Increment, 1));
-            SettingsList.SettingItems.Add(new SettingsListItemViewModel("Number of cards", SettingTypes.Increment, 16));
-            SettingsList.SettingItems.Add(new SettingsListItemViewModel("Use lowercase letters", SettingTypes.Toggle) { IsChecked = true });
-            SettingsList.SettingItems.Add(new SettingsListItemViewModel("Use uppercase letters", SettingTypes.Toggle));
-            SettingsList.SettingItems.Add(new SettingsListItemViewModel("Use numbers", SettingTypes.Toggle));
-            SettingsList.SettingItems.Add(new SettingsListItemViewModel("Use special characters", SettingTypes.Toggle));
+        }
+
+        /// <summary>
+        /// Overloaded constructor
+        /// </summary>
+        public SideMenuViewModel(SettingsListItemViewModel settingsItem)
+        {
+            SettingsList.SettingItems.Add(settingsItem);
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public void AddSettingsItems(SettingsListItemViewModel settingsItem)
+        {
+            SettingsList.SettingItems.Add(settingsItem);
         }
 
         #endregion
