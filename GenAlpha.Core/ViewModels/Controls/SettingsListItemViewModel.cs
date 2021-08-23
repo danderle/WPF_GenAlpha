@@ -19,8 +19,8 @@ namespace GenAlpha.Core
         private readonly int MIN_WORD_SPAWN_INTERVAL = 1000;
         private readonly int MAX_WORD_SPAWN_INTERVAL = 5000;
 
-        private readonly int MIN_WORD_MOVE_INTERVAL = 70;
-        private readonly int MAX_WORD_MOVE_INTERVAL = 1000;
+        private readonly int MIN_WORD_SPEED = 1;
+        private readonly int MAX_WORD_SPEED = 20;
 
         private readonly int[] CARDS = { 2, 4, 12, 16, 20, 30, 36 };
 
@@ -119,10 +119,10 @@ namespace GenAlpha.Core
                 CurrentValue -= 100;
                 CurrentValue = CurrentValue < MIN_WORD_SPAWN_INTERVAL ? MIN_WORD_SPAWN_INTERVAL : CurrentValue;
             }
-            else if (Name.Contains("Word move time"))
+            else if (Name.Contains("Word speed"))
             {
-                CurrentValue -= 10;
-                CurrentValue = CurrentValue < MIN_WORD_MOVE_INTERVAL ? MIN_WORD_MOVE_INTERVAL : CurrentValue;
+                CurrentValue -= 1;
+                CurrentValue = CurrentValue < MIN_WORD_SPEED ? MIN_WORD_SPEED : CurrentValue;
             }
         }
 
@@ -157,10 +157,10 @@ namespace GenAlpha.Core
                 CurrentValue +=100;
                 CurrentValue = CurrentValue > MAX_WORD_SPAWN_INTERVAL ? MAX_WORD_SPAWN_INTERVAL : CurrentValue;
             }
-            else if (Name.Contains("Word move time"))
+            else if (Name.Contains("Word speed"))
             {
-                CurrentValue += 10;
-                CurrentValue = CurrentValue > MAX_WORD_MOVE_INTERVAL ? MAX_WORD_MOVE_INTERVAL : CurrentValue;
+                CurrentValue += 1;
+                CurrentValue = CurrentValue > MAX_WORD_SPEED ? MAX_WORD_SPEED : CurrentValue;
             }
 
         }

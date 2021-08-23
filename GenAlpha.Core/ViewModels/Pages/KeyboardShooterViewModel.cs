@@ -14,25 +14,41 @@ namespace GenAlpha.Core
     {
         #region Constants
 
-        private bool useSpawnTimer;
-        private int wordSpawnInterval;
-        private int wordMoveInterval;
-        private int wordLength;
-        private string wordTxtFilePath = @"Resources\TextFiles\20kWords.txt";
+        private const string WORDS_TEXT_FILE_PATH = @"Resources\TextFiles\20kWords.txt";
 
         #endregion
 
         #region Private Members
 
         /// <summary>
+        /// Flag to let us know if the spawn timer is used
+        /// </summary>
+        private bool useSpawnTimer;
+
+        /// <summary>
+        /// Gets the setting value for word spawning intervals
+        /// </summary>
+        private int wordSpawnInterval;
+
+        /// <summary>
+        /// Word speed setting value
+        /// </summary>
+        private int wordSpeed;
+
+        /// <summary>
+        /// gets the settings value for word length
+        /// </summary>
+        private int wordLength;
+
+        /// <summary>
         /// The timer to spawn a new <see cref="FallingText"/> item
         /// </summary>
-        private Timer SpawnFallingTextTimer = new();
+        private readonly Timer spawnFallingTextTimer = new();
 
         /// <summary>
         /// The timer to move all the <see cref="FallingText"/> and <see cref="Bullets"/> items in the list
         /// </summary>
-        private Timer MoveTimer = new();
+        private readonly Timer moveTimer = new();
 
         /// <summary>
         /// A flag for letting us know if the spawn timer is runnning
@@ -42,7 +58,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// the list of words to create falling texts from
         /// </summary>
-        public List<string> words = new List<string>();
+        public List<string> words = new();
 
         #endregion
 
@@ -126,7 +142,7 @@ namespace GenAlpha.Core
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Word length", SettingTypes.Increment, 1));
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use spawn timer", SettingTypes.Toggle, 0));
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Word spawn time (ms)", SettingTypes.Increment, 5000));
-            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Word move time (ms)", SettingTypes.Increment, 100));
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Word speed", SettingTypes.Increment, 1));
 
             TopBar.ToggelSettingsMenu = ToggleSettingsMenu;
             InitializeCommands();
@@ -138,6 +154,9 @@ namespace GenAlpha.Core
 
         #region Action Methods
 
+        /// <summary>
+        /// Opens and closes the settings menu
+        /// </summary>
         private void ToggleSettingsMenu()
         {
             SideMenu.ShowSideMenu = !SideMenu.ShowSideMenu;
@@ -259,9 +278,9 @@ namespace GenAlpha.Core
         {
             var random = new Random();
             var randomNum = random.Next(0, CanvasWidth);
-            FallingTexts.Add(new FallingText(words.Last(), randomNum));
+            FallingTexts.Add(new FallingText(words.Last(), randomNum, wordSpeed));
             words.RemoveAt(words.Count - 1);
-            if(words.Count ==  0)
+            if(words.Count == 0)
             {
                 words = GetAllWordsWithLength();
             }
@@ -272,6 +291,9 @@ namespace GenAlpha.Core
 
         #region Private Methods
 
+        /// <summary>
+        /// Gets the current game settings
+        /// </summary>
         private void GetGameSettings()
         {
             foreach(var setting in SideMenu.SettingsList.SettingItems)
@@ -288,17 +310,21 @@ namespace GenAlpha.Core
                 {
                     wordSpawnInterval = setting.CurrentValue;
                 }
-                else if (setting.Name.Contains("Word move time"))
+                else if (setting.Name.Contains("Word speed"))
                 {
-                    wordMoveInterval = setting.CurrentValue;
+                    wordSpeed = setting.CurrentValue;
                 }
             }
         }
 
+        /// <summary>
+        /// Gets a list of words with the defined word length
+        /// </summary>
+        /// <returns></returns>
         private List<string> GetAllWordsWithLength()
         {
             var sortedWords = new List<string>();
-            foreach (var word in File.ReadAllLines(wordTxtFilePath).ToList())
+            foreach (var word in File.ReadAllLines(WORDS_TEXT_FILE_PATH).ToList())
             {
                 if (wordLength >= word.Length)
                 {
@@ -317,11 +343,11 @@ namespace GenAlpha.Core
             Bullets.Clear();
             FallingTexts.Clear();
             GetGameSettings();
-            if (File.Exists(wordTxtFilePath))
+            if (File.Exists(WORDS_TEXT_FILE_PATH))
             {
                 words = GetAllWordsWithLength();
             }
-            MoveTimer.Interval = wordMoveInterval;
+            MoveTimer.Interval = 100;
             SpawnFallingTextTimer.Interval = wordSpawnInterval;
         }
 
@@ -415,6 +441,9 @@ namespace GenAlpha.Core
             }
         }
 
+        /// <summary>
+        /// Stops all runnning timers
+        /// </summary>
         private void StopTimers()
         {
             SpawnFallingTextTimer.Stop();

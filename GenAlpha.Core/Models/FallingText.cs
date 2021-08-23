@@ -5,9 +5,9 @@
     /// </summary>
     public class FallingText
     {
-        #region Constants
+        #region Fields
 
-        private const int DEFAULT_SPEED = 1;
+        private readonly int speed = 1;
 
         #endregion
 
@@ -47,12 +47,13 @@
         /// </summary>
         /// <param name="text">The actual text</param>
         /// <param name="xSartPosition">The x start position</param>
-        public FallingText(string text, int xSartPosition)
+        public FallingText(string text, int xSartPosition, int setSpeed)
         {
             Text = text;
             DisplayedText = text;
             Xposition = xSartPosition;
             Yposition = 0;
+            speed = setSpeed;
         }
 
         #endregion
@@ -64,7 +65,7 @@
         /// </summary>
         public void Move()
         {
-            Yposition += DEFAULT_SPEED;
+            Yposition += speed;
         } 
         #endregion
     }
