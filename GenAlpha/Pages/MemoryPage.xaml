@@ -121,8 +121,8 @@
         <local:SideMenuControl Grid.Row="1" 
                                HorizontalAlignment="Right"
                                MinWidth="300"
-                               DataContext="{Binding SideMenu}" 
                                local:AnimateSlideInFromRightProperty.Value="{Binding ShowSideMenu}"
+                               DataContext="{Binding SideMenu}" 
                                />
     </Grid>
 </local:BasePage>

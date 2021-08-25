@@ -25,7 +25,7 @@ namespace GenAlpha.Core
         public GameSelectionViewModel()
         {
             Games.Add(new GameSelectionButtonViewModel("Memory Game", ApplicationPage.Memory));
-            Games.Add(new GameSelectionButtonViewModel("Keyboard shooter", ApplicationPage.Memory));
+            Games.Add(new GameSelectionButtonViewModel("Keyboard shooter", ApplicationPage.KeyboardShooter));
             Games.Add(new GameSelectionButtonViewModel("Game 3", ApplicationPage.Memory));
             Games.Add(new GameSelectionButtonViewModel("Game 4", ApplicationPage.Memory));
             Games.Add(new GameSelectionButtonViewModel("Game 5", ApplicationPage.Memory));

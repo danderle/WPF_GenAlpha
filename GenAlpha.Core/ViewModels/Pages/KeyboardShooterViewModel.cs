@@ -227,20 +227,20 @@ namespace GenAlpha.Core
             if (!useSpawnTimer)
             {
                 SpawnTimer_Elapsed(this, null);
-                MoveTimer.Start();
+                moveTimer.Start();
             }
             // If timer not running start the timers
             else if (!spwanTimerIsRunning)
             {
                 SpawnTimer_Elapsed(this, null);
-                SpawnFallingTextTimer.Start();
-                MoveTimer.Start();
+                spawnFallingTextTimer.Start();
+                moveTimer.Start();
                 spwanTimerIsRunning = true;
             }
             else if (spwanTimerIsRunning)
             {
-                MoveTimer.Stop();
-                SpawnFallingTextTimer.Stop();
+                moveTimer.Stop();
+                spawnFallingTextTimer.Stop();
                 spwanTimerIsRunning = false;
             }
         }
@@ -347,8 +347,8 @@ namespace GenAlpha.Core
             {
                 words = GetAllWordsWithLength();
             }
-            MoveTimer.Interval = 100;
-            SpawnFallingTextTimer.Interval = wordSpawnInterval;
+            moveTimer.Interval = 100;
+            spawnFallingTextTimer.Interval = wordSpawnInterval;
         }
 
         /// <summary>
@@ -446,8 +446,8 @@ namespace GenAlpha.Core
         /// </summary>
         private void StopTimers()
         {
-            SpawnFallingTextTimer.Stop();
-            MoveTimer.Stop();
+            spawnFallingTextTimer.Stop();
+            moveTimer.Stop();
             spwanTimerIsRunning = false;
         }
 
@@ -465,8 +465,8 @@ namespace GenAlpha.Core
         /// </summary>
         private void InitializeTimers()
         {
-            MoveTimer.Elapsed += MoveTimer_Elapsed;
-            SpawnFallingTextTimer.Elapsed += SpawnTimer_Elapsed;
+            moveTimer.Elapsed += MoveTimer_Elapsed;
+            spawnFallingTextTimer.Elapsed += SpawnTimer_Elapsed;
         }
 
         #endregion

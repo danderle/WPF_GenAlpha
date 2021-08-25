@@ -7,7 +7,7 @@
     {
         #region Private Fields
 
-        private bool _showSideMenu = false;
+        private bool _showSideMenu;
 
         #endregion
 
