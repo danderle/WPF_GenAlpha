@@ -11,6 +11,7 @@
     <None Remove="Resources\Fonts\Font Awesome 5 Free-Regular-400.otf" />
     <None Remove="Resources\Fonts\Font Awesome 5 Free-Solid-900.otf" />
     <None Remove="Resources\Images\logo-flat.png" />
+    <None Remove="Resources\Images\tank.png" />
     <None Remove="Resources\Lato-Black.ttf" />
     <None Remove="Resources\Lato-BlackItalic.ttf" />
     <None Remove="Resources\Lato-Bold.ttf" />
@@ -131,6 +132,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Images\logo-flat.png" />
+    <Resource Include="Resources\Images\tank.png" />
     <Content Include="Resources\TextFiles\20kWords.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
