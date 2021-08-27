@@ -183,7 +183,7 @@ namespace GenAlpha.Core
         /// </summary>
         private async void GoToGameSelctionAsync()
         {
-            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.GameSelection);
+            DI.Service<ApplicationViewModel>().GoToPage(ApplicationPage.GameSelection);
 
             await Task.Delay(1);
         }

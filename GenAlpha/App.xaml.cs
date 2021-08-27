@@ -14,7 +14,7 @@ namespace GenAlpha
             base.OnStartup(e);
 
             // Setup Ioc
-            IoC.Setup();
+            DI.Setup();
 
             // Show the main window
             Current.MainWindow = new MainWindow();
