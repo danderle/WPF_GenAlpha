@@ -3,9 +3,17 @@ using System.Collections.Generic;
 
 namespace GenAlpha.Core
 {
+    /// <summary>
+    /// Static helper class for repeating algorithims
+    /// </summary>
     public static class Helper
     {
-
+        /// <summary>
+        /// Shuffles a list of a generic type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <returns></returns>
         public static List<T> Shuffle<T>(this List<T> list)
         {
             Random random = new Random();

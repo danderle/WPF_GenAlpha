@@ -58,6 +58,10 @@
 
         #region Public Methods
 
+        /// <summary>
+        /// Adds a settings item to the list
+        /// </summary>
+        /// <param name="settingsItem"></param>
         public void AddSettingsItems(SettingsListItemViewModel settingsItem)
         {
             SettingsList.SettingItems.Add(settingsItem);

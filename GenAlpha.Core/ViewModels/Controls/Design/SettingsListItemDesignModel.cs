@@ -22,7 +22,7 @@
         public SettingsListItemDesignModel()
         {
             Name = "Players";
-            SettingType = SettingTypes.Increment;
+            SettingType = SettingTypes.LanguageToggle;
             CurrentValue = 2;
         }
 

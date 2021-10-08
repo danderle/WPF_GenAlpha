@@ -21,10 +21,12 @@ namespace GenAlpha
             if (canvas == null)
                 return;
 
+            canvas.Focus();
+
             var childrenCount = canvas.Children.Count;
-            if (childrenCount > 1)
+            if (childrenCount > 2)
             {
-                canvas.Children.RemoveRange(1, childrenCount - 1);
+                canvas.Children.RemoveRange(2, childrenCount - 1);
             }
 
             var texts = TextObjects.Get(canvas);
@@ -113,9 +115,9 @@ namespace GenAlpha
                 return;
 
             var childrenCount = canvas.Children.Count;
-            if (childrenCount > 1)
+            if (childrenCount > 2)
             {
-                canvas.Children.RemoveRange(1, childrenCount-1);
+                canvas.Children.RemoveRange(2, childrenCount-1);
             }
 
             var texts = TextObjects.Get(canvas);
