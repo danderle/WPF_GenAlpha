@@ -7,5 +7,6 @@
     {
         Increment,
         Toggle,
+        LanguageToggle
     }
 }
