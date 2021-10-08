@@ -36,6 +36,11 @@ namespace GenAlpha.Core
         public string Content { get; set; } = string.Empty;
 
         /// <summary>
+        /// The current language
+        /// </summary>
+        public string CultureLanguage { get; set; } = string.Empty;
+
+        /// <summary>
         /// The current animation to run on value changed
         /// </summary>
         public ButtonAnimationTypes Animation { get; set; } = ButtonAnimationTypes.None;
@@ -80,8 +85,10 @@ namespace GenAlpha.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MemoryCardButtonViewModel()
+        public MemoryCardButtonViewModel(string content, string culture)
         {
+            Content = content;
+            CultureLanguage = culture;
             InitializeCommands();
             InitializeProperties();
         }
@@ -128,6 +135,7 @@ namespace GenAlpha.Core
             {
                 //If we revealed check for a match
                 case ButtonAnimationTypes.Reveal:
+                    Speech.Speak(Content, CultureLanguage);
                     CheckForMatch();
                     break;
                 //if there was a match set the match flag and reset the revealed
