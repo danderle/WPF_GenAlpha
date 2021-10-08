@@ -50,6 +50,15 @@
                     Style="{StaticResource ToggleSwitchCheckBox}" 
                     IsChecked="{Binding IsChecked}"
                     Visibility="{Binding SettingType, Converter={local:SettingTypeToVisibilityValueConverter}, ConverterParameter=Toggle}"/>
-        
+
+        <!--The toggle switch option, is visible if the setting is a toggle type-->
+        <CheckBox Grid.Column="1"
+                  Padding="3"
+                  Width="123"
+                  VerticalAlignment="Center"
+                    Style="{StaticResource LangguageToggleCheckBox}" 
+                    IsChecked="{Binding IsChecked}"
+                    Visibility="{Binding SettingType, Converter={local:SettingTypeToVisibilityValueConverter}, ConverterParameter=LanguageToggle}"/>
+
     </Grid>
 </UserControl>
