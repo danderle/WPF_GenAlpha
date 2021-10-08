@@ -9,6 +9,8 @@
 
         private readonly int speed = 1;
 
+        private string originalText = string.Empty;
+
         #endregion
 
         #region Properties
@@ -27,6 +29,11 @@
         /// The displayed text
         /// </summary>
         public string DisplayedText { get; set; }
+
+        /// <summary>
+        /// Returns the original text
+        /// </summary>
+        public string OriginalText => originalText;
 
         /// <summary>
         /// The x position of the text
@@ -51,6 +58,7 @@
         {
             Text = text;
             DisplayedText = text;
+            originalText = text;
             Xposition = xSartPosition;
             Yposition = 0;
             speed = setSpeed;
