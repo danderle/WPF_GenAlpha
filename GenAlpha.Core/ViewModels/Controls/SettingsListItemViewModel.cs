@@ -34,14 +34,14 @@ namespace GenAlpha.Core
         public bool IsChecked { get; set; } = false;
 
         /// <summary>
-        /// The Setting name/description text
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
         /// The items current value
         /// </summary>
         public int CurrentValue { get; set; }
+
+        /// <summary>
+        /// The Setting name/description text
+        /// </summary>
+        public string Name { get; set; }
 
         /// <summary>
         /// The type of setting for this item
@@ -109,11 +109,6 @@ namespace GenAlpha.Core
                 CurrentValue--;
                 CurrentValue = CurrentValue > MIN_WORD_LENGTH ? CurrentValue : 1;
             }
-            else if (Name.Contains("Use spawn"))
-            {
-                CurrentValue--;
-                CurrentValue = CurrentValue <= 0 ? 0 : 1;
-            }
             else if (Name.Contains("Word spawn time"))
             {
                 CurrentValue -= 100;
@@ -162,7 +157,6 @@ namespace GenAlpha.Core
                 CurrentValue += 1;
                 CurrentValue = CurrentValue > MAX_WORD_SPEED ? MAX_WORD_SPEED : CurrentValue;
             }
-
         }
 
         #endregion

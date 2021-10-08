@@ -16,6 +16,8 @@ namespace GenAlpha.Core
 
         private const string WORDS_TEXT_FILE_PATH = @"Resources\TextFiles\20kWords.txt";
 
+        private const int MOVE_TIMER_INTERVAL = 100;
+
         #endregion
 
         #region Private Members
@@ -24,11 +26,6 @@ namespace GenAlpha.Core
         /// Flag to let us know if the spawn timer is used
         /// </summary>
         private bool useSpawnTimer;
-
-        /// <summary>
-        /// Gets the setting value for word spawning intervals
-        /// </summary>
-        private int wordSpawnInterval;
 
         /// <summary>
         /// Word speed setting value
@@ -56,6 +53,11 @@ namespace GenAlpha.Core
         private bool spwanTimerIsRunning;
 
         /// <summary>
+        /// The culture language to use for the speech
+        /// </summary>
+        private static string cultureLanguageInfo = "en-EN";
+
+        /// <summary>
         /// the list of words to create falling texts from
         /// </summary>
         public List<string> words = new();
@@ -65,12 +67,28 @@ namespace GenAlpha.Core
         #region Properties
 
         /// <summary>
+        /// Flag to let us know if the game is over
+        /// </summary>
+        public bool GameOver { get; set; }
+
+        /// <summary>
+        /// Flag to let us know if the game is paused
+        /// </summary>
+        public bool GamePaused { get; set; }
+
+        /// <summary>
+        /// A flag to let us know if the game has not started
+        /// </summary>
+        public bool GameNotStarted { get; set; } = true;
+
+        /// <summary>
         /// A flag for letting us know if a new <see cref="FallingText"/> item has spawned
         /// </summary>
         public bool FallingTextItemSpawned { get; set; }
 
         /// <summary>
         /// A flag for letting us know if the <see cref="FallingText"/> and <see cref="Bullets"/> items have moved
+        /// Also triggers a visual update of the GUI
         /// </summary>
         public bool MoveItems { get; set; }
 
@@ -88,6 +106,16 @@ namespace GenAlpha.Core
         /// The current canvas width
         /// </summary>
         public int CanvasWidth { get; set; } = 100;
+
+        /// <summary>
+        /// Sets the tank width to 1/10 of the canvas width
+        /// </summary>
+        public int TankWidth => CanvasWidth / 10;
+
+        /// <summary>
+        /// Property for setting the tank positon
+        /// </summary>
+        public int TankPosition { get; set; }
 
         /// <summary>
         /// The current targeted text, which is not typed to completion
@@ -128,6 +156,11 @@ namespace GenAlpha.Core
         /// </summary>
         public ICommand KeyboardInputCommand { get; set; }
 
+        /// <summary>
+        /// The command to restart the game
+        /// </summary>
+        public ICommand RestartGameCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -139,15 +172,21 @@ namespace GenAlpha.Core
         {
             Sound.InitializeSounds();
 
+            // Init the settings for this game
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Word length", SettingTypes.Increment, 1));
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use spawn timer", SettingTypes.Toggle, 0));
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Word spawn time (ms)", SettingTypes.Increment, 5000));
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Word speed", SettingTypes.Increment, 1));
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Language", SettingTypes.LanguageToggle, (int)Languages.English));
 
+            // Register the toggle seetings menu action
             TopBar.ToggelSettingsMenu = ToggleSettingsMenu;
+
             InitializeCommands();
             InitializeTimers();
-            RestartGame();
+
+            // Zero all the current game values
+            ResetGame();
         }
 
         #endregion
@@ -162,11 +201,13 @@ namespace GenAlpha.Core
             SideMenu.ShowSideMenu = !SideMenu.ShowSideMenu;
             if (!SideMenu.ShowSideMenu)
             {
-                RestartGame();
-                AddItemToCanvas();
+                // if not showing reset the game
+                ResetGame();
+                GamePaused = false;
             }
             else
             {
+                // if showing stop all timers
                 StopTimers();
             }
         }
@@ -184,16 +225,20 @@ namespace GenAlpha.Core
             bool shot = false;
             string letter = obj.ToString();
 
+            // If currently targeting a text
             if (CurrentTextTarget != string.Empty)
             {
+                // Get the targeted item in list
                 var item = FallingTexts.Find(t => t.Text == CurrentTextTarget);
                 if(item != null)
                 {
                     shot = FireBulletIfInputMatches(item, letter[0]);
                 }
             }
+            // if no text has been targeted
             else
             {
+                // cycle through all the texts and match if typed letter matches first letter of any text
                 for(int i = 0; i < FallingTexts.Count; i++)
                 {
                     FallingText item = FallingTexts[i];
@@ -210,6 +255,7 @@ namespace GenAlpha.Core
 
             if(shot)
             {
+                // add score and play sound
                 TopBar.Score++;
                 Sound.PlayAsync(SoundTypes.Shot);
             }
@@ -222,26 +268,35 @@ namespace GenAlpha.Core
         /// <summary>
         /// Adds <see cref="FallingText"/> items to the list
         /// </summary>
-        private void AddItemToCanvas()
+        private void StartPauseGame()
         {
-            if (!useSpawnTimer)
+            if(GameNotStarted)
             {
-                SpawnTimer_Elapsed(this, null);
-                moveTimer.Start();
+                GameNotStarted = false;
+                GamePaused = false;
+                if (!useSpawnTimer)
+                {
+                    SpawnTimer_Elapsed(this, null);
+                    moveTimer.Start();
+                    GamePaused = false;
+                }
+                // If timer not running start the timers
+                else if (!spwanTimerIsRunning)
+                {
+                    SpawnTimer_Elapsed(this, null);
+                    StartTimers();
+                    GamePaused = false;
+                }
             }
-            // If timer not running start the timers
-            else if (!spwanTimerIsRunning)
+            else if (!GamePaused)
             {
-                SpawnTimer_Elapsed(this, null);
-                spawnFallingTextTimer.Start();
-                moveTimer.Start();
-                spwanTimerIsRunning = true;
+                GamePaused = true;
+                StopTimers();
             }
-            else if (spwanTimerIsRunning)
+            else
             {
-                moveTimer.Stop();
-                spawnFallingTextTimer.Stop();
-                spwanTimerIsRunning = false;
+                GamePaused = false;
+                StartTimers();
             }
         }
 
@@ -277,8 +332,9 @@ namespace GenAlpha.Core
         private void SpawnTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             var random = new Random();
-            var randomNum = random.Next(0, CanvasWidth);
-            FallingTexts.Add(new FallingText(words.Last(), randomNum, wordSpeed));
+            var newWord = words.Last();
+            var randomPositon = random.Next(0, CanvasWidth - (newWord.Length * 15));
+            FallingTexts.Add(new FallingText(newWord, randomPositon, wordSpeed));
             words.RemoveAt(words.Count - 1);
             if(words.Count == 0)
             {
@@ -308,11 +364,15 @@ namespace GenAlpha.Core
                 }
                 else if (setting.Name.Contains("Word spawn time"))
                 {
-                    wordSpawnInterval = setting.CurrentValue;
+                    spawnFallingTextTimer.Interval = setting.CurrentValue;
                 }
                 else if (setting.Name.Contains("Word speed"))
                 {
                     wordSpeed = setting.CurrentValue;
+                }
+                else if (setting.Name.Contains("Language"))
+                {
+                    cultureLanguageInfo = setting.IsChecked? "en-EN" : "de-DE";
                 }
             }
         }
@@ -337,9 +397,12 @@ namespace GenAlpha.Core
         /// <summary>
         /// Restarts game
         /// </summary>
-        private void RestartGame()
+        private void ResetGame()
         {
             CurrentTextTarget = string.Empty;
+            GameOver = false;
+            GameNotStarted = true;
+            TopBar.Score = 0;
             Bullets.Clear();
             FallingTexts.Clear();
             GetGameSettings();
@@ -347,8 +410,8 @@ namespace GenAlpha.Core
             {
                 words = GetAllWordsWithLength();
             }
-            moveTimer.Interval = 100;
-            spawnFallingTextTimer.Interval = wordSpawnInterval;
+            TankPosition = (CanvasWidth - TankWidth) / 2;
+            MoveItems = !MoveItems;
         }
 
         /// <summary>
@@ -362,15 +425,21 @@ namespace GenAlpha.Core
             bool shot = item.Text[0] == inputLetter;
             if (shot)
             {
+                // if match add a bullet
                 Bullets.Add(new Bullet(item.Xposition, CanvasHeight - 40, item));
+                
+                // set tank to text position
+                TankPosition = item.Xposition - (TankWidth / 2);
                 if (item.Text.Length > 1)
                 {
+                    // if word is longer than 1 char set target
                     item.Targeted = true;
                     item.Text = item.Text.Substring(1);
                     CurrentTextTarget = item.Text;
                 }
                 else
                 {
+                    // if word is destroyed erase any set target
                     item.Text = string.Empty;
                     CurrentTextTarget = string.Empty;
                     if(!useSpawnTimer)
@@ -400,15 +469,20 @@ namespace GenAlpha.Core
                 {
                     if (item.DisplayedText.Length > 1)
                     {
+                        // subtract front letter
                         item.DisplayedText = item.DisplayedText.Substring(1);
+                        textHit = true;
                     }
                     else
                     {
+                        // Speak word
+                        Speech.Speak(item.OriginalText, cultureLanguageInfo);
+
+                        // remove word
                         FallingTexts.Remove(item);
                     }
                     Bullets.Remove(bullet);
                     i--;
-                    textHit = true;
                     MoveItems ^= true;
                 }
             }
@@ -429,14 +503,16 @@ namespace GenAlpha.Core
                 }
 
                 item.Move();
-                if (item.Yposition > CanvasHeight)
+                if (item.Yposition >= CanvasHeight - TankWidth)
                 {
-                    if(CurrentTextTarget == item.Text)
-                    {
-                        CurrentTextTarget = string.Empty;
-                    }
-                    FallingTexts.RemoveAt(i);
-                    --i;
+                    StopTimers();
+                    GameOver = true;
+                    //if(CurrentTextTarget == item.Text)
+                    //{
+                    //    CurrentTextTarget = string.Empty;
+                    //}
+                    //FallingTexts.RemoveAt(i);
+                    //--i;
                 }
             }
         }
@@ -452,12 +528,24 @@ namespace GenAlpha.Core
         }
 
         /// <summary>
+        /// Starts all runnning timers
+        /// </summary>
+        private void StartTimers()
+        {
+            spawnFallingTextTimer.Start();
+            moveTimer.Start();
+            spwanTimerIsRunning = true;
+        }
+
+
+        /// <summary>
         /// Initialized the commands
         /// </summary>
         private void InitializeCommands()
         {
-            AddItemToCanvasCommand = new RelayCommand(AddItemToCanvas);
+            AddItemToCanvasCommand = new RelayCommand(StartPauseGame);
             KeyboardInputCommand = new RelayParameterizedCommand(KeyboardInput);
+            RestartGameCommand = new RelayCommand(ResetGame);
         }
 
         /// <summary>
@@ -466,6 +554,7 @@ namespace GenAlpha.Core
         private void InitializeTimers()
         {
             moveTimer.Elapsed += MoveTimer_Elapsed;
+            moveTimer.Interval = MOVE_TIMER_INTERVAL;
             spawnFallingTextTimer.Elapsed += SpawnTimer_Elapsed;
         }
 
