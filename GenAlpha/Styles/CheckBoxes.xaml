@@ -31,4 +31,35 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!--Toggle Switch-->
+    <Style x:Key="LangguageToggleCheckBox" TargetType="{x:Type CheckBox}">
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid SnapsToDevicePixels="True">
+                        <Border Background="{StaticResource GreenBrush}" CornerRadius="5" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="EN" Margin="{TemplateBinding Padding}" Foreground="{StaticResource DarkWhiteBrush}" FontFamily="{StaticResource LatoBold}"/>
+                            <TextBlock Grid.Column="1" Text="DE" Margin="{TemplateBinding Padding}" Foreground="{StaticResource DarkWhiteBrush}" FontFamily="{StaticResource LatoBold}"/>
+                            <Border x:Name="Switch" Grid.Column="0" Background="{StaticResource VeryDarkBlueBrush}" BorderBrush="{StaticResource BlueGreenBrush}" BorderThickness="3" CornerRadius="2"/>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Grid.Column" TargetName="Switch" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Grid.Column" TargetName="Switch" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
