@@ -22,6 +22,8 @@ namespace GenAlpha.Core
 
         private string specialCharacters = "!&?()#%=-_";
 
+        private string culturLanguage = "en-EN";
+
         private List<char> randomCardValues = new List<char>();
 
         private List<char> usedChars = new List<char>();
@@ -290,6 +292,8 @@ namespace GenAlpha.Core
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use uppercase letters", SettingTypes.Toggle));
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use numbers", SettingTypes.Toggle));
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use special characters", SettingTypes.Toggle));
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Language", SettingTypes.LanguageToggle, (int)Languages.English));
+
             SideMenu.ShowSideMenu = false;
             RestartGame();
         }
@@ -354,6 +358,10 @@ namespace GenAlpha.Core
                         }
                     }
                 }
+                else if (item.Name.Contains("Language"))
+                {
+                    culturLanguage = item.IsChecked ? "en-EN" : "de-DE";
+                }
                 else if (item.IsChecked)
                 {
                     if (item.Name.Contains("lowercase"))
@@ -385,15 +393,15 @@ namespace GenAlpha.Core
             //Creates cards for every row and column
             while (MemoryCards.Count < (NumberOfRows * NumberOfColumns))
             {
-                var card = new MemoryCardButtonViewModel();
-                //Gets a random char
-                card.Content = GetRandomChar().ToString();
+                // gets random char
+                var card = new MemoryCardButtonViewModel(GetRandomChar().ToString(), culturLanguage);
 
                 //Hooks into the action calls
                 card.CardRevealed = CardRevealed;
                 card.ResetRevealed = ResetRevealed;
                 card.CheckForMatch = CheckForMatch;
                 count++;
+
                 //Creates a matching card
                 var match = new MemoryCardButtonViewModel(card);
                 match.CardRevealed = CardRevealed;
@@ -444,7 +452,8 @@ namespace GenAlpha.Core
                         CurrentPlayer = PlayerTurn.Player2;
                     break;
                 case PlayerTurn.Player2:
-                    CurrentPlayer = PlayerTurn.Player3;
+                    if(Player3)
+                        CurrentPlayer = PlayerTurn.Player3;
                     break;
                 case PlayerTurn.Player3:
                     CurrentPlayer = PlayerTurn.Player1;
