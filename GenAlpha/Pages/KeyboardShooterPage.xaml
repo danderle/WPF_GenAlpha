@@ -42,7 +42,8 @@
                 <Image Source="../Resources/Images/tank.png"
                        Width="{Binding TankWidth}"
                        Canvas.Bottom="0"
-                       Canvas.Left="{Binding TankPosition}">
+                       Canvas.Left="{Binding TankPosition}"
+                       IsEnabled="{Binding GameOver, Converter={local:InverseBoolValueConverter}}">
                     <Image.InputBindings>
                         <MouseBinding Gesture="LeftClick"
                                       Command="{Binding AddItemToCanvasCommand}"/>
