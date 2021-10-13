@@ -14,19 +14,19 @@ namespace GenAlpha.Core
     {
         #region Private Fields
 
-        private string lowercase = "abcdefghijklmnopqrstuvwxyz";
+        private readonly string lowercase = "abcdefghijklmnopqrstuvwxyz";
 
-        private string uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private readonly string uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        private string numbers = "1234567890";
+        private readonly string numbers = "1234567890";
 
-        private string specialCharacters = "!&?()#%=-_";
+        private readonly string specialCharacters = "!&?()#%=-_";
 
         private string culturLanguage = "en-EN";
 
-        private List<char> randomCardValues = new List<char>();
+        private readonly List<char> randomCardValues = new();
 
-        private List<char> usedChars = new List<char>();
+        private readonly List<char> usedChars = new();
 
         #endregion
 
@@ -115,11 +115,6 @@ namespace GenAlpha.Core
         /// The command for counting the revealed cards
         /// </summary>
         public ICommand CardRevealedCommand { get; set; }
-
-        /// <summary>
-        /// The command to reset the cards revealed
-        /// </summary>
-        public ICommand ResetCardsRevealedCommand { get; set; }
 
         /// <summary>
         /// The command to restart the game
@@ -275,7 +270,6 @@ namespace GenAlpha.Core
         private void InitializeCommands()
         {
             CardRevealedCommand = new RelayCommand(() => CardsRevealed++);
-            ResetCardsRevealedCommand = new RelayCommand(() => CardsRevealed = 0);
             RestartGameCommand = new RelayCommand(RestartGame);
             ToggleSideMenuCommand = new RelayCommand(ToggleSideMenu);
             ToGameSelectionCommand = new RelayCommand(GoToGameSelctionAsync);
@@ -292,7 +286,7 @@ namespace GenAlpha.Core
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use uppercase letters", SettingTypes.Toggle));
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use numbers", SettingTypes.Toggle));
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use special characters", SettingTypes.Toggle));
-            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Language", SettingTypes.LanguageToggle, (int)Languages.English));
+            SideMenu.AddSettingsItems(new SettingsListItemViewModel("Language", SettingTypes.LanguageToggle) { IsChecked = false });
 
             SideMenu.ShowSideMenu = false;
             RestartGame();
@@ -390,6 +384,8 @@ namespace GenAlpha.Core
         private void CreateMemoryCards()
         {
             int count = 0;
+            RevealedCounter = 0;
+
             //Creates cards for every row and column
             while (MemoryCards.Count < (NumberOfRows * NumberOfColumns))
             {
