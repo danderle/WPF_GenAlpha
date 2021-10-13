@@ -115,8 +115,14 @@
             <Button Style="{StaticResource RestartButton}"
                 Content="{StaticResource FontAwesomeRotateLeft}"
                 Command="{Binding RestartGameCommand}"/>
+        </Grid>
 
-        </Grid>        
+        <!--Side menu overlay-->
+        <Border Grid.Row="1" 
+                Background="{StaticResource GrayBlueBrush}"
+                Opacity="0.5"
+                Visibility="{Binding SideMenu.ShowSideMenu, Converter={local:BoolToVisibilityValueConverter}}"/>
+
         <!--Side Menu/Game settings menu-->
         <local:SideMenuControl Grid.Row="1" 
                                HorizontalAlignment="Right"
