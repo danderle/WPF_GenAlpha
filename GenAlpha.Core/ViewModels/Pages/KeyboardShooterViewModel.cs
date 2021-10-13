@@ -170,8 +170,6 @@ namespace GenAlpha.Core
         /// </summary>
         public KeyboardShooterViewModel()
         {
-            Sound.InitializeSounds();
-
             // Init the settings for this game
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Word length", SettingTypes.Increment, 1));
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use spawn timer", SettingTypes.Toggle, 0));

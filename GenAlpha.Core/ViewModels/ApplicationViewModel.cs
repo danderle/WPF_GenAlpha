@@ -5,10 +5,28 @@
     /// </summary>
     public class ApplicationViewModel : BaseViewModel
     {
+        #region Properties
+
         /// <summary>
         /// The current page of the application
         /// </summary>
-        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.KeyboardShooter;
+        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Memory;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public ApplicationViewModel()
+        {
+            Sound.InitializeSounds();
+        }
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Navigates to the specified page
@@ -17,6 +35,8 @@
         public void GoToPage(ApplicationPage page)
         {
             CurrentPage = page;
-        }
+        } 
+
+        #endregion
     }
 }
