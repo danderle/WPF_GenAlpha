@@ -100,6 +100,7 @@ namespace GenAlpha.Core
         {
             InitializeCommands();
             Content = src.Content;
+            CultureLanguage = src.CultureLanguage;
             RgbHexString = src.RgbHexString;
         }
 
