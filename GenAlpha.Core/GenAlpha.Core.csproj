@@ -11,4 +11,8 @@
     <PackageReference Include="System.Speech" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Memory\" />
+  </ItemGroup>
+
 </Project>

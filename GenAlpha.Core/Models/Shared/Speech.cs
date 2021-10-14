@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Speech.Synthesis;
+using System.Threading.Tasks;
 
 namespace GenAlpha.Core
 {
@@ -45,7 +46,19 @@ namespace GenAlpha.Core
             var prompt = new PromptBuilder(new CultureInfo(culture));
             prompt.AppendText(text);
             synth.SpeakAsync(prompt);
+        }
 
+        /// <summary>
+        /// Reads out the given text in the given language
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="culture"></param>
+        public static async Task SpeakAsync(string text, string culture)
+        {
+            // Speak word
+            var prompt = new PromptBuilder(new CultureInfo(culture));
+            prompt.AppendText(text);
+            await Task.Run(() => synth.Speak(prompt));
         }
 
         #endregion
