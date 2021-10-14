@@ -27,40 +27,37 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 
+                <!--Button for returning to the game selection pagee-->
                 <Button Content="{StaticResource FontAwesomeAngleLeft}" 
-                        Command="{Binding ToGameSelectionCommand}"
-                        />
-                <StackPanel Orientation="Horizontal"
-                            Grid.ColumnSpan="3"
-                            HorizontalAlignment="Center">
-                    <TextBlock Text="Player1" 
-                               Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player1}"/>
-                    <TextBlock Margin="5 0 0 0"
-                               Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player1}">
-                        <Run Text="Score:" />
-                        <Run Text="{Binding ScorePlayer1}" />
-                    </TextBlock>
-                    <TextBlock Text="Player2"
-                               Margin="30 0 0 0"
-                               Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player2}"
-                               Visibility="{Binding Player2, Converter={local:BoolToVisibilityValueConverter}}"/>
-                    <TextBlock Margin="5 0 0 0"
-                               Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player2}"
-                               Visibility="{Binding Player2, Converter={local:BoolToVisibilityValueConverter}}">
-                        <Run Text="Score:" />
-                        <Run Text="{Binding ScorePlayer2}" />
-                    </TextBlock>
-                    <TextBlock Text="Player3" 
-                               Margin="30 0 0 0"
-                               Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player3}"
-                               Visibility="{Binding Player3, Converter={local:BoolToVisibilityValueConverter}}"/>
-                    <TextBlock Margin="5 "
-                               Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}, ConverterParameter=Player3}"
-                               Visibility="{Binding Player3, Converter={local:BoolToVisibilityValueConverter}}">
-                        <Run Text="Score:" />
-                        <Run Text="{Binding ScorePlayer3}" />
-                    </TextBlock>
-                </StackPanel>
+                        Command="{Binding ToGameSelectionCommand}"/>
+                
+                <!--The currentplayers and their scores-->
+                <ItemsControl ItemsSource="{Binding Players}"
+                              Grid.ColumnSpan="3"
+                              HorizontalAlignment="Center">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Position}" 
+                                           Margin="30 0 0 0"
+                                            Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}}"/>
+                                <TextBlock Margin="0 0 30 0"
+                                            Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}}">
+                                <Run Text="  Score:" />
+                                <Run Text="{Binding Score}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+                <!--Settings Button-->
                 <Button Grid.Column="2"
                         Content="{StaticResource FontAwesomeCog}" 
                         FontFamily="{StaticResource FontAwesomeSolid}"
@@ -104,7 +101,7 @@
                        FontFamily="{StaticResource LatoBold}"
                        Foreground="{StaticResource GoldBrush}"
                        FontSize="{StaticResource FontSizeXXLarge}">
-                <Run Text="{Binding CurrentPlayer}" />
+                <Run Text="{Binding Winner}" />
                 <Run Text="Winner" />
                 <LineBreak />
                 <Run Text="Score: "/>

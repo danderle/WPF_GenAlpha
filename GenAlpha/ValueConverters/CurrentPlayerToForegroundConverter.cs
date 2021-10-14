@@ -12,7 +12,7 @@ namespace GenAlpha
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value.ToString() == parameter.ToString())
+            if((bool)value)
             {
                 return new SolidColorBrush((Color)Application.Current.FindResource("Green"));
             }

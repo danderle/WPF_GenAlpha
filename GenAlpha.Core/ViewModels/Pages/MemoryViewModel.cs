@@ -35,42 +35,17 @@ namespace GenAlpha.Core
         /// <summary>
         /// Flag to let us know if the game has ended
         /// </summary>
-        public bool GameOver { get; set; } = false;
-
-        /// <summary>
-        /// Flag to let us know if player 2 is playing
-        /// </summary>
-        public bool Player2 { get; set; } = false;
-
-        /// <summary>
-        /// Flag to let us know if player 3 is playing
-        /// </summary>
-        public bool Player3 { get; set; } = false;
-
+        public bool GameOver { get; set; }
+        
         /// <summary>
         /// A flag to let us know if we can reveal another card
         /// </summary>
         public bool CanReveal => CardsRevealed < 2;
 
         /// <summary>
-        /// The score of player 1
-        /// </summary>
-        public int ScorePlayer1 { get; set; } = 0;
-
-        /// <summary>
-        /// The score of player 2
-        /// </summary>
-        public int ScorePlayer2 { get; set; } = 0;
-
-        /// <summary>
-        /// The score of player 3
-        /// </summary>
-        public int ScorePlayer3 { get; set; } = 0;
-
-        /// <summary>
         /// The winner score
         /// </summary>
-        public int WinnerScore { get; set; } = 0;
+        public int WinnerScore { get; set; }
 
         /// <summary>
         /// The current players turn
@@ -78,14 +53,19 @@ namespace GenAlpha.Core
         public PlayerTurn CurrentPlayer { get; set; } = PlayerTurn.Player1;
 
         /// <summary>
+        /// The winner
+        /// </summary>
+        public PlayerTurn Winner { get; set; } = PlayerTurn.Player1;
+
+        /// <summary>
         /// A counter for the number of cards revealed
         /// </summary>
-        public int CardsRevealed { get; set; } = 0;
+        public int CardsRevealed { get; set; }
 
         /// <summary>
         /// Rows for the Memmory field
         /// </summary>
-        public int NumberOfRows { get; set; } = 0;
+        public int NumberOfRows { get; set; }
 
         /// <summary>
         /// Columns for the memory field
@@ -95,7 +75,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// A counter for the current revealed cards
         /// </summary>
-        public static int RevealedCounter { get; private set; } = 0;
+        public static int RevealedCounter { get; private set; }
 
         /// <summary>
         /// The side menu view model
@@ -106,6 +86,11 @@ namespace GenAlpha.Core
         /// The list of all the memory cards
         /// </summary>
         public ObservableCollection<MemoryCardButtonViewModel> MemoryCards { get; set; } = new ObservableCollection<MemoryCardButtonViewModel>();
+
+        /// <summary>
+        /// The list of playing players
+        /// </summary>
+        public ObservableCollection<Player> Players { get; set; }
 
         #endregion
 
@@ -297,18 +282,7 @@ namespace GenAlpha.Core
         /// </summary>
         private void IncreaseScore()
         {
-            switch (CurrentPlayer)
-            {
-                case PlayerTurn.Player1:
-                    ScorePlayer1++;
-                    break;
-                case PlayerTurn.Player2:
-                    ScorePlayer2++;
-                    break;
-                case PlayerTurn.Player3:
-                    ScorePlayer3++;
-                    break;
-            }
+            Players[(int)CurrentPlayer].Score++; ;
         }
 
         /// <summary>
@@ -320,20 +294,20 @@ namespace GenAlpha.Core
             {
                 if (item.Name.Contains("Players"))
                 {
-                    switch(item.CurrentValue)
+                    Players = new ObservableCollection<Player>()
                     {
-                        case 1:
-                            Player2 = false;
-                            break;
-                        case 2:
-                            Player2 = true;
-                            Player3 = false;
-                            break;
-                        case 3:
-                            Player2 = true;
-                            Player3 = true;
-                            break;
+                        new Player(PlayerTurn.Player1)
+                    };
+                    CurrentPlayer = PlayerTurn.Player1;
+                    if(item.CurrentValue >= 2)
+                    {
+                        Players.Add(new Player(PlayerTurn.Player2));
+                        if(item.CurrentValue == 3)
+                        {
+                            Players.Add(new Player(PlayerTurn.Player3));
+                        }
                     }
+                    
                 }
                 else if (item.Name.Contains("cards"))
                 {
@@ -441,19 +415,16 @@ namespace GenAlpha.Core
         /// </summary>
         private void NextPlayer()
         {
-            switch(CurrentPlayer)
+            int index = (int)CurrentPlayer;
+            index++;
+            if(index >= Players.Count)
             {
-                case PlayerTurn.Player1:
-                    if(Player2)
-                        CurrentPlayer = PlayerTurn.Player2;
-                    break;
-                case PlayerTurn.Player2:
-                    if(Player3)
-                        CurrentPlayer = PlayerTurn.Player3;
-                    break;
-                case PlayerTurn.Player3:
-                    CurrentPlayer = PlayerTurn.Player1;
-                    break;
+                index = 0;
+            }
+            CurrentPlayer = (PlayerTurn)index;
+            foreach(Player player in Players)
+            {
+                player.CurrentPlayer = player.Position == CurrentPlayer;
             }
         }
 
@@ -463,9 +434,7 @@ namespace GenAlpha.Core
         private void ResetPlayers()
         {
             CurrentPlayer = PlayerTurn.Player1;
-            ScorePlayer1 = 0;
-            ScorePlayer2 = 0;
-            ScorePlayer3 = 0;
+            GetGameSettings();
         }
 
         /// <summary>
@@ -473,18 +442,10 @@ namespace GenAlpha.Core
         /// </summary>
         private void SetWinnerScore()
         {
-            switch (CurrentPlayer)
-            {
-                case PlayerTurn.Player1:
-                    WinnerScore = ScorePlayer1;
-                    break;
-                case PlayerTurn.Player2:
-                    WinnerScore = ScorePlayer2;
-                    break;
-                case PlayerTurn.Player3:
-                    WinnerScore = ScorePlayer3;
-                    break;
-            }
+            var list = Players.ToList();
+            list.Sort((Player a, Player b) => { return a.Score.CompareTo(b.Score); });
+            Winner = list.Last().Position;
+            WinnerScore = list.Last().Score;
         }
         #endregion
 
