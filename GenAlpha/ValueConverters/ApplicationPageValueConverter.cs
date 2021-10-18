@@ -21,6 +21,8 @@ namespace GenAlpha
                     return new MemoryPage();
                 case ApplicationPage.KeyboardShooter:
                     return new KeyboardShooterPage();
+                case ApplicationPage.Connect4:
+                    return new Connect4Page();
                 default:
                     Debugger.Break();
                     return null;

@@ -13,6 +13,9 @@ namespace GenAlpha.Core
 
         #region Properties
 
+        /// <summary>
+        /// The list of games available
+        /// </summary>
         public List<GameSelectionButtonViewModel> Games { get; set; } = new List<GameSelectionButtonViewModel>();
 
         #endregion
@@ -26,7 +29,7 @@ namespace GenAlpha.Core
         {
             Games.Add(new GameSelectionButtonViewModel("Memory Game", ApplicationPage.Memory));
             Games.Add(new GameSelectionButtonViewModel("Keyboard shooter", ApplicationPage.KeyboardShooter));
-            Games.Add(new GameSelectionButtonViewModel("Game 3", ApplicationPage.Memory));
+            Games.Add(new GameSelectionButtonViewModel("Connect-4", ApplicationPage.Connect4));
             Games.Add(new GameSelectionButtonViewModel("Game 4", ApplicationPage.Memory));
             Games.Add(new GameSelectionButtonViewModel("Game 5", ApplicationPage.Memory));
         }

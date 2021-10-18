@@ -8,5 +8,6 @@
         GameSelection,
         Memory,
         KeyboardShooter,
+        Connect4,
     }
 }
