@@ -1,40 +1,53 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 
 namespace GenAlpha.Core
 {
     /// <summary>
     /// The view model for the connect4 buttons
     /// </summary>
-    public class Connect4ButtonViewModel : BaseViewModel
+    public class Connect4ChipViewModel : BaseViewModel
     {
-        #region Fields
-
-        private byte[] rgbPlayer1 = { 0xFF, 0x33, 0x33 }; // Red player 1
-        private byte[] rgbPlayer2 = { 0xFF, 0xFF, 0x33 }; // Yellow Player 2
-
-        #endregion
-
         #region Properties
 
         /// <summary>
-        /// Flag for letting us know if its still available
+        /// Flag for letting us know if its set by a player
         /// </summary>
-        public bool Available { get; set; } = true;
+        public bool PlayerSet { get; set; }
 
         /// <summary>
-        /// Flag for letting us know if this cards is currently animating
+        /// Flag to let us know if it has been clicked
         /// </summary>
-        public bool IsAnimating { get; set; } = false;
+        public bool IsClicked { get; set; }
 
         /// <summary>
-        /// The current animation to run on value changed
+        /// The index of the button
         /// </summary>
-        public ButtonAnimationTypes Animation { get; set; } = ButtonAnimationTypes.None;
+        public int Index { get; }
+
+        /// <summary>
+        /// The column in which this button is in
+        /// </summary>
+        public int Column { get; }
+
+        /// <summary>
+        /// The row in which this button is on
+        /// </summary>
+        public int Row { get; }
 
         /// <summary>
         /// The rgb in bytes
         /// </summary>
         public byte[] RgbHex { get; set; }
+
+        #region Actions
+
+        /// <summary>
+        /// Trigger action when chip is clicked
+        /// </summary>
+        public Action<int> ChipClicked;
+
+        #endregion
 
         #endregion
 
@@ -57,10 +70,12 @@ namespace GenAlpha.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public Connect4ButtonViewModel()
+        public Connect4ChipViewModel(int row, int col, int index)
         {
+            Row = row;
+            Column = col;
+            Index = index;
             InitializeCommands();
-            InitializeProperties();
         }
 
         #endregion
@@ -72,8 +87,7 @@ namespace GenAlpha.Core
         /// </summary>
         private void Click()
         {
-            RgbHex = Connect4ViewModel.CurrentPlayer == PlayerTurn.Player1 ? rgbPlayer1 : rgbPlayer2;
-            Available = false;
+            ChipClicked(Column);
         }
 
         /// <summary>
@@ -82,11 +96,6 @@ namespace GenAlpha.Core
         private void FinishedAnimating()
         {
         }
-
-        #endregion
-
-        #region Public Methods
-
 
         #endregion
 
@@ -101,13 +110,6 @@ namespace GenAlpha.Core
             FinishedAnimatingCommand = new RelayCommand(FinishedAnimating);
         }
 
-        /// <summary>
-        /// Initializes all the properties
-        /// </summary>
-        private void InitializeProperties()
-        {
-        }
-            
         #endregion
     }
 }
