@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -11,6 +9,14 @@ namespace GenAlpha.Core
     /// </summary>
     public class Connect4ViewModel : BaseViewModel
     {
+        #region Fields
+
+        private readonly byte[] rgbPlayer1 = { 0xFF, 0x33, 0x33 }; // Red player 1
+
+        private readonly byte[] rgbPlayer2 = { 0xFF, 0xFF, 0x33 }; // Yellow Player 2
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -51,7 +57,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// The list of the connect4 field
         /// </summary>
-        public ObservableCollection<Connect4ButtonViewModel> Field { get; set; } = new ObservableCollection<Connect4ButtonViewModel>();
+        public ObservableCollection<Connect4ChipViewModel> Field { get; set; } = new ObservableCollection<Connect4ChipViewModel>();
 
         /// <summary>
         /// The list of playing players
@@ -128,6 +134,40 @@ namespace GenAlpha.Core
 
         #endregion
 
+        #region Action Methods
+
+        /// <summary>
+        /// The action method which is triggered when a chip has been clicked
+        /// </summary>
+        /// <param name="column"></param>
+        private void ChipClicked(int column)
+        {
+            int col = column;
+            bool chipSet = false;
+
+            // Cycles from the bottom row up to check which chip is not set
+            for(int i = NumberOfRows-1; i >= 0; i--)
+            {
+                int index = NumberOfColumns * i + col;
+
+                // true if no player has set this chip
+                if (!Field[index].PlayerSet)
+                {
+                    Field[index].PlayerSet = true;
+                    Field[index].RgbHex = CurrentPlayer == PlayerTurn.Player1? rgbPlayer1 : rgbPlayer2;
+                    chipSet = true;
+                    break;
+                }
+            }
+            // if a chip has been set, switch players
+            if(chipSet)
+            {
+                SwitchPlayer();
+            }
+        }
+
+        #endregion
+
         #region Private Helpers
 
         /// <summary>
@@ -147,13 +187,32 @@ namespace GenAlpha.Core
         {
             SideMenu.ShowSideMenu = false;
             CreatePlayers();
-            Field = new ObservableCollection<Connect4ButtonViewModel>();
-            for(int i = 0; i < NumberOfRows * NumberOfColumns; i++)
-            {
-                Field.Add(new Connect4ButtonViewModel());
-            }
+            CreateGameField();
             
             RestartGame();
+        }
+
+        /// <summary>
+        /// Creates all the chips inside the field and sets the column, row and index of the chip
+        /// </summary>
+        private void CreateGameField()
+        {
+            Field = new ObservableCollection<Connect4ChipViewModel>();
+            int row = 0;
+            int col = 0;
+            for (int i = 0; i < NumberOfRows * NumberOfColumns; i++)
+            {
+                if (col >= NumberOfColumns)
+                {
+                    col = 0;
+                    row++;
+                }
+                var index = NumberOfColumns * row + col;
+                var chip = new Connect4ChipViewModel(row, col, index);
+                chip.ChipClicked = ChipClicked;
+                Field.Add(chip);
+                col++;
+            }
         }
 
         /// <summary>
@@ -161,24 +220,6 @@ namespace GenAlpha.Core
         /// </summary>
         private void GetGameSettings()
         {
-        }
-
-        /// <summary>
-        /// Sets the next player as current player
-        /// </summary>
-        private void NextPlayer()
-        {
-            int index = (int)CurrentPlayer;
-            index++;
-            if(index >= Players.Count)
-            {
-                index = 0;
-            }
-            CurrentPlayer = (PlayerTurn)index;
-            foreach(Player player in Players)
-            {
-                player.CurrentPlayer = player.Position == CurrentPlayer;
-            }
         }
 
         /// <summary>
@@ -191,16 +232,8 @@ namespace GenAlpha.Core
         }
 
         /// <summary>
-        /// Sets the winner score
+        /// Creates the players
         /// </summary>
-        private void SetWinnerScore()
-        {
-            var list = Players.ToList();
-            list.Sort((Player a, Player b) => { return a.Score.CompareTo(b.Score); });
-            Winner = list.Last().Position;
-            WinnerScore = list.Last().Score;
-        }
-
         private void CreatePlayers()
         {
             Players = new ObservableCollection<Player>()
@@ -208,6 +241,14 @@ namespace GenAlpha.Core
                 new Player(PlayerTurn.Player1),
                 new Player(PlayerTurn.Player2),
             };
+        }
+
+        /// <summary>
+        /// Switches the players turn
+        /// </summary>
+        private void SwitchPlayer()
+        {
+            CurrentPlayer = CurrentPlayer == PlayerTurn.Player1 ? PlayerTurn.Player2 : PlayerTurn.Player1;
         }
 
         #endregion
