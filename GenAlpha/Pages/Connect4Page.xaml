@@ -84,7 +84,6 @@
                     <Button Style="{StaticResource Connect4Button}" 
                             DataContext="{Binding }" 
                             Background="{Binding RgbHex, Converter={local:RGBhexToColorConverter}}"
-                            IsEnabled="{Binding Available}"
                             Command="{Binding ClickCommand}"
                             />
                 </DataTemplate>
@@ -104,8 +103,8 @@
                 <Run Text="{Binding Winner}" />
                 <Run Text="Winner" />
                 <LineBreak />
-                <Run Text="Score: "/>
-                <Run Text="{Binding WinnerScore}"/>
+                <Run Text="Moves: "/>
+                <Run Text="{Binding Moves}"/>
             </TextBlock>
 
             <!--Replay game button, only visible when game over-->
