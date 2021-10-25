@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace GenAlpha.Core
@@ -12,9 +13,7 @@ namespace GenAlpha.Core
     {
         #region Fields
 
-        private readonly byte[] rgbPlayer1 = { 0xFF, 0x33, 0x33 }; // Red player 1
-
-        private readonly byte[] rgbPlayer2 = { 0xFF, 0xFF, 0x33 }; // Yellow Player 2
+        private readonly Thickness loserChipsMargin = new Thickness(30);
 
         #endregion
 
@@ -148,15 +147,14 @@ namespace GenAlpha.Core
             bool chipSet = false;
 
             // Cycles from the bottom row up to check which chip is not set
-            for(int row = NumberOfRows-1; row >= 0; row--)
+            for (int row = NumberOfRows - 1; row >= 0; row--)
             {
-                int index = NumberOfColumns * row + col;
+                int index = (NumberOfColumns * row) + col;
 
                 // true if no player has set this chip
-                if (!Field[index].PlayerSet)
+                if (Field[index].Player == PlayerTurn.None)
                 {
-                    Field[index].PlayerSet = true;
-                    Field[index].RgbHex = CurrentPlayer == PlayerTurn.Player1? rgbPlayer1 : rgbPlayer2;
+                    Field[index].Player = CurrentPlayer;
                     chipSet = true;
                     CheckForWin(row, col);
                     break;
@@ -239,6 +237,28 @@ namespace GenAlpha.Core
                 Moves /= 2;
             }
             GameOver = win;
+            if(GameOver)
+            {
+                SetGameOverField();
+            }
+        }
+
+        /// <summary>
+        /// Changes the unselected chips to the background color and shrinks the losing chips by increasing the margin
+        /// </summary>
+        private void SetGameOverField()
+        {
+            foreach(Connect4ChipViewModel chip in Field)
+            {
+                if(chip.ChipState == Connect4ChipStates.StartUnselected)
+                {
+                    chip.ChipState = Connect4ChipStates.GameOverUnselected;
+                }
+                else if(chip.Player != Winner)
+                {
+                    chip.Margin = loserChipsMargin;
+                }
+            }
         }
 
         /// <summary>
@@ -250,10 +270,10 @@ namespace GenAlpha.Core
         private bool CheckColumn(int lastRow, int lastCol)
         {
             int count = 0;
-            var lastRgb = Field[(NumberOfColumns * lastRow) + lastCol].RgbHex;
+            var chipState = Field[(NumberOfColumns * lastRow) + lastCol].ChipState;
             for (int currentRow = 0; currentRow < NumberOfRows; currentRow++)
             {
-                CheckForaSingleMatch(lastRgb, currentRow, lastCol, ref count);
+                CheckForaSingleMatch(chipState, currentRow, lastCol, ref count);
                 if (count == 4)
                 {
                     return true;
@@ -271,10 +291,10 @@ namespace GenAlpha.Core
         private bool CheckRow(int lastRow, int lastCol)
         {
             int count = 0;
-            var lastRgb = Field[(NumberOfColumns * lastRow) + lastCol].RgbHex;
+            var lastChipState = Field[(NumberOfColumns * lastRow) + lastCol].ChipState;
             for (int currentColumn = 0; currentColumn < NumberOfColumns; currentColumn++)
             {
-                CheckForaSingleMatch(lastRgb, lastRow, currentColumn, ref count);
+                CheckForaSingleMatch(lastChipState, lastRow, currentColumn, ref count);
                 if (count == 4)
                 {
                     return true;
@@ -307,23 +327,23 @@ namespace GenAlpha.Core
         /// <returns>true if a connect4 found, false otherwise</returns>
         private bool CheckFallingDiagonal(int lastRow, int lastCol)
         {
-            List<byte[]> diagonalList = new();
+            List<Connect4ChipStates> diagonalList = new();
             // adds all the chips on diagonal toward the row = 0
             for (int row = lastRow, column = lastCol; row >= 0 && column >= 0; row--, column--)
             {
-                byte[] rgb = Field[(NumberOfColumns * row) + column].RgbHex;
-                diagonalList.Add(rgb);
+                Connect4ChipStates chipState = Field[(NumberOfColumns * row) + column].ChipState;
+                diagonalList.Add(chipState);
             }
             diagonalList.Reverse();
             // adds all the chips on the diagonal towards the last row
             for (int row = lastRow + 1, column = lastCol + 1; row < NumberOfRows && column < NumberOfColumns; row++, column++)
             {
-                byte[] rgb = Field[(NumberOfColumns * row) + column].RgbHex;
-                diagonalList.Add(rgb);
+                Connect4ChipStates chipState = Field[(NumberOfColumns * row) + column].ChipState;
+                diagonalList.Add(chipState);
             }
-            byte[] lastRgb = Field[(NumberOfColumns * lastRow) + lastCol].RgbHex;
+            Connect4ChipStates lastChipState = Field[(NumberOfColumns * lastRow) + lastCol].ChipState;
 
-            bool connect4 = CheckListForConnect4(lastRgb, diagonalList);
+            bool connect4 = CheckListForConnect4(lastChipState, diagonalList);
             return connect4;
         }
 
@@ -335,38 +355,38 @@ namespace GenAlpha.Core
         /// <returns>true if a connect4 found, false otherwise</returns>
         private bool CheckRisingDiagonal(int lastRow, int lastCol)
         {
-            List<byte[]> diagonalList = new();
+            List<Connect4ChipStates> diagonalList = new();
             // adds all the chips on diagonal toward the row = 0
             for (int row = lastRow, column = lastCol; row >= 0 && column < NumberOfColumns; row--, column++)
             {
-                byte[] rgb = Field[(NumberOfColumns * row) + column].RgbHex;
-                diagonalList.Add(rgb);
+                Connect4ChipStates chipState = Field[(NumberOfColumns * row) + column].ChipState;
+                diagonalList.Add(chipState);
             }
             diagonalList.Reverse();
             // adds all the chips on the diagonal towards the last row
             for (int row = lastRow + 1, column = lastCol - 1; row < NumberOfRows && column >= 0; row++, column--)
             {
-                byte[] rgb = Field[(NumberOfColumns * row) + column].RgbHex;
-                diagonalList.Add(rgb);
+                Connect4ChipStates chipState = Field[(NumberOfColumns * row) + column].ChipState;
+                diagonalList.Add(chipState);
             }
-            byte[] lastRgb = Field[(NumberOfColumns * lastRow) + lastCol].RgbHex;
+            Connect4ChipStates lastChipState = Field[(NumberOfColumns * lastRow) + lastCol].ChipState;
 
-            bool connect4 = CheckListForConnect4(lastRgb, diagonalList);
+            bool connect4 = CheckListForConnect4(lastChipState, diagonalList);
             return connect4;
         }
 
         /// <summary>
         /// Checks the list of added chips for a connect 4
         /// </summary>
-        /// <param name="lastRgb"></param>
+        /// <param name="lastChipState"></param>
         /// <param name="diagonalList"></param>
         /// <returns></returns>
-        private bool CheckListForConnect4(byte[] lastRgb, List<byte[]> diagonalList)
+        private bool CheckListForConnect4(Connect4ChipStates lastChipState, List<Connect4ChipStates> diagonalList)
         {
             int count = 0;
-            foreach (byte[] rgb in diagonalList)
+            foreach (Connect4ChipStates chipState in diagonalList)
             {
-                if (rgb == lastRgb)
+                if (chipState == lastChipState)
                 {
                     count++;
                 }
@@ -385,14 +405,14 @@ namespace GenAlpha.Core
         /// <summary>
         /// Comapres the given rgb with the current row and column
         /// </summary>
-        /// <param name="matchRgb">the rgb to match</param>
+        /// <param name="lastChipState">the <see cref="Connect4ChipStates"/> to match</param>
         /// <param name="row">the current row</param>
         /// <param name="column">the current column</param>
         /// <param name="count">the current count</param>
-        private void CheckForaSingleMatch(byte[] matchRgb, int row, int column, ref int count)
+        private void CheckForaSingleMatch(Connect4ChipStates lastChipState, int row, int column, ref int count)
         {
-            var iRgb = Field[(NumberOfColumns * row) + column].RgbHex;
-            if (matchRgb == iRgb)
+            var chipState = Field[(NumberOfColumns * row) + column].ChipState;
+            if (lastChipState == chipState)
             {
                 count++;
             }
