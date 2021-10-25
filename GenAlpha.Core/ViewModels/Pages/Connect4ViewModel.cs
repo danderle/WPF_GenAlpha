@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -25,14 +26,14 @@ namespace GenAlpha.Core
         public bool GameOver { get; set; }
 
         /// <summary>
-        /// The winner score
+        /// The winning moves
         /// </summary>
-        public int WinnerScore { get; set; }
+        public int Moves { get; set; }
 
         /// <summary>
         /// The current players turn
         /// </summary>
-        public static PlayerTurn CurrentPlayer { get; private set; } = PlayerTurn.Player1;
+        public PlayerTurn CurrentPlayer { get; private set; } = PlayerTurn.Player1;
 
         /// <summary>
         /// The winner
@@ -106,8 +107,9 @@ namespace GenAlpha.Core
         private void RestartGame()
         {
             GameOver = false;
-            ResetPlayers();
-            GetGameSettings();
+            Moves = 0;
+            CreatePlayers();
+            ResetField();
         }
 
         /// <summary>
@@ -146,9 +148,9 @@ namespace GenAlpha.Core
             bool chipSet = false;
 
             // Cycles from the bottom row up to check which chip is not set
-            for(int i = NumberOfRows-1; i >= 0; i--)
+            for(int row = NumberOfRows-1; row >= 0; row--)
             {
-                int index = NumberOfColumns * i + col;
+                int index = NumberOfColumns * row + col;
 
                 // true if no player has set this chip
                 if (!Field[index].PlayerSet)
@@ -156,12 +158,14 @@ namespace GenAlpha.Core
                     Field[index].PlayerSet = true;
                     Field[index].RgbHex = CurrentPlayer == PlayerTurn.Player1? rgbPlayer1 : rgbPlayer2;
                     chipSet = true;
+                    CheckForWin(row, col);
                     break;
                 }
             }
             // if a chip has been set, switch players
             if(chipSet)
             {
+                Moves++;
                 SwitchPlayer();
             }
         }
@@ -188,8 +192,6 @@ namespace GenAlpha.Core
             SideMenu.ShowSideMenu = false;
             CreatePlayers();
             CreateGameField();
-            
-            RestartGame();
         }
 
         /// <summary>
@@ -216,19 +218,196 @@ namespace GenAlpha.Core
         }
 
         /// <summary>
-        /// Gets the current game settings
+        /// Checks all possible directions for a connect 4
         /// </summary>
-        private void GetGameSettings()
+        /// <param name="lastRow"></param>
+        /// <param name="lastCol"></param>
+        private void CheckForWin(int lastRow, int lastCol)
         {
+            bool win = CheckRow(lastRow, lastCol);
+            if (!win)
+            {
+                win = CheckColumn(lastRow, lastCol);
+            }
+            if (!win)
+            {
+                win = CheckDiagonal(lastRow, lastCol);
+            }
+            if(win)
+            {
+                Winner = CurrentPlayer;
+                Moves /= 2;
+            }
+            GameOver = win;
         }
 
         /// <summary>
-        /// Resets player scores and current player
+        /// Checks the column of last dropped chip for a connect 4
         /// </summary>
-        private void ResetPlayers()
+        /// <param name="lastRow">row of last dropped chip</param>
+        /// <param name="lastCol">column of last dropped chip</param>
+        /// <returns>true if connect 4</returns>
+        private bool CheckColumn(int lastRow, int lastCol)
         {
-            CurrentPlayer = PlayerTurn.Player1;
-            GetGameSettings();
+            int count = 0;
+            var lastRgb = Field[(NumberOfColumns * lastRow) + lastCol].RgbHex;
+            for (int currentRow = 0; currentRow < NumberOfRows; currentRow++)
+            {
+                CheckForaSingleMatch(lastRgb, currentRow, lastCol, ref count);
+                if (count == 4)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Checks the row of last dropped chip for a connect 4
+        /// </summary>
+        /// <param name="lastRow">row of last dropped chip</param>
+        /// <param name="lastCol">column of last dropped chip</param>
+        /// <returns>true if connect 4</returns>
+        private bool CheckRow(int lastRow, int lastCol)
+        {
+            int count = 0;
+            var lastRgb = Field[(NumberOfColumns * lastRow) + lastCol].RgbHex;
+            for (int currentColumn = 0; currentColumn < NumberOfColumns; currentColumn++)
+            {
+                CheckForaSingleMatch(lastRgb, lastRow, currentColumn, ref count);
+                if (count == 4)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Checks the falling and rising diagonals for a connect4
+        /// </summary>
+        /// <param name="lastRow">row of the last dropped chip</param>
+        /// <param name="lastCol">column of the last dropped chip</param>
+        /// <returns>true if a connect4 found, false otherwise</returns>
+        private bool CheckDiagonal(int lastRow, int lastCol)
+        {
+            bool connect4 = CheckRisingDiagonal(lastRow, lastCol);
+            if (!connect4)
+            {
+                connect4 = CheckFallingDiagonal(lastRow, lastCol);
+            }
+            return connect4;
+        }
+
+        /// <summary>
+        /// Checks the falling diagonal
+        /// </summary>
+        /// <param name="lastRow">row of the last dropped chip</param>
+        /// <param name="lastCol">column of the last dropped chip</param>
+        /// <returns>true if a connect4 found, false otherwise</returns>
+        private bool CheckFallingDiagonal(int lastRow, int lastCol)
+        {
+            List<byte[]> diagonalList = new();
+            // adds all the chips on diagonal toward the row = 0
+            for (int row = lastRow, column = lastCol; row >= 0 && column >= 0; row--, column--)
+            {
+                byte[] rgb = Field[(NumberOfColumns * row) + column].RgbHex;
+                diagonalList.Add(rgb);
+            }
+            diagonalList.Reverse();
+            // adds all the chips on the diagonal towards the last row
+            for (int row = lastRow + 1, column = lastCol + 1; row < NumberOfRows && column < NumberOfColumns; row++, column++)
+            {
+                byte[] rgb = Field[(NumberOfColumns * row) + column].RgbHex;
+                diagonalList.Add(rgb);
+            }
+            byte[] lastRgb = Field[(NumberOfColumns * lastRow) + lastCol].RgbHex;
+
+            bool connect4 = CheckListForConnect4(lastRgb, diagonalList);
+            return connect4;
+        }
+
+        /// <summary>
+        /// Checks the rising diagonal
+        /// </summary>
+        /// <param name="lastRow">row of the last dropped chip</param>
+        /// <param name="lastCol">column of the last dropped chip</param>
+        /// <returns>true if a connect4 found, false otherwise</returns>
+        private bool CheckRisingDiagonal(int lastRow, int lastCol)
+        {
+            List<byte[]> diagonalList = new();
+            // adds all the chips on diagonal toward the row = 0
+            for (int row = lastRow, column = lastCol; row >= 0 && column < NumberOfColumns; row--, column++)
+            {
+                byte[] rgb = Field[(NumberOfColumns * row) + column].RgbHex;
+                diagonalList.Add(rgb);
+            }
+            diagonalList.Reverse();
+            // adds all the chips on the diagonal towards the last row
+            for (int row = lastRow + 1, column = lastCol - 1; row < NumberOfRows && column >= 0; row++, column--)
+            {
+                byte[] rgb = Field[(NumberOfColumns * row) + column].RgbHex;
+                diagonalList.Add(rgb);
+            }
+            byte[] lastRgb = Field[(NumberOfColumns * lastRow) + lastCol].RgbHex;
+
+            bool connect4 = CheckListForConnect4(lastRgb, diagonalList);
+            return connect4;
+        }
+
+        /// <summary>
+        /// Checks the list of added chips for a connect 4
+        /// </summary>
+        /// <param name="lastRgb"></param>
+        /// <param name="diagonalList"></param>
+        /// <returns></returns>
+        private bool CheckListForConnect4(byte[] lastRgb, List<byte[]> diagonalList)
+        {
+            int count = 0;
+            foreach (byte[] rgb in diagonalList)
+            {
+                if (rgb == lastRgb)
+                {
+                    count++;
+                }
+                else
+                {
+                    count = 0;
+                }
+                if (count == 4)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Comapres the given rgb with the current row and column
+        /// </summary>
+        /// <param name="matchRgb">the rgb to match</param>
+        /// <param name="row">the current row</param>
+        /// <param name="column">the current column</param>
+        /// <param name="count">the current count</param>
+        private void CheckForaSingleMatch(byte[] matchRgb, int row, int column, ref int count)
+        {
+            var iRgb = Field[(NumberOfColumns * row) + column].RgbHex;
+            if (matchRgb == iRgb)
+            {
+                count++;
+            }
+            else
+            {
+                count = 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the current game settings
+        /// </summary>
+        private void ResetField()
+        {
+            CreateGameField();
         }
 
         /// <summary>
@@ -241,6 +420,7 @@ namespace GenAlpha.Core
                 new Player(PlayerTurn.Player1),
                 new Player(PlayerTurn.Player2),
             };
+            CurrentPlayer = PlayerTurn.Player1;
         }
 
         /// <summary>
@@ -248,7 +428,14 @@ namespace GenAlpha.Core
         /// </summary>
         private void SwitchPlayer()
         {
-            CurrentPlayer = CurrentPlayer == PlayerTurn.Player1 ? PlayerTurn.Player2 : PlayerTurn.Player1;
+            if (!GameOver)
+            {
+                CurrentPlayer = CurrentPlayer == PlayerTurn.Player1 ? PlayerTurn.Player2 : PlayerTurn.Player1;
+                foreach (Player player in Players)
+                {
+                    player.CurrentPlayer = CurrentPlayer == player.Position;
+                }
+            }
         }
 
         #endregion
