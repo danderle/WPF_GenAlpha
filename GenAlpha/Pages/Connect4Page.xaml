@@ -83,23 +83,27 @@
                     <!--Each Card Binding to the MemoryCardViewModel-->
                     <Button Style="{StaticResource Connect4Button}" 
                             DataContext="{Binding }" 
-                            Background="{Binding RgbHex, Converter={local:RGBhexToColorConverter}}"
+                            Background="{Binding ChipState, Converter={local:ChipStateToColorConverter}}"
                             Command="{Binding ClickCommand}"
-                            />
+                            Margin="{Binding Margin}"/>
+                    
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         
         <!--The game over grid layout-->
         <Grid Grid.Row="1"
-                Visibility="{Binding GameOver, Converter={local:BoolToVisibilityValueConverter}}">
+              Background="Transparent"
+              Visibility="{Binding GameOver, Converter={local:BoolToVisibilityValueConverter}}">
+            
             <!--Winner and score-->
             <TextBlock VerticalAlignment="Top"
                         TextAlignment="Center"
                        Margin="100 25"
                        FontFamily="{StaticResource LatoBold}"
                        Foreground="{StaticResource GoldBrush}"
-                       FontSize="{StaticResource FontSizeXXLarge}">
+                       FontSize="{StaticResource FontSizeXXLarge}"
+                       Background="{StaticResource VeryDarkBlueBrush}">
                 <Run Text="{Binding Winner}" />
                 <Run Text="Winner" />
                 <LineBreak />
@@ -109,8 +113,8 @@
 
             <!--Replay game button, only visible when game over-->
             <Button Style="{StaticResource RestartButton}"
-                Content="{StaticResource FontAwesomeRotateLeft}"
-                Command="{Binding RestartGameCommand}"/>
+                    Content="{StaticResource FontAwesomeRotateLeft}"
+                    Command="{Binding RestartGameCommand}"/>
         </Grid>
 
         <!--Side menu overlay-->
