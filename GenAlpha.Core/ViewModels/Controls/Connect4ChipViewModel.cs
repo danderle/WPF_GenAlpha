@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace GenAlpha.Core
@@ -8,6 +9,12 @@ namespace GenAlpha.Core
     /// </summary>
     public class Connect4ChipViewModel : BaseViewModel
     {
+        #region Fields
+
+        private PlayerTurn player = PlayerTurn.None;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -35,10 +42,29 @@ namespace GenAlpha.Core
         /// </summary>
         public int Row { get; }
 
+        public Thickness Margin { get; set; } = new Thickness(5);
+
         /// <summary>
-        /// The rgb in bytes
+        /// The current chip state
         /// </summary>
-        public byte[] RgbHex { get; set; }
+        public Connect4ChipStates ChipState { get; set; }
+
+        public PlayerTurn Player
+        {
+            get => player;
+            set
+            {
+                player = value;
+                if (player == PlayerTurn.Player1)
+                {
+                    ChipState = Connect4ChipStates.Player1;
+                }
+                else if (player == PlayerTurn.Player2)
+                {
+                    ChipState = Connect4ChipStates.Player2;
+                }
+            }
+        }
 
         #region Actions
 
