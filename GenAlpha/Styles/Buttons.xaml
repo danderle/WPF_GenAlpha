@@ -335,6 +335,7 @@
     <Style TargetType="{x:Type Button}" x:Key="RestartButton" BasedOn="{StaticResource BaseButtonStyle}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Margin" Value="100" />
+        <Setter Property="Padding" Value="3" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
         <Setter Property="Template">

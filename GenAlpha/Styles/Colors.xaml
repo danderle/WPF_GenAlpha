@@ -10,6 +10,9 @@
     <Color x:Key="Red">#ff0000</Color>
     <SolidColorBrush x:Key="RedBrush" Color="{StaticResource Red}" />
 
+    <Color x:Key="Player1Red">#ff3333</Color>
+    <SolidColorBrush x:Key="Player1RedBrush" Color="{StaticResource Player1Red}" />
+
     <Color x:Key="DarkWhite">#edf1f4</Color>
     <SolidColorBrush x:Key="DarkWhiteBrush" Color="{StaticResource DarkWhite}" />
 
@@ -27,7 +30,10 @@
 
     <Color x:Key="Gold">#ffd700</Color>
     <SolidColorBrush x:Key="GoldBrush" Color="{StaticResource Gold}" />
-    
+
+    <Color x:Key="Player2Yellow">#ffff33</Color>
+    <SolidColorBrush x:Key="Player2YellowBrush" Color="{StaticResource Player2Yellow}" />
+
     <Color x:Key="Green">#42b665</Color>
     <SolidColorBrush x:Key="GreenBrush" Color="{StaticResource Green}" />
 
