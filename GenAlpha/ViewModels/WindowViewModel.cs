@@ -24,7 +24,7 @@ namespace GenAlpha
 
         #region Properties
 
-        public bool Borderless => (_window.WindowState == WindowState.Maximized);
+        public bool Borderless => _window.WindowState == WindowState.Maximized;
 
         /// <summary>
         /// The minimum size of the window width
