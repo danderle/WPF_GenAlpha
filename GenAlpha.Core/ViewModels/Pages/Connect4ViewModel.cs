@@ -13,7 +13,15 @@ namespace GenAlpha.Core
     {
         #region Fields
 
+        /// <summary>
+        /// increases the margin of the losers chip which will shrink the losers chips
+        /// </summary>
         private readonly Thickness loserChipsMargin = new Thickness(30);
+
+        /// <summary>
+        /// Flag to let us know if a chip is falling. If a chip is falling we cannot add another
+        /// </summary>
+        private bool chipIsFalling;
 
         #endregion
 
@@ -141,36 +149,59 @@ namespace GenAlpha.Core
         /// The action method which is triggered when a chip has been clicked
         /// </summary>
         /// <param name="column"></param>
-        private void ChipClicked(int column)
+        private async void ChipClicked(int column)
         {
-            int col = column;
-            bool chipSet = false;
-
-            // Cycles from the bottom row up to check which chip is not set
-            for (int row = NumberOfRows - 1; row >= 0; row--)
+            // cannot add another chip while previous is still falling or gameover
+            if (!chipIsFalling && !GameOver)
             {
-                int index = (NumberOfColumns * row) + col;
-
-                // true if no player has set this chip
-                if (Field[index].Player == PlayerTurn.None)
+                chipIsFalling = true;
+                int col = column;
+                bool chipSet = false;
+                // Cycles from the bottom row up to check which chip is not set
+                for (int row = NumberOfRows - 1; row >= 0; row--)
                 {
-                    Field[index].Player = CurrentPlayer;
-                    chipSet = true;
-                    CheckForWin(row, col);
-                    break;
+                    int index = (NumberOfColumns * row) + col;
+                    // true if no player has set this chip
+                    if (Field[index].Player == PlayerTurn.None)
+                    {
+                        await DropChip(column, row);
+                        Field[index].Player = CurrentPlayer;
+                        chipSet = true;
+                        CheckForWin(row, col);
+                        break;
+                    }
                 }
-            }
-            // if a chip has been set, switch players
-            if(chipSet)
-            {
-                Moves++;
-                SwitchPlayer();
+                // if a chip has been set, switch players
+                if (chipSet)
+                {
+                    Moves++;
+                    SwitchPlayer();
+                }
+                chipIsFalling = false;
             }
         }
 
         #endregion
 
         #region Private Helpers
+
+        /// <summary>
+        /// Toggles the color of each chip in the selected column, to simulate a falling chip
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="lastRowIndex"></param>
+        /// <returns></returns>
+        private async Task DropChip(int column, int lastRowIndex)
+        {
+            for (int row = 0; row < lastRowIndex; row++)
+            {
+                int index = (NumberOfColumns * row) + column;
+                var chip = Field[index];
+                chip.Player = CurrentPlayer;
+                await Task.Delay(Connect4ChipViewModel.FLASH_TIME_MILLISECONDS);
+                chip.Player = PlayerTurn.None;
+            }
+        }
 
         /// <summary>
         /// Initialize all the commands
@@ -459,6 +490,5 @@ namespace GenAlpha.Core
         }
 
         #endregion
-
     }
 }
