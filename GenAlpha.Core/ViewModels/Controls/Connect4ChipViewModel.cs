@@ -16,7 +16,7 @@ namespace GenAlpha.Core
         #endregion
 
         #region Properties
-
+        
         /// <summary>
         /// Flag for letting us know if its set by a player
         /// </summary>
@@ -42,6 +42,14 @@ namespace GenAlpha.Core
         /// </summary>
         public int Row { get; }
 
+        /// <summary>
+        /// The full time to display falling chip in each section, in milliseconds
+        /// </summary>
+        public static int FLASH_TIME_MILLISECONDS => 25;
+
+        /// <summary>
+        /// The margin of this chip
+        /// </summary>
         public Thickness Margin { get; set; } = new Thickness(5);
 
         /// <summary>
@@ -49,6 +57,9 @@ namespace GenAlpha.Core
         /// </summary>
         public Connect4ChipStates ChipState { get; set; }
 
+        /// <summary>
+        /// The player that owns this chip
+        /// </summary>
         public PlayerTurn Player
         {
             get => player;
@@ -62,6 +73,10 @@ namespace GenAlpha.Core
                 else if (player == PlayerTurn.Player2)
                 {
                     ChipState = Connect4ChipStates.Player2;
+                }
+                else
+                {
+                    ChipState = Connect4ChipStates.StartUnselected;
                 }
             }
         }
@@ -84,11 +99,6 @@ namespace GenAlpha.Core
         /// </summary>
         public ICommand ClickCommand { get; set; }
 
-        /// <summary>
-        /// The command when animation is finished
-        /// </summary>
-        public ICommand FinishedAnimatingCommand { get; set; }
-        
         #endregion
 
         #region Constructor
@@ -116,13 +126,6 @@ namespace GenAlpha.Core
             ChipClicked(Column);
         }
 
-        /// <summary>
-        /// The finished animation command
-        /// </summary>
-        private void FinishedAnimating()
-        {
-        }
-
         #endregion
 
         #region Private Helpers Methods
@@ -133,7 +136,6 @@ namespace GenAlpha.Core
         private void InitializeCommands()
         {
             ClickCommand = new RelayCommand(Click);
-            FinishedAnimatingCommand = new RelayCommand(FinishedAnimating);
         }
 
         #endregion
