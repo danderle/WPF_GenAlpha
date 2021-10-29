@@ -23,6 +23,8 @@ namespace GenAlpha
                     return new KeyboardShooterPage();
                 case ApplicationPage.Connect4:
                     return new Connect4Page();
+                case ApplicationPage.Minesweeper:
+                    return new MinesweeperPage();
                 default:
                     Debugger.Break();
                     return null;

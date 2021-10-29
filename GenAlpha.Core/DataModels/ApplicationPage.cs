@@ -9,5 +9,6 @@
         Memory,
         KeyboardShooter,
         Connect4,
+        Minesweeper,
     }
 }
