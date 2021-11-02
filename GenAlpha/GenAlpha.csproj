@@ -11,6 +11,18 @@
     <None Remove="Resources\Fonts\Font Awesome 5 Free-Regular-400.otf" />
     <None Remove="Resources\Fonts\Font Awesome 5 Free-Solid-900.otf" />
     <None Remove="Resources\Images\logo-flat.png" />
+    <None Remove="Resources\Images\Minesweeper_0.png" />
+    <None Remove="Resources\Images\Minesweeper_1.png" />
+    <None Remove="Resources\Images\Minesweeper_2.png" />
+    <None Remove="Resources\Images\Minesweeper_3.png" />
+    <None Remove="Resources\Images\Minesweeper_4.png" />
+    <None Remove="Resources\Images\Minesweeper_5.png" />
+    <None Remove="Resources\Images\Minesweeper_6.png" />
+    <None Remove="Resources\Images\Minesweeper_7.png" />
+    <None Remove="Resources\Images\Minesweeper_8.png" />
+    <None Remove="Resources\Images\minesweeper_bomb.jpg" />
+    <None Remove="Resources\Images\Minesweeper_flag.png" />
+    <None Remove="Resources\Images\Minesweeper_unopened_square.png" />
     <None Remove="Resources\Images\tank.png" />
     <None Remove="Resources\Lato-Black.ttf" />
     <None Remove="Resources\Lato-BlackItalic.ttf" />
@@ -132,6 +144,42 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Images\logo-flat.png" />
+    <Resource Include="Resources\Images\Minesweeper_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Minesweeper_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Minesweeper_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Minesweeper_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Minesweeper_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Minesweeper_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Minesweeper_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Minesweeper_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Minesweeper_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\minesweeper_bomb.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Minesweeper_flag.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Minesweeper_unopened_square.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\Images\tank.png" />
     <Content Include="Resources\TextFiles\20kWords.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
