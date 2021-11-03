@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Input;
 
 namespace GenAlpha.Core
@@ -19,11 +18,6 @@ namespace GenAlpha.Core
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Flag for letting us know if its set by a player
-        /// </summary>
-        public bool PlayerSet { get; set; }
 
         /// <summary>
         /// Flag to let us know if it has been clicked
@@ -46,19 +40,9 @@ namespace GenAlpha.Core
         public int Row { get; }
 
         /// <summary>
-        /// The full time to display falling chip in each section, in milliseconds
+        /// The state of the square
         /// </summary>
-        public static int FLASH_TIME_MILLISECONDS => 25;
-
-        /// <summary>
-        /// The margin of this chip
-        /// </summary>
-        public Thickness Margin { get; set; } = new Thickness(5);
-
-        /// <summary>
-        /// The current square state
-        /// </summary>
-        public Connect4ChipStates ChipState { get; set; }
+        public MinesweeperSquareState SqaureState { get; set; } = MinesweeperSquareState.Unopened;
 
         #endregion
 
