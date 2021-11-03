@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace GenAlpha.Core
@@ -28,24 +26,19 @@ namespace GenAlpha.Core
         public int Moves { get; set; }
 
         /// <summary>
-        /// The current players turn
-        /// </summary>
-        public PlayerTurn CurrentPlayer { get; private set; } = PlayerTurn.Player1;
-
-        /// <summary>
         /// The winner
         /// </summary>
         public PlayerTurn Winner { get; set; } = PlayerTurn.Player1;
 
         /// <summary>
-        /// Rows for the connect4 field
+        /// Rows for the minesweeper field
         /// </summary>
-        public int NumberOfRows => 6;
+        public int NumberOfRows { get; private set; } = 20;
 
         /// <summary>
-        /// Columns for the connect4 field
+        /// Columns for the minesweeper field
         /// </summary>
-        public int NumberOfColumns => 7;
+        public int NumberOfColumns { get; private set; } = 20;
 
         /// <summary>
         /// The side menu view model
@@ -53,9 +46,9 @@ namespace GenAlpha.Core
         public SideMenuViewModel SideMenu { get; set; } = new SideMenuViewModel();
 
         /// <summary>
-        /// The list of the connect4 field
+        /// The list of the minesweeper field
         /// </summary>
-        public ObservableCollection<Connect4ChipViewModel> Field { get; set; } = new ObservableCollection<Connect4ChipViewModel>();
+        public ObservableCollection<MinesweeperSquareViewModel> Field { get; set; }
 
         #endregion
 
@@ -94,7 +87,7 @@ namespace GenAlpha.Core
         #region Command Methods
 
         /// <summary>
-        /// Creates new memory cards and restarts game
+        /// Resets the game properties
         /// </summary>
         private void RestartGame()
         {
@@ -129,34 +122,11 @@ namespace GenAlpha.Core
         #region Action Methods
 
         /// <summary>
-        /// The action method which is triggered when a chip has been clicked
+        /// The action method which is triggered when a square has been clicked
         /// </summary>
         /// <param name="column"></param>
-        private void ChipClicked(int column)
+        private void SquareClicked(int column)
         {
-            // cannot add another chip while previous is still falling or gameover
-            if (!GameOver)
-            {
-                int col = column;
-                bool chipSet = false;
-                // Cycles from the bottom row up to check which chip is not set
-                for (int row = NumberOfRows - 1; row >= 0; row--)
-                {
-                    int index = (NumberOfColumns * row) + col;
-                    // true if no player has set this chip
-                    if (Field[index].Player == PlayerTurn.None)
-                    {
-                        Field[index].Player = CurrentPlayer;
-                        chipSet = true;
-                        break;
-                    }
-                }
-                // if a chip has been set, switch players
-                if (chipSet)
-                {
-                    Moves++;
-                }
-            }
         }
 
         #endregion
@@ -183,11 +153,11 @@ namespace GenAlpha.Core
         }
 
         /// <summary>
-        /// Creates all the chips inside the field and sets the column, row and index of the chip
+        /// Creates all the squares inside the field and sets the column, row and index of the chip
         /// </summary>
         private void CreateGameField()
         {
-            Field = new ObservableCollection<Connect4ChipViewModel>();
+            Field = new ObservableCollection<MinesweeperSquareViewModel>();
             int row = 0;
             int col = 0;
             for (int i = 0; i < NumberOfRows * NumberOfColumns; i++)
@@ -198,9 +168,8 @@ namespace GenAlpha.Core
                     row++;
                 }
                 var index = NumberOfColumns * row + col;
-                var chip = new Connect4ChipViewModel(row, col, index);
-                chip.ChipClicked = ChipClicked;
-                Field.Add(chip);
+                var square = new MinesweeperSquareViewModel(row, col, index, SquareClicked);
+                Field.Add(square);
                 col++;
             }
         }
