@@ -8,7 +8,7 @@
                   xmlns:core="clr-namespace:GenAlpha.Core;assembly=GenAlpha.Core"
                   mc:Ignorable="d" 
                   d:DesignHeight="450" d:DesignWidth="800"
-                  Title="Connect4">
+                  Title="Minesweeper">
     
     <!--Page layout definition-->
     <Grid Background="{StaticResource VeryDarkBlueBrush}"
@@ -31,32 +31,6 @@
                 <Button Content="{StaticResource FontAwesomeAngleLeft}" 
                         Command="{Binding ToGameSelectionCommand}"/>
                 
-                <!--The currentplayers and their scores-->
-                <ItemsControl ItemsSource="{Binding Players}"
-                              Grid.ColumnSpan="3"
-                              HorizontalAlignment="Center">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"
-                                        HorizontalAlignment="Center"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Position}" 
-                                           Margin="30 0 0 0"
-                                            Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}}"/>
-                                <TextBlock Margin="0 0 30 0"
-                                            Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}}">
-                                <Run Text="  Score:" />
-                                <Run Text="{Binding Score}" />
-                                </TextBlock>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                
                 <!--Settings Button-->
                 <Button Grid.Column="2"
                         Content="{StaticResource FontAwesomeCog}" 
@@ -67,11 +41,11 @@
         </Border>
 
         <!--Game field Main Page content-->
-        <!--The Memory cards-->
+        <!--The squares to show Numbers, Flags or Bombs-->
         <ItemsControl Grid.Row="1"
                       ItemsSource="{Binding Field}"
                       HorizontalAlignment="Center">
-            <!--Defining the panel to place the memory cards in-->
+            <!--Defining the panel to place the squares in-->
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="{Binding NumberOfColumns}"
@@ -80,13 +54,15 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <!--Each Card Binding to the MemoryCardViewModel-->
-                    <Button Style="{StaticResource Connect4Button}" 
+                    <!--Each Card Binding to the MinesweeperSquareViewModel-->
+                    <Button Style="{StaticResource MinesweeperButton}" 
                             DataContext="{Binding }" 
-                            Background="{Binding ChipState, Converter={local:ChipStateToColorConverter}}"
-                            Command="{Binding ClickCommand}"
-                            Margin="{Binding Margin}"/>
-                    
+                            Command="{Binding ClickCommand}">
+                        <Button.Background>
+                            <ImageBrush ImageSource="{Binding SqaureState, Converter={local:MinesweeperSqaureStateToImagePathValueConverter}}" />
+                        </Button.Background>
+                    </Button>
+
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
