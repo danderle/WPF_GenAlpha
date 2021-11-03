@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:GenAlpha"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+    <ImageSource x:Key="0">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
+    <ImageSource x:Key="1">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
+    <ImageSource x:Key="2">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
+    <ImageSource x:Key="3">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
+    <ImageSource x:Key="4">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
+    <ImageSource x:Key="5">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
+    <ImageSource x:Key="6">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
+    <ImageSource x:Key="7">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
+    <ImageSource x:Key="8">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
+    <ImageSource x:Key="Bomb">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
+    <ImageSource x:Key="Flag">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
+    <ImageSource x:Key="Unopened">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
+
+</ResourceDictionary>
