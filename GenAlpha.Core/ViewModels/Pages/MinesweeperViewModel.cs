@@ -163,13 +163,7 @@ namespace GenAlpha.Core
         /// </summary>
         private void CreateGameField()
         {
-            bool[] bombIndexs = new bool[NumberOfRows * NumberOfColumns];
-            for(int i = 0; i < NumberOfBombs; i++)
-            {
-                bombIndexs[i] = true;
-            }
-            bombIndexs = bombIndexs.Shuffle();
-
+            bool[] bombIndexes = GetRandomBombPositions();
             Field = new ObservableCollection<MinesweeperSquareViewModel>();
             int row = 0;
             int col = 0;
@@ -181,12 +175,30 @@ namespace GenAlpha.Core
                     row++;
                 }
                 var index = (NumberOfColumns * row) + col;
-                var square = new MinesweeperSquareViewModel(row, col, index, bombIndexs[i]? MinesweeperSquareState.Bomb : MinesweeperSquareState.Unopened, SquareClicked);
+                var square = new MinesweeperSquareViewModel(row, col, index, bombIndexes[i]? MinesweeperSquareState.Bomb : MinesweeperSquareState.Unopened, SquareClicked);
                 Field.Add(square);
                 col++;
             }
         }
 
+        /// <summary>
+        /// Creates an array of the size of the field and sets true if a bomb is present
+        /// </summary>
+        /// <returns></returns>
+        private bool[] GetRandomBombPositions()
+        {
+            // Create array with same size of field
+            bool[] bombIndexs = new bool[NumberOfRows * NumberOfColumns];
+
+            // Set the bombs to true
+            for (int i = 0; i < NumberOfBombs; i++)
+            {
+                bombIndexs[i] = true;
+            }
+
+            // Shuffle and return
+            return bombIndexs.Shuffle();
+        }
         #endregion
     }
 }
