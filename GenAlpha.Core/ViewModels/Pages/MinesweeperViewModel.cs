@@ -164,6 +164,7 @@ namespace GenAlpha.Core
         private void CreateGameField()
         {
             bool[] bombIndexes = GetRandomBombPositions();
+
             Field = new ObservableCollection<MinesweeperSquareViewModel>();
             int row = 0;
             int col = 0;
@@ -179,6 +180,45 @@ namespace GenAlpha.Core
                 Field.Add(square);
                 col++;
             }
+
+            SetSquareValues();
+        }
+
+        private void SetSquareValues()
+        {
+            for (int row = 0; row < NumberOfRows; row++)
+            {
+                for (int column = 0; column < NumberOfColumns; column++)
+                {
+                    var index = (NumberOfColumns * row) + column;
+                    if (Field[index].SqaureState != MinesweeperSquareState.Bomb)
+                    {
+                        int count = GetCountOfSurroundingBombs(row, column);
+                        Field[index].SqaureState = (MinesweeperSquareState)count;
+                    }
+                }
+            }
+        }
+
+        private int GetCountOfSurroundingBombs(int middleRow, int middleColumn)
+        {
+            int count = 0;
+            for (int row = middleRow - 1; row <= middleRow + 1; row++)
+            {
+                for (int column = middleColumn - 1; column <= middleColumn + 1; column++)
+                {
+                    if (row >= 0 && row < NumberOfRows)
+                    {
+                        if (column >= 0 && column < NumberOfColumns)
+                        {
+                            var index = (NumberOfColumns * row) + column;
+                            count += Field[index].SqaureState == MinesweeperSquareState.Bomb ? 1 : 0;
+                        }
+                    }
+                }
+            }
+
+            return count;
         }
 
         /// <summary>
