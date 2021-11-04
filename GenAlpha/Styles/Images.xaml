@@ -3,17 +3,17 @@
                     xmlns:local="clr-namespace:GenAlpha"
                     xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
-    <ImageSource x:Key="0">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
-    <ImageSource x:Key="1">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
-    <ImageSource x:Key="2">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
-    <ImageSource x:Key="3">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
-    <ImageSource x:Key="4">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
-    <ImageSource x:Key="5">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
-    <ImageSource x:Key="6">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
-    <ImageSource x:Key="7">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
-    <ImageSource x:Key="8">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
-    <ImageSource x:Key="Bomb">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
-    <ImageSource x:Key="Flag">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
-    <ImageSource x:Key="Unopened">/GenAlpha;Component/Resources/Images/Minesweeper_unopened_square.png</ImageSource>
+    <ImageSource x:Key="0">/GenAlpha;Component/Resources/Images/Minesweeper_0.png</ImageSource>
+    <ImageSource x:Key="1">/GenAlpha;Component/Resources/Images/Minesweeper_1.png</ImageSource>
+    <ImageSource x:Key="2">/GenAlpha;Component/Resources/Images/Minesweeper_2.png</ImageSource>
+    <ImageSource x:Key="3">/GenAlpha;Component/Resources/Images/Minesweeper_3.png</ImageSource>
+    <ImageSource x:Key="4">/GenAlpha;Component/Resources/Images/Minesweeper_4.png</ImageSource>
+    <ImageSource x:Key="5">/GenAlpha;Component/Resources/Images/Minesweeper_5.png</ImageSource>
+    <ImageSource x:Key="6">/GenAlpha;Component/Resources/Images/Minesweeper_6.png</ImageSource>
+    <ImageSource x:Key="7">/GenAlpha;Component/Resources/Images/Minesweeper_7.png</ImageSource>
+    <ImageSource x:Key="8">/GenAlpha;Component/Resources/Images/Minesweeper_8.png</ImageSource>
+    <ImageSource x:Key="Bomb">/GenAlpha;Component/Resources/Images/Minesweeper_Bomb.png</ImageSource>
+    <ImageSource x:Key="Flag">/GenAlpha;Component/Resources/Images/Minesweeper_Flag.png</ImageSource>
+    <ImageSource x:Key="Unopened">/GenAlpha;Component/Resources/Images/Minesweeper_Unopened_Square.png</ImageSource>
 
 </ResourceDictionary>
