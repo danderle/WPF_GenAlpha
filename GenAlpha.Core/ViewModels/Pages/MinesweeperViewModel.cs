@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -39,6 +40,11 @@ namespace GenAlpha.Core
         /// Columns for the minesweeper field
         /// </summary>
         public int NumberOfColumns { get; private set; } = 20;
+
+        /// <summary>
+        /// The number of bombs
+        /// </summary>
+        public int NumberOfBombs { get; private set; } = 10;
 
         /// <summary>
         /// The side menu view model
@@ -157,6 +163,13 @@ namespace GenAlpha.Core
         /// </summary>
         private void CreateGameField()
         {
+            bool[] bombIndexs = new bool[NumberOfRows * NumberOfColumns];
+            for(int i = 0; i < NumberOfBombs; i++)
+            {
+                bombIndexs[i] = true;
+            }
+            bombIndexs = bombIndexs.Shuffle();
+
             Field = new ObservableCollection<MinesweeperSquareViewModel>();
             int row = 0;
             int col = 0;
@@ -167,8 +180,8 @@ namespace GenAlpha.Core
                     col = 0;
                     row++;
                 }
-                var index = NumberOfColumns * row + col;
-                var square = new MinesweeperSquareViewModel(row, col, index, SquareClicked);
+                var index = (NumberOfColumns * row) + col;
+                var square = new MinesweeperSquareViewModel(row, col, index, bombIndexs[i]? MinesweeperSquareState.Bomb : MinesweeperSquareState.Unopened, SquareClicked);
                 Field.Add(square);
                 col++;
             }
