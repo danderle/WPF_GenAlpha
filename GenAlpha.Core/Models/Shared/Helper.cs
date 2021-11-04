@@ -28,5 +28,26 @@ namespace GenAlpha.Core
             }
             return list;
         }
+
+        /// <summary>
+        /// Shuffles an array of a generic type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static T[] Shuffle<T>(this T[] array)
+        {
+            Random random = new Random();
+
+            for (int i = array.Length - 1; i > 1; i--)
+            {
+                int rnd = random.Next(i + 1);
+                var value = array[rnd];
+
+                array[rnd] = array[i];
+                array[i] = value;
+            }
+            return array;
+        }
     }
 }
