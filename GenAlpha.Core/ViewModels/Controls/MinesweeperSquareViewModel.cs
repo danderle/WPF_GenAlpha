@@ -42,7 +42,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// The state of the square
         /// </summary>
-        public MinesweeperSquareState SqaureState { get; set; } = MinesweeperSquareState.Unopened;
+        public MinesweeperSquareState SqaureState { get; set; }
 
         #endregion
 
@@ -60,11 +60,12 @@ namespace GenAlpha.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MinesweeperSquareViewModel(int row, int col, int index, Action<int> squareClicked)
+        public MinesweeperSquareViewModel(int row, int col, int index, MinesweeperSquareState state, Action<int> squareClicked)
         {
             Row = row;
             Column = col;
             Index = index;
+            SqaureState = state;
             SquareClicked = squareClicked;
             InitializeCommands();
         }
