@@ -184,6 +184,9 @@ namespace GenAlpha.Core
             SetSquareValues();
         }
 
+        /// <summary>
+        /// Sets the square state with the number of surrounding bombs
+        /// </summary>
         private void SetSquareValues()
         {
             for (int row = 0; row < NumberOfRows; row++)
@@ -200,6 +203,12 @@ namespace GenAlpha.Core
             }
         }
 
+        /// <summary>
+        /// Returns the count of the number of surrounding bombs
+        /// </summary>
+        /// <param name="middleRow">current row index</param>
+        /// <param name="middleColumn">current column index</param>
+        /// <returns></returns>
         private int GetCountOfSurroundingBombs(int middleRow, int middleColumn)
         {
             int count = 0;
