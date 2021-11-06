@@ -15,6 +15,8 @@ namespace GenAlpha.Core
         /// </summary>
         private readonly Action<int> SquareClicked;
 
+        private MinesweeperSquareState hiddenState;
+
         #endregion
 
         #region Properties
@@ -23,6 +25,11 @@ namespace GenAlpha.Core
         /// Flag to let us know if it has been clicked
         /// </summary>
         public bool IsClicked { get; set; }
+
+        /// <summary>
+        /// Flag to let us know if the sqaure is revealed
+        /// </summary>
+        public bool IsRevealed { get; set; }
 
         /// <summary>
         /// The index of the button
@@ -42,7 +49,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// The state of the square
         /// </summary>
-        public MinesweeperSquareState SqaureState { get; set; }
+        public MinesweeperSquareState SquareState { get; set; }
 
         #endregion
 
@@ -52,6 +59,11 @@ namespace GenAlpha.Core
         /// The command for clicking
         /// </summary>
         public ICommand ClickCommand { get; set; }
+
+        /// <summary>
+        /// The command for right clicking
+        /// </summary>
+        public ICommand RightClickCommand { get; set; }
 
         #endregion
 
@@ -65,7 +77,7 @@ namespace GenAlpha.Core
             Row = row;
             Column = col;
             Index = index;
-            SqaureState = state;
+            SquareState = state;
             SquareClicked = squareClicked;
             InitializeCommands();
         }
@@ -79,7 +91,27 @@ namespace GenAlpha.Core
         /// </summary>
         private void Click()
         {
+            IsRevealed = true;
             SquareClicked(Column);
+        }
+
+        /// <summary>
+        /// The right click command
+        /// </summary>
+        private void RightClick()
+        {
+            if(!IsRevealed)
+            {
+                if (SquareState == MinesweeperSquareState.Flag)
+                {
+                    SquareState = hiddenState;
+                }
+                else
+                {
+                    hiddenState = SquareState;
+                    SquareState = MinesweeperSquareState.Flag;
+                }
+            }
         }
 
         #endregion
@@ -92,6 +124,7 @@ namespace GenAlpha.Core
         private void InitializeCommands()
         {
             ClickCommand = new RelayCommand(Click);
+            RightClickCommand = new RelayCommand(RightClick);
         }
 
         #endregion
