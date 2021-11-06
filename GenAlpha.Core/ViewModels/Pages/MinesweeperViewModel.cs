@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -9,10 +10,6 @@ namespace GenAlpha.Core
     /// </summary>
     public class MinesweeperViewModel : BaseViewModel
     {
-        #region Fields
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -54,6 +51,11 @@ namespace GenAlpha.Core
         /// The list of the minesweeper field
         /// </summary>
         public ObservableCollection<MinesweeperSquareViewModel> Field { get; set; }
+
+        /// <summary>
+        /// A dictionary holding the image paths according to the square states
+        /// </summary>
+        public static Dictionary<MinesweeperSquareState, object> MinesweeperImagePaths => Image.GetMinesweeperImagePaths();
 
         #endregion
 
@@ -174,8 +176,8 @@ namespace GenAlpha.Core
                     col = 0;
                     row++;
                 }
-                var index = (NumberOfColumns * row) + col;
-                var square = new MinesweeperSquareViewModel(row, col, index, bombIndexes[i]? MinesweeperSquareState.Bomb : MinesweeperSquareState.Unopened, SquareClicked);
+                int index = (NumberOfColumns * row) + col;
+                MinesweeperSquareViewModel square = new(row, col, index, bombIndexes[i]? MinesweeperSquareState.Bomb : MinesweeperSquareState.Unopened, SquareClicked);
                 Field.Add(square);
                 col++;
             }
@@ -219,13 +221,12 @@ namespace GenAlpha.Core
                     {
                         if (column >= 0 && column < NumberOfColumns)
                         {
-                            var index = (NumberOfColumns * row) + column;
+                            int index = (NumberOfColumns * row) + column;
                             count += Field[index].SquareState == MinesweeperSquareState.Bomb ? 1 : 0;
                         }
                     }
                 }
             }
-
             return count;
         }
 
