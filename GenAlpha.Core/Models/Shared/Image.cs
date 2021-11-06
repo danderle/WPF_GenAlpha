@@ -1,18 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 
 namespace GenAlpha.Core
 {
+    /// <summary>
+    /// Static class handles the image paths
+    /// </summary>
     public static class Image
     {
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         static Image()
         {
         }
 
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Returns a dictionary containing the Minewsweeper
+        /// </summary>
+        /// <returns></returns>
         public static Dictionary<MinesweeperSquareState, object> GetMinesweeperImagePaths()
         {
             return new()
@@ -31,5 +43,6 @@ namespace GenAlpha.Core
                 { MinesweeperSquareState.Unopened, Application.Current.FindResource("Unopened") },
             };
         }
+        #endregion
     }
 }
