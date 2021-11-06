@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -194,10 +193,10 @@ namespace GenAlpha.Core
                 for (int column = 0; column < NumberOfColumns; column++)
                 {
                     var index = (NumberOfColumns * row) + column;
-                    if (Field[index].SqaureState != MinesweeperSquareState.Bomb)
+                    if (Field[index].SquareState != MinesweeperSquareState.Bomb)
                     {
                         int count = GetCountOfSurroundingBombs(row, column);
-                        Field[index].SqaureState = (MinesweeperSquareState)count;
+                        Field[index].SquareState = (MinesweeperSquareState)count;
                     }
                 }
             }
@@ -221,7 +220,7 @@ namespace GenAlpha.Core
                         if (column >= 0 && column < NumberOfColumns)
                         {
                             var index = (NumberOfColumns * row) + column;
-                            count += Field[index].SqaureState == MinesweeperSquareState.Bomb ? 1 : 0;
+                            count += Field[index].SquareState == MinesweeperSquareState.Bomb ? 1 : 0;
                         }
                     }
                 }
