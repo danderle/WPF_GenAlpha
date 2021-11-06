@@ -58,8 +58,18 @@
                     <Button Style="{StaticResource MinesweeperButton}" 
                             DataContext="{Binding }" 
                             Command="{Binding ClickCommand}">
+                        <Button.InputBindings>
+                            <MouseBinding Gesture="RightClick" Command="{Binding RightClickCommand}" />
+                        </Button.InputBindings>
                         <Button.Background>
-                            <ImageBrush ImageSource="{Binding SqaureState, Converter={local:MinesweeperSqaureStateToImagePathValueConverter}}" />
+                            <ImageBrush>
+                                <ImageBrush.ImageSource>
+                                    <MultiBinding Converter="{local:MinesweeperSqaureStateToImagePathValueConverter}">
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Button}" Path="DataContext.IsRevealed" />
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Button}" Path="DataContext.SquareState" />
+                                    </MultiBinding>
+                                </ImageBrush.ImageSource>
+                            </ImageBrush>
                         </Button.Background>
                     </Button>
 
