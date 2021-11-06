@@ -64,7 +64,7 @@
                         <Button.Background>
                             <ImageBrush>
                                 <ImageBrush.ImageSource>
-                                    <MultiBinding Converter="{local:MinesweeperSqaureStateToImagePathValueConverter}">
+                                    <MultiBinding Converter="{local:MinesweeperSqaureStateToImagePathMultiValueConverter}">
                                         <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Button}" Path="DataContext.IsRevealed" />
                                         <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Button}" Path="DataContext.SquareState" />
                                     </MultiBinding>
