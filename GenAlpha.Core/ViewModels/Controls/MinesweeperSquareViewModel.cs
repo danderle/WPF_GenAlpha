@@ -13,9 +13,17 @@ namespace GenAlpha.Core
         /// <summary>
         /// Trigger action when a square is clicked
         /// </summary>
-        private readonly Action<int> SquareClicked;
+        private readonly Action<int, int> SquareClicked;
 
-        private MinesweeperSquareState hiddenState;
+        /// <summary>
+        /// Trigger action when a bomb is revealed
+        /// </summary>
+        private readonly Action BombRevealed;
+
+        /// <summary>
+        /// The item which is flagged
+        /// </summary>
+        private MinesweeperSquareState flaggedState;
 
         #endregion
 
@@ -30,11 +38,6 @@ namespace GenAlpha.Core
         /// Flag to let us know if the sqaure is revealed
         /// </summary>
         public bool IsRevealed { get; set; }
-
-        /// <summary>
-        /// The index of the button
-        /// </summary>
-        public int Index { get; }
 
         /// <summary>
         /// The column in which this button is in
@@ -72,13 +75,13 @@ namespace GenAlpha.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MinesweeperSquareViewModel(int row, int col, int index, MinesweeperSquareState state, Action<int> squareClicked)
+        public MinesweeperSquareViewModel(int row, int col, MinesweeperSquareState state, Action<int, int> squareClicked, Action bombRevealed)
         {
             Row = row;
             Column = col;
-            Index = index;
             SquareState = state;
             SquareClicked = squareClicked;
+            BombRevealed = bombRevealed;
             InitializeCommands();
         }
 
@@ -91,8 +94,18 @@ namespace GenAlpha.Core
         /// </summary>
         private void Click()
         {
-            IsRevealed = true;
-            SquareClicked(Column);
+            if (SquareState != MinesweeperSquareState.Flag && !IsRevealed)
+            {
+                IsRevealed = true;
+                if (SquareState == MinesweeperSquareState.Bomb)
+                {
+                    BombRevealed();
+                }
+                else
+                {
+                    SquareClicked(Row, Column);
+                }
+            }
         }
 
         /// <summary>
@@ -104,11 +117,11 @@ namespace GenAlpha.Core
             {
                 if (SquareState == MinesweeperSquareState.Flag)
                 {
-                    SquareState = hiddenState;
+                    SquareState = flaggedState;
                 }
                 else
                 {
-                    hiddenState = SquareState;
+                    flaggedState = SquareState;
                     SquareState = MinesweeperSquareState.Flag;
                 }
             }
