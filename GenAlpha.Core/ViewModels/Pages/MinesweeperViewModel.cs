@@ -203,11 +203,11 @@ namespace GenAlpha.Core
             {
                 for (int column = 0; column < NumberOfColumns; column++)
                 {
-                    var index = (NumberOfColumns * row) + column;
-                    if (Field[index].SquareState != MinesweeperSquareState.Bomb)
+                    MinesweeperSquareViewModel square = GetSquareFromField(row, column);
+                    if (square.SquareState != MinesweeperSquareState.Bomb)
                     {
                         int count = GetCountOfSurroundingBombs(row, column);
-                        Field[index].SquareState = (MinesweeperSquareState)count;
+                        square.SquareState = (MinesweeperSquareState)count;
                     }
                 }
             }
@@ -226,13 +226,10 @@ namespace GenAlpha.Core
             {
                 for (int column = middleColumn - 1; column <= middleColumn + 1; column++)
                 {
-                    if (row >= 0 && row < NumberOfRows)
+                    if(IsValidIndex(row, column))
                     {
-                        if (column >= 0 && column < NumberOfColumns)
-                        {
-                            int index = (NumberOfColumns * row) + column;
-                            count += Field[index].SquareState == MinesweeperSquareState.Bomb ? 1 : 0;
-                        }
+                        MinesweeperSquareViewModel square = GetSquareFromField(row, column);
+                        count += square.SquareState == MinesweeperSquareState.Bomb ? 1 : 0;
                     }
                 }
             }
@@ -296,6 +293,12 @@ namespace GenAlpha.Core
             }
         }
 
+        /// <summary>
+        /// Returns true if the row and column make a valid index
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
         private bool IsValidIndex(int row, int column)
         {
             if (row >= 0 && row < NumberOfRows)
@@ -308,6 +311,12 @@ namespace GenAlpha.Core
             return false;
         }
 
+        /// <summary>
+        /// Returns a square from the field
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
         private MinesweeperSquareViewModel GetSquareFromField(int row, int column)
         {
             int index = (NumberOfColumns * row) + column;
