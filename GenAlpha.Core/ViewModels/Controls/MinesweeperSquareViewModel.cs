@@ -23,7 +23,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// The item which is flagged
         /// </summary>
-        private MinesweeperSquareState flaggedState;
+        private MinesweeperValues flaggedState;
 
         #endregion
 
@@ -50,9 +50,9 @@ namespace GenAlpha.Core
         public int Row { get; }
 
         /// <summary>
-        /// The state of the square
+        /// The value of the square
         /// </summary>
-        public MinesweeperSquareState SquareState { get; set; }
+        public MinesweeperValues Value { get; set; }
 
         #endregion
 
@@ -75,11 +75,11 @@ namespace GenAlpha.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MinesweeperSquareViewModel(int row, int col, MinesweeperSquareState state, Action<int, int> squareClicked, Action bombRevealed)
+        public MinesweeperSquareViewModel(int row, int col, MinesweeperValues state, Action<int, int> squareClicked, Action bombRevealed)
         {
             Row = row;
             Column = col;
-            SquareState = state;
+            Value = state;
             SquareClicked = squareClicked;
             BombRevealed = bombRevealed;
             InitializeCommands();
@@ -94,10 +94,10 @@ namespace GenAlpha.Core
         /// </summary>
         private void Click()
         {
-            if (SquareState != MinesweeperSquareState.Flag && !IsRevealed)
+            if (Value != MinesweeperValues.Flag && !IsRevealed)
             {
                 IsRevealed = true;
-                if (SquareState == MinesweeperSquareState.Bomb)
+                if (Value == MinesweeperValues.Bomb)
                 {
                     BombRevealed();
                 }
@@ -115,14 +115,14 @@ namespace GenAlpha.Core
         {
             if(!IsRevealed)
             {
-                if (SquareState == MinesweeperSquareState.Flag)
+                if (Value == MinesweeperValues.Flag)
                 {
-                    SquareState = flaggedState;
+                    Value = flaggedState;
                 }
                 else
                 {
-                    flaggedState = SquareState;
-                    SquareState = MinesweeperSquareState.Flag;
+                    flaggedState = Value;
+                    Value = MinesweeperValues.Flag;
                 }
             }
         }

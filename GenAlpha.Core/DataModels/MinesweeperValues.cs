@@ -1,9 +1,9 @@
 ﻿namespace GenAlpha.Core
 {
     /// <summary>
-    /// The state of squares in minesweeper
+    /// The values a square can have in Minesweeper
     /// </summary>
-    public enum MinesweeperSquareState
+    public enum MinesweeperValues
     {
         Zero,
         One,

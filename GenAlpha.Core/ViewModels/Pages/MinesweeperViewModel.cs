@@ -55,7 +55,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// A dictionary holding the image paths according to the square states
         /// </summary>
-        public static Dictionary<MinesweeperSquareState, object> MinesweeperImagePaths => Image.GetMinesweeperImagePaths();
+        public static Dictionary<MinesweeperValues, object> MinesweeperImagePaths => Image.GetMinesweeperImagePaths();
 
         #endregion
 
@@ -186,7 +186,7 @@ namespace GenAlpha.Core
                     row++;
                 }
                 int index = (NumberOfColumns * row) + col;
-                MinesweeperSquareViewModel square = new(row, col, bombIndexes[i]? MinesweeperSquareState.Bomb : MinesweeperSquareState.Zero, SquareClicked, BombRevealed);
+                MinesweeperSquareViewModel square = new(row, col, bombIndexes[i]? MinesweeperValues.Bomb : MinesweeperValues.Zero, SquareClicked, BombRevealed);
                 Field.Add(square);
                 col++;
             }
@@ -204,10 +204,10 @@ namespace GenAlpha.Core
                 for (int column = 0; column < NumberOfColumns; column++)
                 {
                     MinesweeperSquareViewModel square = GetSquareFromField(row, column);
-                    if (square.SquareState != MinesweeperSquareState.Bomb)
+                    if (square.Value != MinesweeperValues.Bomb)
                     {
                         int count = GetCountOfSurroundingBombs(row, column);
-                        square.SquareState = (MinesweeperSquareState)count;
+                        square.Value = (MinesweeperValues)count;
                     }
                 }
             }
@@ -229,7 +229,7 @@ namespace GenAlpha.Core
                     if(IsValidIndex(row, column))
                     {
                         MinesweeperSquareViewModel square = GetSquareFromField(row, column);
-                        count += square.SquareState == MinesweeperSquareState.Bomb ? 1 : 0;
+                        count += square.Value == MinesweeperValues.Bomb ? 1 : 0;
                     }
                 }
             }
@@ -283,10 +283,10 @@ namespace GenAlpha.Core
         /// <param name="square"></param>
         private void Reveal(int row, int column, MinesweeperSquareViewModel square)
         {
-            if (!square.IsRevealed && square.SquareState != MinesweeperSquareState.Bomb)
+            if (!square.IsRevealed && square.Value != MinesweeperValues.Bomb)
             {
                 square.IsRevealed = true;
-                if (square.SquareState == MinesweeperSquareState.Zero)
+                if (square.Value == MinesweeperValues.Zero)
                 {
                     RevealSurrounding(row, column);
                 }
