@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="GenAlpha.SideMenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GenAlpha"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="400">
+
+    <Grid Background="{StaticResource VeryDarkBlueBrush}">
+        <StackPanel >
+            <Button Content="Beginner 9x9"
+                    Style="{StaticResource TextButton}"
+                    Command="{Binding BeginnerCommand}"/>
+            <Button Content="Advanced 16x16"
+                    Style="{StaticResource TextButton}"
+                    Command="{Binding AdvancedCommand}"/>
+            <Button Content="Expert 30x16"
+                    Style="{StaticResource TextButton}"
+                    Command="{Binding ExpertCommand}"/>
+            <Button Content="Custom"
+                    Style="{StaticResource TextButton}"
+                    Command="{Binding CustomCommand}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
