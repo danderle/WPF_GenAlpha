@@ -204,10 +204,10 @@ namespace GenAlpha.Core
                 for (int column = 0; column < NumberOfColumns; column++)
                 {
                     MinesweeperSquareViewModel square = GetSquareFromField(row, column);
-                    if (square.Value != MinesweeperValues.Bomb)
+                    if (square.FaceValue != MinesweeperValues.Bomb)
                     {
                         int count = GetCountOfSurroundingBombs(row, column);
-                        square.Value = (MinesweeperValues)count;
+                        square.FaceValue = (MinesweeperValues)count;
                     }
                 }
             }
@@ -229,7 +229,7 @@ namespace GenAlpha.Core
                     if(IsValidIndex(row, column))
                     {
                         MinesweeperSquareViewModel square = GetSquareFromField(row, column);
-                        count += square.Value == MinesweeperValues.Bomb ? 1 : 0;
+                        count += square.FaceValue == MinesweeperValues.Bomb ? 1 : 0;
                     }
                 }
             }
@@ -283,10 +283,10 @@ namespace GenAlpha.Core
         /// <param name="square"></param>
         private void Reveal(int row, int column, MinesweeperSquareViewModel square)
         {
-            if (!square.IsRevealed && square.Value != MinesweeperValues.Bomb)
+            if (!square.IsRevealed && square.FaceValue != MinesweeperValues.Bomb)
             {
                 square.IsRevealed = true;
-                if (square.Value == MinesweeperValues.Zero)
+                if (square.FaceValue == MinesweeperValues.Zero)
                 {
                     RevealSurrounding(row, column);
                 }

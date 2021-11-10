@@ -52,7 +52,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// The value of the square
         /// </summary>
-        public MinesweeperValues Value { get; set; }
+        public MinesweeperValues FaceValue { get; set; } = MinesweeperValues.Unopened;
 
         #endregion
 
@@ -75,11 +75,11 @@ namespace GenAlpha.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MinesweeperSquareViewModel(int row, int col, MinesweeperValues state, Action<int, int> squareClicked, Action bombRevealed)
+        public MinesweeperSquareViewModel(int row, int col, MinesweeperValues faceValue, Action<int, int> squareClicked, Action bombRevealed)
         {
             Row = row;
             Column = col;
-            Value = state;
+            FaceValue = faceValue;
             SquareClicked = squareClicked;
             BombRevealed = bombRevealed;
             InitializeCommands();
@@ -94,14 +94,14 @@ namespace GenAlpha.Core
         /// </summary>
         private void Click()
         {
-            if (Value != MinesweeperValues.Flag && !IsRevealed)
+            if (FaceValue != MinesweeperValues.Flag && !IsRevealed)
             {
                 IsRevealed = true;
-                if (Value == MinesweeperValues.Bomb)
+                if (FaceValue == MinesweeperValues.Bomb)
                 {
                     BombRevealed();
                 }
-                else
+                else if(FaceValue == MinesweeperValues.Zero)
                 {
                     SquareClicked(Row, Column);
                 }
@@ -115,14 +115,14 @@ namespace GenAlpha.Core
         {
             if(!IsRevealed)
             {
-                if (Value == MinesweeperValues.Flag)
+                if (FaceValue == MinesweeperValues.Flag)
                 {
-                    Value = flaggedState;
+                    FaceValue = flaggedState;
                 }
                 else
                 {
-                    flaggedState = Value;
-                    Value = MinesweeperValues.Flag;
+                    flaggedState = FaceValue;
+                    FaceValue = MinesweeperValues.Flag;
                 }
             }
         }

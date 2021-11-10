@@ -11,17 +11,17 @@ namespace GenAlpha
     {
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            MinesweeperValues value = (MinesweeperValues)values[1];
+            MinesweeperValues faceValue = (MinesweeperValues)values[1];
             if (values[0] is bool && (bool)values[0])
             {
-                return MinesweeperViewModel.MinesweeperImagePaths[value];
+                return MinesweeperViewModel.MinesweeperImagePaths[faceValue];
             }
             else
             {
-                switch (value)
+                switch (faceValue)
                 {
                     case MinesweeperValues.Flag:
-                        return MinesweeperViewModel.MinesweeperImagePaths[value];
+                        return MinesweeperViewModel.MinesweeperImagePaths[faceValue];
                     default:
                         return MinesweeperViewModel.MinesweeperImagePaths[MinesweeperValues.Unopened];
                 }
