@@ -111,11 +111,10 @@
                 Visibility="{Binding SideMenu.ShowSideMenu, Converter={local:BoolToVisibilityValueConverter}}"/>
 
         <!--Side Menu/Game settings menu-->
-        <local:SideMenuControl Grid.Row="1" 
-                               HorizontalAlignment="Right"
-                               MinWidth="300"
-                               local:AnimateSlideInFromRightProperty.Value="{Binding ShowSideMenu}"
-                               DataContext="{Binding SideMenu}" 
-                               />
+        <local:MinesweeperSideMenuControl Grid.Row="1"
+                                          HorizontalAlignment="Right"
+                                          MinWidth="300"
+                                          local:AnimateSlideInFromRightProperty.Value="{Binding ShowSideMenu}"
+                                          DataContext="{Binding SideMenu}"/>       
     </Grid>
 </local:BasePage>
