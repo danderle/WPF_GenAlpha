@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -45,7 +46,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// The side menu view model
         /// </summary>
-        public SideMenuViewModel SideMenu { get; set; } = new SideMenuViewModel();
+        public MinesweeperSideMenuViewModel SideMenu { get; set; }
 
         /// <summary>
         /// The list of the minesweeper field
@@ -145,6 +146,17 @@ namespace GenAlpha.Core
             GameOver = true;
         }
 
+        /// <summary>
+        /// Set up the field size and number of bombs
+        /// </summary>
+        private void SetGameSettings(int rows, int columns, int bombs)
+        {
+            NumberOfRows = rows;
+            NumberOfColumns = columns;
+            NumberOfBombs = bombs;
+            CreateGameField();
+        }
+
         #endregion
 
         #region Private Helpers
@@ -164,7 +176,7 @@ namespace GenAlpha.Core
         /// </summary>
         private void InitializeProperties()
         {
-            SideMenu.ShowSideMenu = false;
+            SideMenu = new MinesweeperSideMenuViewModel(SetGameSettings);
             CreateGameField();
         }
 
