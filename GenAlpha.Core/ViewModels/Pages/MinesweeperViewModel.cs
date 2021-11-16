@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -29,29 +27,14 @@ namespace GenAlpha.Core
         public PlayerTurn Winner { get; set; } = PlayerTurn.Player1;
 
         /// <summary>
-        /// Rows for the minesweeper field
-        /// </summary>
-        public int NumberOfRows { get; private set; } = 20;
-
-        /// <summary>
-        /// Columns for the minesweeper field
-        /// </summary>
-        public int NumberOfColumns { get; private set; } = 20;
-
-        /// <summary>
-        /// The number of bombs
-        /// </summary>
-        public int NumberOfBombs { get; private set; } = 50;
-
-        /// <summary>
         /// The side menu view model
         /// </summary>
         public MinesweeperSideMenuViewModel SideMenu { get; set; }
 
         /// <summary>
-        /// The list of the minesweeper field
+        /// The field view model
         /// </summary>
-        public ObservableCollection<MinesweeperSquareViewModel> Field { get; set; }
+        public MinesweeperFieldViewModel Field { get; set; }
 
         /// <summary>
         /// A dictionary holding the image paths according to the square states
@@ -100,7 +83,7 @@ namespace GenAlpha.Core
         private void RestartGame()
         {
             GameOver = false;
-            CreateGameField();
+            Field.Reset();
         }
 
         /// <summary>
@@ -109,10 +92,6 @@ namespace GenAlpha.Core
         private void ToggleSideMenu()
         {
             SideMenu.ShowSideMenu = !SideMenu.ShowSideMenu;
-            if (!SideMenu.ShowSideMenu)
-            {
-                RestartGame();
-            }
         }
 
         /// <summary>
@@ -130,15 +109,6 @@ namespace GenAlpha.Core
         #region Action Methods
 
         /// <summary>
-        /// The action method which is triggered when a square has been clicked
-        /// </summary>
-        /// <param name="column"></param>
-        private void SquareClicked(int row, int column)
-        {
-            RevealSurrounding(row, column);
-        }
-
-        /// <summary>
         /// The action method to let us know we have revealed a bomb
         /// </summary>
         private void BombRevealed()
@@ -151,10 +121,7 @@ namespace GenAlpha.Core
         /// </summary>
         private void SetGameSettings(int rows, int columns, int bombs)
         {
-            NumberOfRows = rows;
-            NumberOfColumns = columns;
-            NumberOfBombs = bombs;
-            CreateGameField();
+            Field = new MinesweeperFieldViewModel(rows, columns, bombs, BombRevealed);
         }
 
         #endregion
@@ -177,162 +144,6 @@ namespace GenAlpha.Core
         private void InitializeProperties()
         {
             SideMenu = new MinesweeperSideMenuViewModel(SetGameSettings);
-            CreateGameField();
-        }
-
-        /// <summary>
-        /// Creates all the squares inside the field and sets the column, row and index of the chip
-        /// </summary>
-        private void CreateGameField()
-        {
-            bool[] bombIndexes = GetRandomBombPositions();
-
-            Field = new ObservableCollection<MinesweeperSquareViewModel>();
-            int row = 0;
-            int col = 0;
-            for (int i = 0; i < NumberOfRows * NumberOfColumns; i++)
-            {
-                if (col >= NumberOfColumns)
-                {
-                    col = 0;
-                    row++;
-                }
-                int index = (NumberOfColumns * row) + col;
-                MinesweeperSquareViewModel square = new(row, col, bombIndexes[i]? MinesweeperValues.Bomb : MinesweeperValues.Zero, SquareClicked, BombRevealed);
-                Field.Add(square);
-                col++;
-            }
-
-            SetSquareValues();
-        }
-
-        /// <summary>
-        /// Sets the square state with the number of surrounding bombs
-        /// </summary>
-        private void SetSquareValues()
-        {
-            for (int row = 0; row < NumberOfRows; row++)
-            {
-                for (int column = 0; column < NumberOfColumns; column++)
-                {
-                    MinesweeperSquareViewModel square = GetSquareFromField(row, column);
-                    if (square.FaceValue != MinesweeperValues.Bomb)
-                    {
-                        int count = GetCountOfSurroundingBombs(row, column);
-                        square.FaceValue = (MinesweeperValues)count;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns the count of the number of surrounding bombs
-        /// </summary>
-        /// <param name="middleRow">current row index</param>
-        /// <param name="middleColumn">current column index</param>
-        /// <returns></returns>
-        private int GetCountOfSurroundingBombs(int middleRow, int middleColumn)
-        {
-            int count = 0;
-            for (int row = middleRow - 1; row <= middleRow + 1; row++)
-            {
-                for (int column = middleColumn - 1; column <= middleColumn + 1; column++)
-                {
-                    if(IsValidIndex(row, column))
-                    {
-                        MinesweeperSquareViewModel square = GetSquareFromField(row, column);
-                        count += square.FaceValue == MinesweeperValues.Bomb ? 1 : 0;
-                    }
-                }
-            }
-            return count;
-        }
-
-        /// <summary>
-        /// Creates an array of the size of the field and sets true if a bomb is present
-        /// </summary>
-        /// <returns></returns>
-        private bool[] GetRandomBombPositions()
-        {
-            // Create array with same size of field
-            bool[] bombIndexs = new bool[NumberOfRows * NumberOfColumns];
-
-            // Set the bombs to true
-            for (int i = 0; i < NumberOfBombs; i++)
-            {
-                bombIndexs[i] = true;
-            }
-
-            // Shuffle and return
-            return bombIndexs.Shuffle();
-        }
-
-        /// <summary>
-        /// Reveals the surrounding squares
-        /// </summary>
-        /// <param name="middleRow"></param>
-        /// <param name="middleColumn"></param>
-        private void RevealSurrounding(int middleRow, int middleColumn)
-        {
-            for (int row = middleRow - 1; row <= middleRow + 1; row++)
-            {
-                for (int column = middleColumn - 1; column <= middleColumn + 1; column++)
-                {
-                    if (IsValidIndex(row, column))
-                    {
-                        MinesweeperSquareViewModel square = GetSquareFromField(row, column);
-                        Reveal(row, column, square);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Reveals a sqaure if not already revealed or if a bomb
-        /// </summary>
-        /// <param name="row"></param>
-        /// <param name="column"></param>
-        /// <param name="square"></param>
-        private void Reveal(int row, int column, MinesweeperSquareViewModel square)
-        {
-            if (!square.IsRevealed && square.FaceValue != MinesweeperValues.Bomb)
-            {
-                square.IsRevealed = true;
-                if (square.FaceValue == MinesweeperValues.Zero)
-                {
-                    RevealSurrounding(row, column);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns true if the row and column make a valid index
-        /// </summary>
-        /// <param name="row"></param>
-        /// <param name="column"></param>
-        /// <returns></returns>
-        private bool IsValidIndex(int row, int column)
-        {
-            if (row >= 0 && row < NumberOfRows)
-            {
-                if (column >= 0 && column < NumberOfColumns)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Returns a square from the field
-        /// </summary>
-        /// <param name="row"></param>
-        /// <param name="column"></param>
-        /// <returns></returns>
-        private MinesweeperSquareViewModel GetSquareFromField(int row, int column)
-        {
-            int index = (NumberOfColumns * row) + column;
-            return Field[index];
         }
 
         #endregion
