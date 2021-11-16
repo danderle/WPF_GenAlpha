@@ -75,11 +75,10 @@ namespace GenAlpha.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MinesweeperSquareViewModel(int row, int col, MinesweeperValues faceValue, Action<int, int> squareClicked, Action bombRevealed)
+        public MinesweeperSquareViewModel(int row, int col, Action<int, int> squareClicked, Action bombRevealed)
         {
             Row = row;
             Column = col;
-            FaceValue = faceValue;
             SquareClicked = squareClicked;
             BombRevealed = bombRevealed;
             InitializeCommands();
@@ -101,7 +100,7 @@ namespace GenAlpha.Core
                 {
                     BombRevealed();
                 }
-                else if(FaceValue == MinesweeperValues.Zero)
+                else if (FaceValue == MinesweeperValues.Zero)
                 {
                     SquareClicked(Row, Column);
                 }
