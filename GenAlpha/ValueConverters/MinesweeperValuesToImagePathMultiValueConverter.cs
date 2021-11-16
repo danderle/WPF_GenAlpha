@@ -1,5 +1,6 @@
 ﻿using GenAlpha.Core;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace GenAlpha
@@ -11,20 +12,28 @@ namespace GenAlpha
     {
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            MinesweeperValues faceValue = (MinesweeperValues)values[1];
-            if (values[0] is bool && (bool)values[0])
+            try
             {
-                return MinesweeperViewModel.MinesweeperImagePaths[faceValue];
-            }
-            else
-            {
-                switch (faceValue)
+                MinesweeperValues faceValue = (MinesweeperValues)values[1];
+                if (values[0] is bool && (bool)values[0])
                 {
-                    case MinesweeperValues.Flag:
-                        return MinesweeperViewModel.MinesweeperImagePaths[faceValue];
-                    default:
-                        return MinesweeperViewModel.MinesweeperImagePaths[MinesweeperValues.Unopened];
+                    return MinesweeperViewModel.MinesweeperImagePaths[faceValue];
                 }
+                else
+                {
+                    switch (faceValue)
+                    {
+                        case MinesweeperValues.Flag:
+                            return MinesweeperViewModel.MinesweeperImagePaths[faceValue];
+                        default:
+                            return MinesweeperViewModel.MinesweeperImagePaths[MinesweeperValues.Unopened];
+                    }
+                }
+            }
+            catch
+            {
+                Debugger.Break();
+                return MinesweeperViewModel.MinesweeperImagePaths[MinesweeperValues.Unopened];
             }
         }
 
