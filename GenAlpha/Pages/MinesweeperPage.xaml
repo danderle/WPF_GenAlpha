@@ -44,7 +44,8 @@
         <!--Game field Main Page content-->
         <!--The squares to show Numbers, Flags or Bombs-->
         <ItemsControl Grid.Row="1"
-                      ItemsSource="{Binding Field}"
+                      DataContext="{Binding Field}"
+                      ItemsSource="{Binding Squares}"
                       HorizontalAlignment="Center">
             <!--Defining the panel to place the squares in-->
             <ItemsControl.ItemsPanel>
@@ -73,11 +74,9 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        
         <!--The game over grid layout-->
         <Grid Grid.Row="1"
               Background="Transparent"
