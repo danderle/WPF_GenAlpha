@@ -107,6 +107,24 @@ namespace GenAlpha.Core
 
         #endregion
 
+        #region Public Methods
+
+        /// <summary>
+        /// Reveals all the bomb positions
+        /// </summary>
+        public void ShowAllBombs()
+        {
+            foreach (MinesweeperSquareViewModel square in Squares)
+            {
+                if (square.FaceValue == MinesweeperValues.Bomb)
+                {
+                    square.IsRevealed = true;
+                }
+            }
+        }
+
+        #endregion
+
         #region Command Methods
 
         #endregion

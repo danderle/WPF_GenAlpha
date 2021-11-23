@@ -119,6 +119,7 @@ namespace GenAlpha.Core
         private void BombRevealed()
         {
             GameOver = true;
+            Field.ShowAllBombs();
         }
 
         /// <summary>
