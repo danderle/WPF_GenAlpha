@@ -31,6 +31,23 @@
                 <!--Button for returning to the game selection pagee-->
                 <Button Content="{StaticResource FontAwesomeAngleLeft}" 
                         Command="{Binding ToGameSelectionCommand}"/>
+
+                <StackPanel Grid.Column="1"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal"
+                            Margin="0 10">
+                    <TextBlock Text="{Binding RemainingBombs, StringFormat={}{0:000}}"
+                               FontSize="{StaticResource FontSizeXXLarge}"
+                               FontFamily="{StaticResource LatoBold}"/>
+                    <TextBlock Text="Start"
+                               FontSize="{StaticResource FontSizeXXLarge}"
+                               FontFamily="{StaticResource LatoBold}"
+                               Margin="80 0"/>
+                    <TextBlock Text="999"
+                               FontSize="{StaticResource FontSizeXXLarge}"
+                               FontFamily="{StaticResource LatoBold}" />
+                </StackPanel>
                 
                 <!--Settings Button-->
                 <Button Grid.Column="2"
@@ -41,6 +58,7 @@
             </Grid>
         </Border>
 
+        
         <!--Game field Main Page content-->
         <!--The squares to show Numbers, Flags or Bombs-->
         <ItemsControl Grid.Row="1"

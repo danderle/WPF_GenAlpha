@@ -21,6 +21,11 @@ namespace GenAlpha.Core
         private readonly Action BombRevealed;
 
         /// <summary>
+        /// Trigger action when a bomb is marked
+        /// </summary>
+        private readonly Action<bool> BombMarked;
+
+        /// <summary>
         /// The item which is flagged
         /// </summary>
         private MinesweeperValues flaggedState;
@@ -75,12 +80,13 @@ namespace GenAlpha.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MinesweeperSquareViewModel(int row, int col, Action<int, int> squareClicked, Action bombRevealed)
+        public MinesweeperSquareViewModel(int row, int col, Action<int, int> squareClicked, Action bombRevealed, Action<bool> bombMarked)
         {
             Row = row;
             Column = col;
             SquareClicked = squareClicked;
             BombRevealed = bombRevealed;
+            BombMarked = bombMarked;
             InitializeCommands();
         }
 
@@ -117,11 +123,13 @@ namespace GenAlpha.Core
                 if (FaceValue == MinesweeperValues.Flag)
                 {
                     FaceValue = flaggedState;
+                    BombMarked(false);
                 }
                 else
                 {
                     flaggedState = FaceValue;
                     FaceValue = MinesweeperValues.Flag;
+                    BombMarked(true);
                 }
             }
         }

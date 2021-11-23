@@ -22,6 +22,11 @@ namespace GenAlpha.Core
         public int Moves { get; set; }
 
         /// <summary>
+        /// Shows the number of potential bombs
+        /// </summary>
+        public int RemainingBombs { get; set; }
+
+        /// <summary>
         /// The winner
         /// </summary>
         public PlayerTurn Winner { get; set; } = PlayerTurn.Player1;
@@ -117,11 +122,20 @@ namespace GenAlpha.Core
         }
 
         /// <summary>
+        /// The action method to let us know we have marked a potential bomb
+        /// </summary>
+        private void BombMarked(bool flagSet)
+        {
+            RemainingBombs += flagSet ? -1 : 1;
+        }
+
+        /// <summary>
         /// Set up the field size and number of bombs
         /// </summary>
         private void SetGameSettings(int rows, int columns, int bombs)
         {
-            Field = new MinesweeperFieldViewModel(rows, columns, bombs, BombRevealed);
+            Field = new MinesweeperFieldViewModel(rows, columns, bombs, BombRevealed, BombMarked);
+            RemainingBombs = Field.NumberOfBombs;
         }
 
         #endregion

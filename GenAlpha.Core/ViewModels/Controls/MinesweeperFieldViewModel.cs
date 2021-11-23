@@ -52,7 +52,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MinesweeperFieldViewModel(int rows, int columns, int bombs, Action bombRevealed)
+        public MinesweeperFieldViewModel(int rows, int columns, int bombs, Action bombRevealed, Action<bool> bombMarked)
         {
             NumberOfRows = rows;
             NumberOfColumns = columns;
@@ -68,7 +68,7 @@ namespace GenAlpha.Core
                     row++;
                 }
                 int index = (NumberOfColumns * row) + col;
-                MinesweeperSquareViewModel square = new(row, col, SquareClicked, bombRevealed);
+                MinesweeperSquareViewModel square = new(row, col, SquareClicked, bombRevealed, bombMarked);
                 Squares.Add(square);
                 col++;
             }
