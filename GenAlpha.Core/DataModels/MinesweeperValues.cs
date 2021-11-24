@@ -16,7 +16,8 @@
         Eight,
         Unopened,
         Flag,
-        Bomb
+        Bomb,
+        FalseFlag
     }
 
 }

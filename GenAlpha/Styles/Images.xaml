@@ -3,6 +3,7 @@
                     xmlns:local="clr-namespace:GenAlpha"
                     xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
+    <!--Add keys to dictionary in Image.cs-->
     <ImageSource x:Key="0">/GenAlpha;Component/Resources/Images/Minesweeper_0.png</ImageSource>
     <ImageSource x:Key="1">/GenAlpha;Component/Resources/Images/Minesweeper_1.png</ImageSource>
     <ImageSource x:Key="2">/GenAlpha;Component/Resources/Images/Minesweeper_2.png</ImageSource>
@@ -15,5 +16,6 @@
     <ImageSource x:Key="Bomb">/GenAlpha;Component/Resources/Images/Minesweeper_Bomb.png</ImageSource>
     <ImageSource x:Key="Flag">/GenAlpha;Component/Resources/Images/Minesweeper_Flag.png</ImageSource>
     <ImageSource x:Key="Unopened">/GenAlpha;Component/Resources/Images/Minesweeper_Unopened_Square.png</ImageSource>
+    <ImageSource x:Key="FalseFlag">/GenAlpha;Component/Resources/Images/Minesweeper_False_Flag.png</ImageSource>
 
 </ResourceDictionary>

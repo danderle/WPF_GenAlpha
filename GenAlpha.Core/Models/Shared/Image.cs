@@ -41,6 +41,7 @@ namespace GenAlpha.Core
                 { MinesweeperValues.Flag, Application.Current.FindResource("Flag") },
                 { MinesweeperValues.Bomb, Application.Current.FindResource("Bomb") },
                 { MinesweeperValues.Unopened, Application.Current.FindResource("Unopened") },
+                { MinesweeperValues.FalseFlag, Application.Current.FindResource("FalseFlag") },
             };
         }
         #endregion
