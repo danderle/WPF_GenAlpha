@@ -110,7 +110,7 @@ namespace GenAlpha.Core
         #region Public Methods
 
         /// <summary>
-        /// Reveals all the bomb positions
+        /// Reveals all the bomb positions and wrongly placed flags
         /// </summary>
         public void ShowAllBombs()
         {
@@ -119,6 +119,14 @@ namespace GenAlpha.Core
                 if (square.FaceValue == MinesweeperValues.Bomb)
                 {
                     square.IsRevealed = true;
+                }
+                else if (square.FaceValue == MinesweeperValues.Flag)
+                {
+                    if (square.FlaggedState != MinesweeperValues.Bomb)
+                    {
+                        square.FaceValue = MinesweeperValues.FalseFlag;
+                        square.IsRevealed = true;
+                    }
                 }
             }
         }
