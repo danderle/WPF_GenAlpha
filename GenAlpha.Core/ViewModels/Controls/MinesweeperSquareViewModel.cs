@@ -8,6 +8,15 @@ namespace GenAlpha.Core
     /// </summary>
     public class MinesweeperSquareViewModel : BaseViewModel
     {
+        #region Fields
+
+        /// <summary>
+        /// The item which is flagged
+        /// </summary>
+        public MinesweeperValues FlaggedState;
+
+        #endregion
+
         #region Actions
 
         /// <summary>
@@ -24,11 +33,6 @@ namespace GenAlpha.Core
         /// Trigger action when a bomb is marked
         /// </summary>
         private readonly Action<bool> BombMarked;
-
-        /// <summary>
-        /// The item which is flagged
-        /// </summary>
-        private MinesweeperValues flaggedState;
 
         #endregion
 
@@ -122,12 +126,12 @@ namespace GenAlpha.Core
             {
                 if (FaceValue == MinesweeperValues.Flag)
                 {
-                    FaceValue = flaggedState;
+                    FaceValue = FlaggedState;
                     BombMarked(false);
                 }
                 else
                 {
-                    flaggedState = FaceValue;
+                    FlaggedState = FaceValue;
                     FaceValue = MinesweeperValues.Flag;
                     BombMarked(true);
                 }
