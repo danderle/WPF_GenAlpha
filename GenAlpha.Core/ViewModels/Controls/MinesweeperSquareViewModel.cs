@@ -15,6 +15,11 @@ namespace GenAlpha.Core
         /// </summary>
         public MinesweeperValues FlaggedState;
 
+        /// <summary>
+        /// Flag for lettung us know if the first square has been clicked to start the game
+        /// </summary>
+        public static bool FirstSquareClicked = true;
+
         #endregion
 
         #region Actions
@@ -33,6 +38,11 @@ namespace GenAlpha.Core
         /// Trigger action when a bomb is marked
         /// </summary>
         private readonly Action<bool> BombMarked;
+
+        /// <summary>
+        /// Trigger action when the first square is clicked
+        /// </summary>
+        private readonly Action StartGameTimer;
 
         #endregion
 
@@ -84,13 +94,14 @@ namespace GenAlpha.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MinesweeperSquareViewModel(int row, int col, Action<int, int> squareClicked, Action bombRevealed, Action<bool> bombMarked)
+        public MinesweeperSquareViewModel(int row, int col, Action<int, int> squareClicked, Action bombRevealed, Action<bool> bombMarked, Action startGameTimer)
         {
             Row = row;
             Column = col;
             SquareClicked = squareClicked;
             BombRevealed = bombRevealed;
             BombMarked = bombMarked;
+            StartGameTimer = startGameTimer;
             InitializeCommands();
         }
 
@@ -115,6 +126,7 @@ namespace GenAlpha.Core
                     SquareClicked(Row, Column);
                 }
             }
+            CheckFirstClick();
         }
 
         /// <summary>
@@ -135,6 +147,19 @@ namespace GenAlpha.Core
                     FaceValue = MinesweeperValues.Flag;
                     BombMarked(true);
                 }
+            }
+            CheckFirstClick();
+        }
+
+        /// <summary>
+        /// Checks if the first square is clicked. If true then start game timer
+        /// </summary>
+        private void CheckFirstClick()
+        {
+            if (FirstSquareClicked)
+            {
+                FirstSquareClicked = false;
+                StartGameTimer();
             }
         }
 
