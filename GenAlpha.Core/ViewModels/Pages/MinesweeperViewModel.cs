@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Input;
 
 namespace GenAlpha.Core
@@ -9,6 +10,14 @@ namespace GenAlpha.Core
     /// </summary>
     public class MinesweeperViewModel : BaseViewModel
     {
+        #region Fields
+
+        private const int TIMER_INTERVAL = 1000;
+
+        private Timer stopwatchTimer = new Timer(TIMER_INTERVAL);
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -30,6 +39,16 @@ namespace GenAlpha.Core
         /// The winner
         /// </summary>
         public PlayerTurn Winner { get; set; } = PlayerTurn.Player1;
+
+        /// <summary>
+        /// Displays the current GameState
+        /// </summary>
+        public string GameState { get; set; } = "Ready";
+
+        /// <summary>
+        /// Elapsed time in seconds
+        /// </summary>
+        public int ElapsedTime { get; set; } = 0;
 
         /// <summary>
         /// The side menu view model
@@ -89,6 +108,10 @@ namespace GenAlpha.Core
         {
             GameOver = false;
             Field.Reset();
+            MinesweeperSquareViewModel.FirstSquareClicked = true;
+            GameState = "Ready";
+            ElapsedTime = 0;
+            RemainingBombs = Field.NumberOfBombs;
         }
 
         /// <summary>
@@ -120,6 +143,8 @@ namespace GenAlpha.Core
         {
             GameOver = true;
             Field.ShowAllBombs();
+            GameState = "Game Over";
+            StopTimer();
         }
 
         /// <summary>
@@ -131,12 +156,41 @@ namespace GenAlpha.Core
         }
 
         /// <summary>
+        /// Starts the game timer after first click
+        /// </summary>
+        private void StartGameTimer()
+        {
+            if (!GameOver)
+            {
+                GameState = "Go!";
+                StartTimer();
+            }
+        }
+
+        /// <summary>
         /// Set up the field size and number of bombs
         /// </summary>
         private void SetGameSettings(int rows, int columns, int bombs)
         {
-            Field = new MinesweeperFieldViewModel(rows, columns, bombs, BombRevealed, BombMarked);
+            Field = new MinesweeperFieldViewModel(rows, columns, bombs, BombRevealed, BombMarked, StartGameTimer);
             RemainingBombs = Field.NumberOfBombs;
+            GameState = "Ready";
+            ElapsedTime = 0;
+            GameOver = false;
+        }
+
+        #endregion
+
+        #region Event Methods
+
+        /// <summary>
+        /// The elapsed stopwatch timer method to add a second to the <see cref="ElapsedTime"/>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StopwatchTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            ElapsedTime += 1;
         }
 
         #endregion
@@ -159,6 +213,23 @@ namespace GenAlpha.Core
         private void InitializeProperties()
         {
             SideMenu = new MinesweeperSideMenuViewModel(SetGameSettings);
+            stopwatchTimer.Elapsed += StopwatchTimer_Elapsed;
+        }
+
+        /// <summary>
+        /// Stops the stopwatchTimer
+        /// </summary>
+        private void StopTimer()
+        {
+            stopwatchTimer.Stop();
+        }
+
+        /// <summary>
+        /// Starts stopwatch timer
+        /// </summary>
+        private void StartTimer()
+        {
+            stopwatchTimer.Start();
         }
 
         #endregion

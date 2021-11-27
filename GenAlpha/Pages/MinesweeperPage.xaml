@@ -40,11 +40,11 @@
                     <TextBlock Text="{Binding RemainingBombs, StringFormat={}{0:000}}"
                                FontSize="{StaticResource FontSizeXXLarge}"
                                FontFamily="{StaticResource LatoBold}"/>
-                    <TextBlock Text="Start"
+                    <TextBlock Text="{Binding GameState}"
                                FontSize="{StaticResource FontSizeXXLarge}"
                                FontFamily="{StaticResource LatoBold}"
                                Margin="80 0"/>
-                    <TextBlock Text="999"
+                    <TextBlock Text="{Binding ElapsedTime, StringFormat={}{0:000}}"
                                FontSize="{StaticResource FontSizeXXLarge}"
                                FontFamily="{StaticResource LatoBold}" />
                 </StackPanel>
