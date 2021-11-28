@@ -168,11 +168,21 @@ namespace GenAlpha.Core
         }
 
         /// <summary>
+        /// Stops the game when won
+        /// </summary>
+        private void GameIsWon()
+        {
+            GameOver = true;
+            GameState = "Winner";
+            StopTimer();
+        }
+
+        /// <summary>
         /// Set up the field size and number of bombs
         /// </summary>
         private void SetGameSettings(int rows, int columns, int bombs)
         {
-            Field = new MinesweeperFieldViewModel(rows, columns, bombs, BombRevealed, BombMarked, StartGameTimer);
+            Field = new MinesweeperFieldViewModel(rows, columns, bombs, BombRevealed, BombMarked, StartGameTimer, GameIsWon);
             RemainingBombs = Field.NumberOfBombs;
             GameState = "Ready";
             ElapsedTime = 0;
