@@ -9,6 +9,15 @@ namespace GenAlpha.Core
     /// </summary>
     public class MinesweeperFieldViewModel : BaseViewModel
     {
+        #region Fields
+
+        /// <summary>
+        /// Holds the number of unrevealed squares
+        /// </summary>
+        public static int UnrevealedSquares;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -33,6 +42,11 @@ namespace GenAlpha.Core
 
         #endregion
 
+        /// <summary>
+        /// Action to run if the game is won
+        /// </summary>
+        private Action GameIsWon;
+
         #region Commands
 
         /// <summary>
@@ -52,11 +66,12 @@ namespace GenAlpha.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MinesweeperFieldViewModel(int rows, int columns, int bombs, Action bombRevealed, Action<bool> bombMarked, Action startGameTimer)
+        public MinesweeperFieldViewModel(int rows, int columns, int bombs, Action bombRevealed, Action<bool> bombMarked, Action startGameTimer, Action gameIsWon)
         {
             NumberOfRows = rows;
             NumberOfColumns = columns;
             NumberOfBombs = bombs;
+            GameIsWon = gameIsWon;
 
             int row = 0;
             int col = 0;
@@ -68,7 +83,7 @@ namespace GenAlpha.Core
                     row++;
                 }
                 int index = (NumberOfColumns * row) + col;
-                MinesweeperSquareViewModel square = new(row, col, SquareClicked, bombRevealed, bombMarked, startGameTimer);
+                MinesweeperSquareViewModel square = new(row, col, SquareClicked, bombRevealed, bombMarked, startGameTimer, CheckIfGameIsWon);
                 Squares.Add(square);
                 col++;
             }
@@ -90,6 +105,7 @@ namespace GenAlpha.Core
             }
 
             SetSquareValues();
+            UnrevealedSquares = NumberOfColumns * NumberOfRows;
         }
 
         #endregion
@@ -103,6 +119,25 @@ namespace GenAlpha.Core
         private void SquareClicked(int row, int column)
         {
             RevealSurrounding(row, column);
+        }
+
+        /// <summary>
+        /// The game is won if all are revealed and all bombs are marked
+        /// </summary>
+        private void CheckIfGameIsWon()
+        {
+            if (UnrevealedSquares - NumberOfBombs == 0)
+            {
+                foreach (MinesweeperSquareViewModel square in Squares)
+                {
+                    if ((square.FaceValue == MinesweeperValues.Flag && square.FlaggedState != MinesweeperValues.Bomb) ||
+                        (square.FaceValue != MinesweeperValues.Flag && !square.IsRevealed))
+                    {
+                        return;
+                    }
+                }
+                GameIsWon();   
+            }
         }
 
         #endregion
@@ -257,6 +292,7 @@ namespace GenAlpha.Core
             if (!square.IsRevealed && square.FaceValue != MinesweeperValues.Bomb)
             {
                 square.IsRevealed = true;
+                UnrevealedSquares--;
                 if (square.FaceValue == MinesweeperValues.Zero)
                 {
                     RevealSurrounding(row, column);
