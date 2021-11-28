@@ -27,7 +27,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// Trigger action when a square is clicked
         /// </summary>
-        private readonly Action<int, int> SquareClicked;
+        private readonly Action<int, int> ZeroSquareClicked;
 
         /// <summary>
         /// Trigger action when a bomb is revealed
@@ -38,6 +38,11 @@ namespace GenAlpha.Core
         /// Trigger action when a bomb is marked
         /// </summary>
         private readonly Action<bool> BombMarked;
+
+        /// <summary>
+        /// Trigger action when a bomb is marked and check if game is won
+        /// </summary>
+        private readonly Action CheckIfGameIsWon;
 
         /// <summary>
         /// Trigger action when the first square is clicked
@@ -94,14 +99,21 @@ namespace GenAlpha.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MinesweeperSquareViewModel(int row, int col, Action<int, int> squareClicked, Action bombRevealed, Action<bool> bombMarked, Action startGameTimer)
+        public MinesweeperSquareViewModel(int row, 
+            int col, 
+            Action<int, int> zeroSquareClicked, 
+            Action bombRevealed, 
+            Action<bool> bombMarked, 
+            Action startGameTimer, 
+            Action checkIfGameIsWon)
         {
             Row = row;
             Column = col;
-            SquareClicked = squareClicked;
+            ZeroSquareClicked = zeroSquareClicked;
             BombRevealed = bombRevealed;
             BombMarked = bombMarked;
             StartGameTimer = startGameTimer;
+            CheckIfGameIsWon = checkIfGameIsWon;
             InitializeCommands();
         }
 
@@ -117,16 +129,18 @@ namespace GenAlpha.Core
             if (FaceValue != MinesweeperValues.Flag && !IsRevealed)
             {
                 IsRevealed = true;
+                MinesweeperFieldViewModel.UnrevealedSquares--;
                 if (FaceValue == MinesweeperValues.Bomb)
                 {
                     BombRevealed();
                 }
                 else if (FaceValue == MinesweeperValues.Zero)
                 {
-                    SquareClicked(Row, Column);
+                    ZeroSquareClicked(Row, Column);
                 }
             }
             CheckFirstClick();
+            CheckIfGameIsWon();
         }
 
         /// <summary>
@@ -146,6 +160,7 @@ namespace GenAlpha.Core
                     FlaggedState = FaceValue;
                     FaceValue = MinesweeperValues.Flag;
                     BombMarked(true);
+                    CheckIfGameIsWon();
                 }
             }
             CheckFirstClick();
