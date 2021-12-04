@@ -31,7 +31,7 @@ namespace GenAlpha.Core
             Games.Add(new GameSelectionButtonViewModel("Keyboard shooter", ApplicationPage.KeyboardShooter));
             Games.Add(new GameSelectionButtonViewModel("Connect-4", ApplicationPage.Connect4));
             Games.Add(new GameSelectionButtonViewModel("Minesweeper", ApplicationPage.Minesweeper));
-            Games.Add(new GameSelectionButtonViewModel("Game 5", ApplicationPage.Memory));
+            Games.Add(new GameSelectionButtonViewModel("Guess the animal", ApplicationPage.GuessAnimal));
         }
 
         #endregion

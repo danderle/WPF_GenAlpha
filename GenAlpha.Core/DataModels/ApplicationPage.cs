@@ -10,5 +10,6 @@
         KeyboardShooter,
         Connect4,
         Minesweeper,
+        GuessAnimal,
     }
 }

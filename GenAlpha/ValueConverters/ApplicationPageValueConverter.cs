@@ -25,6 +25,8 @@ namespace GenAlpha
                     return new Connect4Page();
                 case ApplicationPage.Minesweeper:
                     return new MinesweeperPage();
+                case ApplicationPage.GuessAnimal:
+                    return new AnimalGuessPage();
                 default:
                     Debugger.Break();
                     return null;

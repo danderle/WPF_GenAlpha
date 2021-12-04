@@ -10,7 +10,7 @@
         /// <summary>
         /// The current page of the application
         /// </summary>
-        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Minesweeper;
+        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.GuessAnimal;
 
         #endregion
 
