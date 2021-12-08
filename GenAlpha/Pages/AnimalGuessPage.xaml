@@ -8,55 +8,19 @@
                   xmlns:core="clr-namespace:GenAlpha.Core;assembly=GenAlpha.Core"
                   mc:Ignorable="d" 
                   d:DesignHeight="450" d:DesignWidth="800"
-                  Title="Minesweeper"
-                d:DataContext="{x:Static core:MinesweeperDesignModel.Instance}">
+                  Title="AnimalGuess">
     
     <!--Page layout definition-->
     <Grid Background="{StaticResource VeryDarkBlueBrush}"
-          ClipToBounds="True">
+          ClipToBounds="True"
+          local:MouseMoved.Value="{Binding MouseMoveCommand}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!--Top Row-->
-        <Border Grid.Row="0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                
-                <!--Button for returning to the game selection pagee-->
-                <Button Content="{StaticResource FontAwesomeAngleLeft}" 
-                        Command="{Binding ToGameSelectionCommand}"/>
-
-                <StackPanel Grid.Column="1"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Orientation="Horizontal"
-                            Margin="0 10">
-                    <TextBlock Text="{Binding RemainingBombs, StringFormat={}{0:000}}"
-                               FontSize="{StaticResource FontSizeXXLarge}"
-                               FontFamily="{StaticResource LatoBold}"/>
-                    <TextBlock Text="{Binding GameState}"
-                               FontSize="{StaticResource FontSizeXXLarge}"
-                               FontFamily="{StaticResource LatoBold}"
-                               Margin="80 0"/>
-                    <TextBlock Text="{Binding ElapsedTime, StringFormat={}{0:000}}"
-                               FontSize="{StaticResource FontSizeXXLarge}"
-                               FontFamily="{StaticResource LatoBold}" />
-                </StackPanel>
-                
-                <!--Settings Button-->
-                <Button Grid.Column="2"
-                        Content="{StaticResource FontAwesomeCog}" 
-                        FontFamily="{StaticResource FontAwesomeSolid}"
-                        Command="{Binding ToggleSideMenuCommand}"/>
-
-            </Grid>
-        </Border>
+        <local:TopBarControl DataContext="{Binding TopBar}" />
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -64,16 +28,15 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Image Source="//Resources/Images/Animals/Alligator.jpg" />
-            <Border Background="Black" 
-                    >
+            <Image Source="C:\Users\beach\Development\C# Development\WPF_GenAlpha\GenAlpha\Resources\Images\Animals\Alligator.jpg" />
+            <Border Background="Black">
                 <Border.Clip>
                     <CombinedGeometry GeometryCombineMode="Exclude">
                         <CombinedGeometry.Geometry1>
                             <RectangleGeometry Rect="0,0,10000,10000"/>
                         </CombinedGeometry.Geometry1>
                         <CombinedGeometry.Geometry2>
-                            <EllipseGeometry x:Name="CutOut"/>
+                            <EllipseGeometry Center="{Binding MousePosition}" RadiusX="50" RadiusY="50"/>
                         </CombinedGeometry.Geometry2>
                     </CombinedGeometry>
                 </Border.Clip>
@@ -88,30 +51,5 @@
                 <Button Content="Alligator" FontFamily="{StaticResource LatoRegular}"/>
             </StackPanel>
         </Grid>
-        
-        <!--The game over grid layout-->
-        <Grid Grid.Row="1"
-              Background="Transparent"
-              Visibility="{Binding GameOver, Converter={local:BoolToVisibilityValueConverter}}">
-            
-            <!--Replay game button, only visible when game over-->
-            <Button Style="{StaticResource RestartButton}"
-                    Content="{StaticResource FontAwesomeRotateLeft}"
-                    Command="{Binding RestartGameCommand}"
-                    Opacity="0.7"/>
-        </Grid>
-
-        <!--Side menu overlay-->
-        <Border Grid.Row="1" 
-                Background="{StaticResource GrayBlueBrush}"
-                Opacity="0.5"
-                Visibility="{Binding SideMenu.ShowSideMenu, Converter={local:BoolToVisibilityValueConverter}}"/>
-
-        <!--Side Menu/Game settings menu-->
-        <local:MinesweeperSideMenuControl Grid.Row="1"
-                                          HorizontalAlignment="Right"
-                                          MinWidth="300"
-                                          local:AnimateSlideInFromRightProperty.Value="{Binding ShowSideMenu}"
-                                          DataContext="{Binding SideMenu}"/>       
     </Grid>
 </local:BasePage>
