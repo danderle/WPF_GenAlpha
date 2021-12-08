@@ -19,7 +19,26 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <local:TopBarControl DataContext="{Binding TopBar}" />
+        <local:TopBarControl DataContext="{Binding TopBar}" >
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal"
+                            Grid.ColumnSpan="3"
+                            HorizontalAlignment="Center">
+                    <TextBlock>
+                        <Run Text="Score:" />
+                        <Run Text="{Binding Score}" />
+                    </TextBlock>
+                </StackPanel>
+                <Button Grid.Column="2"
+                        Content="{StaticResource FontAwesomeCog}" 
+                        FontFamily="{StaticResource FontAwesomeSolid}"
+                        Command="{Binding ToggleSideMenuCommand}"/>
+            </Grid>
+        </local:TopBarControl>
 
         <!--Main Content-->
         <Grid Grid.Row="1"
