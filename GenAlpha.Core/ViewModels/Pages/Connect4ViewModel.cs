@@ -63,15 +63,15 @@ namespace GenAlpha.Core
         public SideMenuViewModel SideMenu { get; set; } = new SideMenuViewModel();
 
         /// <summary>
+        /// The top bar for this view model
+        /// </summary>
+        public Connect4TopBarViewModel TopBar { get; set; }
+
+        /// <summary>
         /// The list of the connect4 field
         /// </summary>
         public ObservableCollection<Connect4ChipViewModel> Field { get; set; } = new ObservableCollection<Connect4ChipViewModel>();
-
-        /// <summary>
-        /// The list of playing players
-        /// </summary>
-        public ObservableCollection<Player> Players { get; set; }
-
+        
         #endregion
 
         #region Commands
@@ -80,16 +80,6 @@ namespace GenAlpha.Core
         /// The command to restart the game
         /// </summary>
         public ICommand RestartGameCommand { get; set; }
-
-        /// <summary>
-        /// The command to show/hidew the side menu
-        /// </summary>
-        public ICommand ToggleSideMenuCommand { get; set; }
-        
-        /// <summary>
-        /// The command to go back to the game selection menu
-        /// </summary>
-        public ICommand ToGameSelectionCommand { get; set; }
 
         #endregion
 
@@ -115,7 +105,7 @@ namespace GenAlpha.Core
         {
             GameOver = false;
             Moves = 0;
-            CreatePlayers();
+            CurrentPlayer = TopBar.CreatePlayers();
             ResetField();
         }
 
@@ -129,16 +119,6 @@ namespace GenAlpha.Core
             {
                 RestartGame();
             }
-        }
-
-        /// <summary>
-        /// Switches the page to return to the game selection page
-        /// </summary>
-        private async void GoToGameSelctionAsync()
-        {
-            DI.Service<ApplicationViewModel>().GoToPage(ApplicationPage.GameSelection);
-
-            await Task.Delay(1);
         }
 
         #endregion
@@ -209,8 +189,6 @@ namespace GenAlpha.Core
         private void InitializeCommands()
         {
             RestartGameCommand = new RelayCommand(RestartGame);
-            ToggleSideMenuCommand = new RelayCommand(ToggleSideMenu);
-            ToGameSelectionCommand = new RelayCommand(GoToGameSelctionAsync);
         }
 
         /// <summary>
@@ -218,8 +196,9 @@ namespace GenAlpha.Core
         /// </summary>
         private void InitializeProperties()
         {
+            TopBar = new Connect4TopBarViewModel(ToggleSideMenu);
             SideMenu.ShowSideMenu = false;
-            CreatePlayers();
+            CurrentPlayer = TopBar.CreatePlayers();
             CreateGameField();
         }
 
@@ -462,19 +441,6 @@ namespace GenAlpha.Core
         }
 
         /// <summary>
-        /// Creates the players
-        /// </summary>
-        private void CreatePlayers()
-        {
-            Players = new ObservableCollection<Player>()
-            {
-                new Player(PlayerTurn.Player1),
-                new Player(PlayerTurn.Player2),
-            };
-            CurrentPlayer = PlayerTurn.Player1;
-        }
-
-        /// <summary>
         /// Switches the players turn
         /// </summary>
         private void SwitchPlayer()
@@ -482,10 +448,7 @@ namespace GenAlpha.Core
             if (!GameOver)
             {
                 CurrentPlayer = CurrentPlayer == PlayerTurn.Player1 ? PlayerTurn.Player2 : PlayerTurn.Player1;
-                foreach (Player player in Players)
-                {
-                    player.CurrentPlayer = CurrentPlayer == player.Position;
-                }
+                TopBar.SetCurrentPlayer(CurrentPlayer);
             }
         }
 
