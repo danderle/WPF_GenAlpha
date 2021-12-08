@@ -7,31 +7,24 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="800">
 
-    <!--Top Row-->
-    <Border Grid.Row="0"
-            Background="{StaticResource VeryDarkBlueBrush}">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+    <UserControl.Template>
+        <ControlTemplate TargetType="{x:Type UserControl}">
+            <Border Grid.Row="0"
+                    Background="{StaticResource VeryDarkBlueBrush}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-            <Button Content="{StaticResource FontAwesomeAngleLeft}" 
-                    Command="{Binding ToGameSelectionCommand}"
-                    />
-            <StackPanel Orientation="Horizontal"
-                        Grid.ColumnSpan="3"
-                        HorizontalAlignment="Center">
-                <TextBlock>
-                        <Run Text="Score:" />
-                        <Run Text="{Binding Score}" />
-                </TextBlock>
-            </StackPanel>
-            <Button Grid.Column="2"
-                    Content="{StaticResource FontAwesomeCog}" 
-                    FontFamily="{StaticResource FontAwesomeSolid}"
-                    Command="{Binding ToggleSideMenuCommand}"/>
-        </Grid>
-    </Border>
+                    <Button Content="{StaticResource FontAwesomeAngleLeft}" 
+                            Command="{Binding ToGameSelectionCommand}"/>
+                    <ContentPresenter Grid.Column="1" 
+                                      Content="{TemplateBinding Content}"/>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Template>
+
+    
 </UserControl>
