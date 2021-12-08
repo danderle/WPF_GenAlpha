@@ -19,18 +19,13 @@
         </Grid.RowDefinitions>
 
         <!--Top Row-->
-        <Border Grid.Row="0">
+        <local:TopBarControl DataContext="{Binding TopBar}" >
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                
-                <!--Button for returning to the game selection pagee-->
-                <Button Content="{StaticResource FontAwesomeAngleLeft}" 
-                        Command="{Binding ToGameSelectionCommand}"/>
-                
+
                 <!--The currentplayers and their scores-->
                 <ItemsControl ItemsSource="{Binding Players}"
                               Grid.ColumnSpan="3"
@@ -43,20 +38,13 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Position}" 
-                                           Margin="30 0 0 0"
-                                            Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}}"/>
-                                <TextBlock Margin="0 0 30 0"
-                                            Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}}">
-                                <Run Text="  Score:" />
-                                <Run Text="{Binding Score}" />
-                                </TextBlock>
-                            </StackPanel>
+                            <TextBlock Text="{Binding Position}" 
+                                        Margin="30 0 0 0"
+                                        Foreground="{Binding CurrentPlayer, Converter={local:CurrentPlayerToForegroundConverter}}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                
+
                 <!--Settings Button-->
                 <Button Grid.Column="2"
                         Content="{StaticResource FontAwesomeCog}" 
@@ -64,7 +52,7 @@
                         Command="{Binding ToggleSideMenuCommand}"/>
 
             </Grid>
-        </Border>
+        </local:TopBarControl>
 
         <!--Game field Main Page content-->
         <!--The Memory cards-->
