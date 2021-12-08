@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Input;
 
 namespace GenAlpha.Core
@@ -10,14 +8,6 @@ namespace GenAlpha.Core
     /// </summary>
     public class MinesweeperViewModel : BaseViewModel
     {
-        #region Fields
-
-        private const int TIMER_INTERVAL = 1000;
-
-        private Timer stopwatchTimer = new Timer(TIMER_INTERVAL);
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -29,26 +19,16 @@ namespace GenAlpha.Core
         /// The winning moves
         /// </summary>
         public int Moves { get; set; }
-
-        /// <summary>
-        /// Shows the number of potential bombs
-        /// </summary>
-        public int RemainingBombs { get; set; }
-
+        
         /// <summary>
         /// The winner
         /// </summary>
         public PlayerTurn Winner { get; set; } = PlayerTurn.Player1;
 
         /// <summary>
-        /// Displays the current GameState
+        /// The top bar for this view model
         /// </summary>
-        public string GameState { get; set; } = "Ready";
-
-        /// <summary>
-        /// Elapsed time in seconds
-        /// </summary>
-        public int ElapsedTime { get; set; } = 0;
+        public MinesweeperTopBarViewModel TopBar { get; set; }
 
         /// <summary>
         /// The side menu view model
@@ -73,16 +53,6 @@ namespace GenAlpha.Core
         /// The command to restart the game
         /// </summary>
         public ICommand RestartGameCommand { get; set; }
-
-        /// <summary>
-        /// The command to show/hidew the side menu
-        /// </summary>
-        public ICommand ToggleSideMenuCommand { get; set; }
-        
-        /// <summary>
-        /// The command to go back to the game selection menu
-        /// </summary>
-        public ICommand ToGameSelectionCommand { get; set; }
 
         #endregion
 
@@ -109,9 +79,7 @@ namespace GenAlpha.Core
             GameOver = false;
             Field.Reset();
             MinesweeperSquareViewModel.FirstSquareClicked = true;
-            GameState = "Ready";
-            ElapsedTime = 0;
-            RemainingBombs = Field.NumberOfBombs;
+            TopBar.ResetGameScore(Field.NumberOfBombs);
         }
 
         /// <summary>
@@ -120,16 +88,6 @@ namespace GenAlpha.Core
         private void ToggleSideMenu()
         {
             SideMenu.ShowSideMenu = !SideMenu.ShowSideMenu;
-        }
-
-        /// <summary>
-        /// Switches the page to return to the game selection page
-        /// </summary>
-        private async void GoToGameSelctionAsync()
-        {
-            DI.Service<ApplicationViewModel>().GoToPage(ApplicationPage.GameSelection);
-
-            await Task.Delay(1);
         }
 
         #endregion
@@ -143,8 +101,7 @@ namespace GenAlpha.Core
         {
             GameOver = true;
             Field.ShowAllBombs();
-            GameState = "Game Over";
-            StopTimer();
+            TopBar.StopGameOver();
         }
 
         /// <summary>
@@ -152,7 +109,7 @@ namespace GenAlpha.Core
         /// </summary>
         private void BombMarked(bool flagSet)
         {
-            RemainingBombs += flagSet ? -1 : 1;
+            TopBar.RemainingBombs += flagSet ? -1 : 1;
         }
 
         /// <summary>
@@ -162,8 +119,7 @@ namespace GenAlpha.Core
         {
             if (!GameOver)
             {
-                GameState = "Go!";
-                StartTimer();
+                TopBar.StartGame();
             }
         }
 
@@ -173,8 +129,7 @@ namespace GenAlpha.Core
         private void GameIsWon()
         {
             GameOver = true;
-            GameState = "Winner";
-            StopTimer();
+            TopBar.StopGameWinner();
         }
 
         /// <summary>
@@ -183,24 +138,8 @@ namespace GenAlpha.Core
         private void SetGameSettings(int rows, int columns, int bombs)
         {
             Field = new MinesweeperFieldViewModel(rows, columns, bombs, BombRevealed, BombMarked, StartGameTimer, GameIsWon);
-            RemainingBombs = Field.NumberOfBombs;
-            GameState = "Ready";
-            ElapsedTime = 0;
+            TopBar.ResetGameScore(Field.NumberOfBombs);
             GameOver = false;
-        }
-
-        #endregion
-
-        #region Event Methods
-
-        /// <summary>
-        /// The elapsed stopwatch timer method to add a second to the <see cref="ElapsedTime"/>
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void StopwatchTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            ElapsedTime += 1;
         }
 
         #endregion
@@ -213,8 +152,6 @@ namespace GenAlpha.Core
         private void InitializeCommands()
         {
             RestartGameCommand = new RelayCommand(RestartGame);
-            ToggleSideMenuCommand = new RelayCommand(ToggleSideMenu);
-            ToGameSelectionCommand = new RelayCommand(GoToGameSelctionAsync);
         }
 
         /// <summary>
@@ -222,24 +159,8 @@ namespace GenAlpha.Core
         /// </summary>
         private void InitializeProperties()
         {
+            TopBar = new MinesweeperTopBarViewModel(ToggleSideMenu);
             SideMenu = new MinesweeperSideMenuViewModel(SetGameSettings);
-            stopwatchTimer.Elapsed += StopwatchTimer_Elapsed;
-        }
-
-        /// <summary>
-        /// Stops the stopwatchTimer
-        /// </summary>
-        private void StopTimer()
-        {
-            stopwatchTimer.Stop();
-        }
-
-        /// <summary>
-        /// Starts stopwatch timer
-        /// </summary>
-        private void StartTimer()
-        {
-            stopwatchTimer.Start();
         }
 
         #endregion
