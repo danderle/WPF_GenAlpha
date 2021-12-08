@@ -135,7 +135,7 @@ namespace GenAlpha.Core
         /// <summary>
         /// The view model for the top bar
         /// </summary>
-        public TopBarViewModel TopBar { get; set; } = new TopBarViewModel();
+        public KeyboardShooterTopBarViewModel TopBar { get; set; }
 
         /// <summary>
         /// The side menu view model
@@ -178,7 +178,7 @@ namespace GenAlpha.Core
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Language", SettingTypes.LanguageToggle, (int)Languages.English));
 
             // Register the toggle seetings menu action
-            TopBar.ToggelSettingsMenu = ToggleSettingsMenu;
+            TopBar = new KeyboardShooterTopBarViewModel(ToggleSideMenu);
 
             InitializeCommands();
             InitializeTimers();
@@ -192,9 +192,9 @@ namespace GenAlpha.Core
         #region Action Methods
 
         /// <summary>
-        /// Opens and closes the settings menu
+        /// Opens and closes the side menu
         /// </summary>
-        private void ToggleSettingsMenu()
+        private void ToggleSideMenu()
         {
             SideMenu.ShowSideMenu = !SideMenu.ShowSideMenu;
             if (!SideMenu.ShowSideMenu)
