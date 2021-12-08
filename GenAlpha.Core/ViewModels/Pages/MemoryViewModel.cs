@@ -78,6 +78,11 @@ namespace GenAlpha.Core
         public static int RevealedCounter { get; private set; }
 
         /// <summary>
+        /// the top bar for this view model
+        /// </summary>
+        public MemoryTopBarViewModel TopBar { get; set; }
+
+        /// <summary>
         /// The side menu view model
         /// </summary>
         public SideMenuViewModel SideMenu { get; set; } = new SideMenuViewModel();
@@ -105,16 +110,6 @@ namespace GenAlpha.Core
         /// The command to restart the game
         /// </summary>
         public ICommand RestartGameCommand { get; set; }
-
-        /// <summary>
-        /// The command to show/hidew the side menu
-        /// </summary>
-        public ICommand ToggleSideMenuCommand { get; set; }
-        
-        /// <summary>
-        /// The command to go back to the game selection menu
-        /// </summary>
-        public ICommand ToGameSelectionCommand { get; set; }
 
         #endregion
 
@@ -148,7 +143,6 @@ namespace GenAlpha.Core
             ShuffleMemoryCards();
         }
 
-        /// <summary>
         /// The command method to show / hide the side menu
         /// </summary>
         private void ToggleSideMenu()
@@ -158,16 +152,6 @@ namespace GenAlpha.Core
             {
                 RestartGame();
             }
-        }
-
-        /// <summary>
-        /// Switches the page to return to the game selection page
-        /// </summary>
-        private async void GoToGameSelctionAsync()
-        {
-            DI.Service<ApplicationViewModel>().GoToPage(ApplicationPage.GameSelection);
-
-            await Task.Delay(1);
         }
 
         #endregion
@@ -256,8 +240,6 @@ namespace GenAlpha.Core
         {
             CardRevealedCommand = new RelayCommand(() => CardsRevealed++);
             RestartGameCommand = new RelayCommand(RestartGame);
-            ToggleSideMenuCommand = new RelayCommand(ToggleSideMenu);
-            ToGameSelectionCommand = new RelayCommand(GoToGameSelctionAsync);
         }
 
         /// <summary>
@@ -265,6 +247,8 @@ namespace GenAlpha.Core
         /// </summary>
         private void InitializeProperties()
         {
+            TopBar = new MemoryTopBarViewModel(ToggleSideMenu);
+
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Players", SettingTypes.Increment, 1));
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Number of cards", SettingTypes.Increment, 16));
             SideMenu.AddSettingsItems(new SettingsListItemViewModel("Use lowercase letters", SettingTypes.Toggle) { IsChecked = true });
