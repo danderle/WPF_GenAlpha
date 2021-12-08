@@ -53,7 +53,6 @@ namespace GenAlpha.Core
             ToGameSelectionCommand = new RelayCommand(GoToGameSelctionAsync);
         }
 
-
         #endregion
     }
 }

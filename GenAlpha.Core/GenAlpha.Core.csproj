@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Memory\" />
+    <Folder Include="ViewModels\Pages\Base\" />
   </ItemGroup>
 
 </Project>
