@@ -10,6 +10,87 @@
     <None Remove="Resources\Fonts\Font Awesome 5 Brands-Regular-400.otf" />
     <None Remove="Resources\Fonts\Font Awesome 5 Free-Regular-400.otf" />
     <None Remove="Resources\Fonts\Font Awesome 5 Free-Solid-900.otf" />
+    <None Remove="Resources\Images\Animals\Alligator.jpg" />
+    <None Remove="Resources\Images\Animals\Alpaca.jpg" />
+    <None Remove="Resources\Images\Animals\Antelope.jpg" />
+    <None Remove="Resources\Images\Animals\Badger.jpg" />
+    <None Remove="Resources\Images\Animals\Bat.jpg" />
+    <None Remove="Resources\Images\Animals\Bear.jpg" />
+    <None Remove="Resources\Images\Animals\Bee.jpg" />
+    <None Remove="Resources\Images\Animals\Big cat.jpg" />
+    <None Remove="Resources\Images\Animals\Cat.jpg" />
+    <None Remove="Resources\Images\Animals\Cattle.jpg" />
+    <None Remove="Resources\Images\Animals\Chicken.jpg" />
+    <None Remove="Resources\Images\Animals\Chinchilla.jpg" />
+    <None Remove="Resources\Images\Animals\Cicada.jpg" />
+    <None Remove="Resources\Images\Animals\Crab.jpg" />
+    <None Remove="Resources\Images\Animals\Crane.jpg" />
+    <None Remove="Resources\Images\Animals\Cricket.jpg" />
+    <None Remove="Resources\Images\Animals\Crow.jpg" />
+    <None Remove="Resources\Images\Animals\Curlew.jpg" />
+    <None Remove="Resources\Images\Animals\Deer.jpg" />
+    <None Remove="Resources\Images\Animals\Dog.jpg" />
+    <None Remove="Resources\Images\Animals\Dolphin.jpg" />
+    <None Remove="Resources\Images\Animals\Donkey.jpg" />
+    <None Remove="Resources\Images\Animals\Duck.jpg" />
+    <None Remove="Resources\Images\Animals\Eagle.jpg" />
+    <None Remove="Resources\Images\Animals\Elephant.jpg" />
+    <None Remove="Resources\Images\Animals\Elk.jpg" />
+    <None Remove="Resources\Images\Animals\Ferret.jpg" />
+    <None Remove="Resources\Images\Animals\Fly.jpg" />
+    <None Remove="Resources\Images\Animals\Fox.jpg" />
+    <None Remove="Resources\Images\Animals\Frog.jpg" />
+    <None Remove="Resources\Images\Animals\Gaur.jpg" />
+    <None Remove="Resources\Images\Animals\Giraffe.jpg" />
+    <None Remove="Resources\Images\Animals\Goat.jpg" />
+    <None Remove="Resources\Images\Animals\Goose.jpg" />
+    <None Remove="Resources\Images\Animals\Grasshopper.jpg" />
+    <None Remove="Resources\Images\Animals\Guinea pig.jpg" />
+    <None Remove="Resources\Images\Animals\Hamster.jpg" />
+    <None Remove="Resources\Images\Animals\Hermit crab.jpg" />
+    <None Remove="Resources\Images\Animals\Hippopotamus.jpg" />
+    <None Remove="Resources\Images\Animals\Hornet.jpg" />
+    <None Remove="Resources\Images\Animals\Horse.jpg" />
+    <None Remove="Resources\Images\Animals\Hyena.jpg" />
+    <None Remove="Resources\Images\Animals\Koala.jpg" />
+    <None Remove="Resources\Images\Animals\Leopard.jpg" />
+    <None Remove="Resources\Images\Animals\Linnet.jpg" />
+    <None Remove="Resources\Images\Animals\Lion.jpg" />
+    <None Remove="Resources\Images\Animals\Locust.jpg" />
+    <None Remove="Resources\Images\Animals\Magpie.jpg" />
+    <None Remove="Resources\Images\Animals\Monkey.jpg" />
+    <None Remove="Resources\Images\Animals\Moose.jpg" />
+    <None Remove="Resources\Images\Animals\Mosquito.jpg" />
+    <None Remove="Resources\Images\Animals\Mouse.jpg" />
+    <None Remove="Resources\Images\Animals\Okapi.jpg" />
+    <None Remove="Resources\Images\Animals\Owl.jpg" />
+    <None Remove="Resources\Images\Animals\Ox.jpg" />
+    <None Remove="Resources\Images\Animals\Parrot.jpg" />
+    <None Remove="Resources\Images\Animals\Peacock.jpg" />
+    <None Remove="Resources\Images\Animals\Pig.jpg" />
+    <None Remove="Resources\Images\Animals\Pigeon.jpg" />
+    <None Remove="Resources\Images\Animals\Prairie dog.jpg" />
+    <None Remove="Resources\Images\Animals\Quail.jpg" />
+    <None Remove="Resources\Images\Animals\Rabbit.jpg" />
+    <None Remove="Resources\Images\Animals\Raccoon.jpg" />
+    <None Remove="Resources\Images\Animals\Rat.jpg" />
+    <None Remove="Resources\Images\Animals\Raven.jpg" />
+    <None Remove="Resources\Images\Animals\Rook.jpg" />
+    <None Remove="Resources\Images\Animals\Seal.jpg" />
+    <None Remove="Resources\Images\Animals\Sheep.jpg" />
+    <None Remove="Resources\Images\Animals\Snake.jpg" />
+    <None Remove="Resources\Images\Animals\Songbird.jpg" />
+    <None Remove="Resources\Images\Animals\Squirrel.jpg" />
+    <None Remove="Resources\Images\Animals\Swan.jpg" />
+    <None Remove="Resources\Images\Animals\Tapir.jpg" />
+    <None Remove="Resources\Images\Animals\Tiger.jpg" />
+    <None Remove="Resources\Images\Animals\Tokay gecko.jpg" />
+    <None Remove="Resources\Images\Animals\Turkey.jpg" />
+    <None Remove="Resources\Images\Animals\Whale.jpg" />
+    <None Remove="Resources\Images\Animals\Wild boar.jpg" />
+    <None Remove="Resources\Images\Animals\Wildebeest.jpg" />
+    <None Remove="Resources\Images\Animals\Wolf.jpg" />
+    <None Remove="Resources\Images\Animals\Zebra.jpg" />
     <None Remove="Resources\Images\logo-flat.png" />
     <None Remove="Resources\Images\Minesweeper\Minesweeper_0.png" />
     <None Remove="Resources\Images\Minesweeper\Minesweeper_1.png" />
@@ -157,6 +238,246 @@
     <Resource Include="Resources\Fonts\Lato-ThinItalic.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Content Include="Resources\Images\Animals\Alligator.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Alpaca.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Antelope.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Badger.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Bat.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Bear.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Bee.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Cat.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Cattle.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Chicken.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Chinchilla.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Cicada.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Crab.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Crane.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Cricket.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Crow.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Curlew.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Deer.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Dog.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Dolphin.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Donkey.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Duck.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Eagle.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Elephant.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Elk.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Ferret.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Fly.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Fox.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Frog.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Gaur.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Giraffe.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Goat.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Goose.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Grasshopper.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Guinea pig.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Hamster.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Hermit crab.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Hippopotamus.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Hornet.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Horse.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Hyena.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Koala.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Leopard.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Linnet.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Lion.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Locust.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Magpie.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Monkey.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Moose.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Mosquito.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Mouse.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Okapi.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Owl.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Ox.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Parrot.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Peacock.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Pig.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Pigeon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Prairie dog.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Quail.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Rabbit.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Raccoon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Rat.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Raven.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Rook.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Seal.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Sheep.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Snake.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Songbird.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Squirrel.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Swan.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Tapir.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Tokay gecko.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Turkey.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Whale.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Wild boar.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Wildebeest.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Wolf.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Zebra.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Animals\Tiger.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Images\logo-flat.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
