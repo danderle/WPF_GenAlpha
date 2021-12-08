@@ -20,20 +20,14 @@
         </Grid.RowDefinitions>
 
         <!--Top Row-->
-        <Border Grid.Row="0">
+        <local:TopBarControl DataContext="{Binding TopBar}" >
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                
-                <!--Button for returning to the game selection pagee-->
-                <Button Content="{StaticResource FontAwesomeAngleLeft}" 
-                        Command="{Binding ToGameSelectionCommand}"/>
 
-                <StackPanel Grid.Column="1"
-                            VerticalAlignment="Center"
+                <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Orientation="Horizontal"
                             Margin="0 10">
@@ -48,7 +42,7 @@
                                FontSize="{StaticResource FontSizeXXLarge}"
                                FontFamily="{StaticResource LatoBold}" />
                 </StackPanel>
-                
+
                 <!--Settings Button-->
                 <Button Grid.Column="2"
                         Content="{StaticResource FontAwesomeCog}" 
@@ -56,8 +50,7 @@
                         Command="{Binding ToggleSideMenuCommand}"/>
 
             </Grid>
-        </Border>
-
+        </local:TopBarControl>
         
         <!--Game field Main Page content-->
         <!--The squares to show Numbers, Flags or Bombs-->
