@@ -12,6 +12,11 @@ namespace GenAlpha.Core
         #region Public Properties
 
         /// <summary>
+        /// The radius of the spy circle
+        /// </summary>
+        public double Radius { get; set; } = 10;
+
+        /// <summary>
         /// The current mouse position
         /// </summary>
         public Point MousePosition { get; set; }
@@ -30,6 +35,16 @@ namespace GenAlpha.Core
         /// </summary>
         public ICommand MouseMoveCommand { get; set; }
 
+        /// <summary>
+        /// The mouse enter command
+        /// </summary>
+        public ICommand MouseEnterCommand { get; set; }
+
+        /// <summary>
+        /// The mouse leave command
+        /// </summary>
+        public ICommand MouseLeaveCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -39,6 +54,8 @@ namespace GenAlpha.Core
         /// </summary>
         public AnimalGuessViewModel()
         {
+            MouseLeaveCommand = new RelayCommand(MouseLeave);
+            MouseEnterCommand = new RelayCommand(MouseEnter);
             MouseMoveCommand = new RelayParameterizedCommand(MouseMoved);
         }
 
@@ -47,7 +64,7 @@ namespace GenAlpha.Core
         #region Command Methods
 
         /// <summary>
-        /// Seths the current mouse position
+        /// Sets the current mouse position
         /// </summary>
         /// <param name="obj"></param>
         private void MouseMoved(object obj)
@@ -55,6 +72,22 @@ namespace GenAlpha.Core
             string position = obj.ToString();
             var coo = position.Split(";");
             MousePosition = new Point(Convert.ToDouble(coo[0]), Convert.ToDouble(coo[1]));
+        }
+
+        /// <summary>
+        /// On entering set the radius
+        /// </summary>
+        private void MouseEnter()
+        {
+            Radius = 20;
+        }
+
+        /// <summary>
+        /// On leave set the radius to zero
+        /// </summary>
+        private void MouseLeave()
+        {
+            Radius = 0;
         }
 
         #endregion
