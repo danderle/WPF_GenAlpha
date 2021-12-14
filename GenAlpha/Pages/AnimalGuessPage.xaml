@@ -12,8 +12,7 @@
     
     <!--Page layout definition-->
     <Grid Background="{StaticResource VeryDarkBlueBrush}"
-          ClipToBounds="True"
-          local:MouseMoved.Value="{Binding MouseMoveCommand}">
+          ClipToBounds="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -22,13 +21,18 @@
         <!--Top Row-->
         <local:TopBarControl DataContext="{Binding TopBar}" />
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1"
+              Background="Transparent"
+              local:MouseMoved.Value="{Binding MouseMoveCommand}"
+              local:MouseEnter.Value="{Binding MouseEnterCommand}"
+              local:MouseLeave.Value="{Binding MouseLeaveCommand}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Image Source="C:\Users\beach\Development\C# Development\WPF_GenAlpha\GenAlpha\Resources\Images\Animals\Alligator.jpg" />
+
             <Border Background="Black">
                 <Border.Clip>
                     <CombinedGeometry GeometryCombineMode="Exclude">
@@ -36,7 +40,7 @@
                             <RectangleGeometry Rect="0,0,10000,10000"/>
                         </CombinedGeometry.Geometry1>
                         <CombinedGeometry.Geometry2>
-                            <EllipseGeometry Center="{Binding MousePosition}" RadiusX="50" RadiusY="50"/>
+                            <EllipseGeometry Center="{Binding MousePosition}" RadiusX="{Binding Radius}" RadiusY="{Binding Radius}"/>
                         </CombinedGeometry.Geometry2>
                     </CombinedGeometry>
                 </Border.Clip>
