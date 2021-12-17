@@ -7,7 +7,7 @@
                   xmlns:local="clr-namespace:GenAlpha"
                   xmlns:core="clr-namespace:GenAlpha.Core;assembly=GenAlpha.Core"
                   mc:Ignorable="d" 
-                  d:DesignHeight="450" d:DesignWidth="800"
+                  d:DesignHeight="800" d:DesignWidth="900"
                   Title="AnimalGuess">
     
     <!--Page layout definition-->
@@ -19,7 +19,12 @@
         </Grid.RowDefinitions>
 
         <!--Top Row-->
-        <local:TopBarControl DataContext="{Binding TopBar}" />
+        <local:TopBarControl DataContext="{Binding TopBar}">
+        </local:TopBarControl>
+        
+        <TextBlock Text="{Binding ElapsedTime, StringFormat={}{0:000}}"
+                FontSize="{StaticResource FontSizeXXLarge}"
+                FontFamily="{StaticResource LatoBold}" />
 
         <Grid Grid.Row="1"
               Background="Transparent"
@@ -27,8 +32,8 @@
               local:MouseEnter.Value="{Binding MouseEnterCommand}"
               local:MouseLeave.Value="{Binding MouseLeaveCommand}">
             <Grid.RowDefinitions>
+                <RowDefinition Height="7*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Image Source="C:\Users\beach\Development\C# Development\WPF_GenAlpha\GenAlpha\Resources\Images\Animals\Alligator.jpg" />
@@ -54,6 +59,22 @@
                 <Button Content="Boar" FontFamily="{StaticResource LatoRegular}"/>
                 <Button Content="Alligator" FontFamily="{StaticResource LatoRegular}"/>
             </StackPanel>
+
+            <Border Background="{StaticResource VeryDarkBlueBrush}"
+                    Visibility="{Binding ShowStartButton, Converter={local:BoolToVisibilityValueConverter}}"
+                    Grid.RowSpan="2">
+                <Button Style="{StaticResource TextButton}"
+                        FontSize="{StaticResource FontSizeXXLarge}"
+                        Command="{Binding StartCommand}"
+                        Content="Start"
+                        Margin="100"/>
+            </Border>
+
+            <Border Background="{StaticResource VeryDarkBlueBrush}"
+                    Visibility="{Binding NoImagesFound, Converter={local:BoolToVisibilityValueConverter}}"
+                    Grid.RowSpan="2">
+                <TextBlock Text="No images found!"/>
+            </Border>
         </Grid>
     </Grid>
 </local:BasePage>
