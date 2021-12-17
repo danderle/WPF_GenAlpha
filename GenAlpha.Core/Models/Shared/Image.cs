@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 
 namespace GenAlpha.Core
@@ -8,6 +9,8 @@ namespace GenAlpha.Core
     /// </summary>
     public static class Image
     {
+        private const string ANIMAL_IMAGES = @"Resources\Images\Animals";
+
         #region Constructor
 
         /// <summary>
@@ -43,6 +46,24 @@ namespace GenAlpha.Core
                 { MinesweeperValues.Unopened, Application.Current.FindResource("Unopened") },
                 { MinesweeperValues.FalseFlag, Application.Current.FindResource("FalseFlag") },
             };
+        }
+
+        /// <summary>
+        /// Returns a dictionary containing the animal name and image path
+        /// </summary>
+        /// <returns></returns>
+        public static Dictionary<string, string> GetAllAnimalImages()
+        {
+            Dictionary<string, string> images = new Dictionary<string, string>();
+            string imagesDirectory = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, ANIMAL_IMAGES);
+            if (Directory.Exists(imagesDirectory))
+            {
+                foreach (var file in Directory.GetFiles(imagesDirectory))
+                {
+                    images.TryAdd(Path.GetFileNameWithoutExtension(file), file);
+                }
+            }
+            return images;
         }
         #endregion
     }
