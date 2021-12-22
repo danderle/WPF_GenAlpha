@@ -36,9 +36,10 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Image Source="C:\Users\beach\Development\C# Development\WPF_GenAlpha\GenAlpha\Resources\Images\Animals\Alligator.jpg" />
+            <Image Source="{Binding ImagePath}" />
 
-            <Border Background="Black">
+            <Border Background="Black"
+                    Visibility="{Binding ImageCovered, Converter={local:BoolToVisibilityValueConverter}}">
                 <Border.Clip>
                     <CombinedGeometry GeometryCombineMode="Exclude">
                         <CombinedGeometry.Geometry1>
@@ -51,15 +52,24 @@
                 </Border.Clip>
             </Border>
 
-            <StackPanel Grid.Row="1"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Center">
-                <Button Content="Tiger" FontFamily="{StaticResource LatoRegular}"/>
-                <Button Content="Bear" FontFamily="{StaticResource LatoRegular}"/>
-                <Button Content="Boar" FontFamily="{StaticResource LatoRegular}"/>
-                <Button Content="Alligator" FontFamily="{StaticResource LatoRegular}"/>
-            </StackPanel>
-
+            <ItemsControl Grid.Row="1"
+                          HorizontalAlignment="Center"
+                          ItemsSource="{Binding AnimalChoices}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding ChoiceName}" 
+                                Command="{Binding AnimalFoundCommand}"
+                                CommandParameter="{Binding IsHiddenAnimal}"
+                                FontFamily="{StaticResource LatoRegular}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
             <Border Background="{StaticResource VeryDarkBlueBrush}"
                     Visibility="{Binding ShowStartButton, Converter={local:BoolToVisibilityValueConverter}}"
                     Grid.RowSpan="2">
