@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows.Input;
 
 namespace GenAlpha.Core
@@ -34,6 +35,11 @@ namespace GenAlpha.Core
         /// </summary>
         public ICommand AnimalFoundCommand { get; set; }
 
+        /// <summary>
+        /// The command to speak the animal name
+        /// </summary>
+        public ICommand SpeakAnimalNameCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -48,7 +54,22 @@ namespace GenAlpha.Core
             ImagePath = imagePath;
             ChoiceName = Path.GetFileNameWithoutExtension(imagePath);
             AnimalFoundCommand = command;
-        } 
+            SpeakAnimalNameCommand = new RelayCommand(SpeakAnimalName);
+        }
+        #endregion
+
+        #region Command methods
+
+        /// <summary>
+        /// The command method to speak the animal name on hover
+        /// </summary>
+        private async void SpeakAnimalName()
+        {
+            if (!Speech.IsSpeaking)
+            {
+                await Speech.SpeakAsync(ChoiceName);
+            }
+        }
 
         #endregion
     }
