@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
@@ -11,9 +13,15 @@ namespace GenAlpha.Core
     /// </summary>
     public class AnimalGuessViewModel : BaseViewModel
     {
-        #region Fields
+        #region Constants
 
         private const int TIMER_INTERVAL = 1000;
+
+        private const int START_RADIUS = 10;
+
+        #endregion
+
+        #region Fields
 
         private Timer stopwatchTimer = new Timer(TIMER_INTERVAL);
 
@@ -21,7 +29,7 @@ namespace GenAlpha.Core
 
         private bool insideWindow = false;
 
-        private Dictionary<string, string> images;
+        private List<string> imagePaths;
 
         #endregion
 
@@ -38,6 +46,11 @@ namespace GenAlpha.Core
         public bool NoImagesFound { get; set; }
 
         /// <summary>
+        /// A flag to let us know if the image is covered
+        /// </summary>
+        public bool ImageCovered { get; set; } = true;
+
+        /// <summary>
         /// Elapsed time in seconds
         /// </summary>
         public int ElapsedTime { get; set; } = 0;
@@ -48,14 +61,24 @@ namespace GenAlpha.Core
         public double Radius { get; set; }
 
         /// <summary>
+        /// The path of the image to identify
+        /// </summary>
+        public string ImagePath { get; set; }
+
+        /// <summary>
         /// The current mouse position
         /// </summary>
         public Point MousePosition { get; set; }
 
         /// <summary>
+        /// The list of possible choices
+        /// </summary>
+        public ObservableCollection<AnimalChoiceViewModel> AnimalChoices { get; set; } = new();
+
+        /// <summary>
         /// The top bar for this view model
         /// </summary>
-        public BaseTopBarViewModel TopBar { get; set; } = new BaseTopBarViewModel();
+        public BaseTopBarViewModel TopBar { get; set; } = new ();
 
         #endregion
 
@@ -80,6 +103,11 @@ namespace GenAlpha.Core
         /// The command to start the game
         /// </summary>
         public ICommand StartCommand { get; set; }
+
+        /// <summary>
+        /// The command to check if the right animal is found
+        /// </summary>
+        public ICommand AnimalFoundCommand { get; set; }
 
         #endregion
 
@@ -119,7 +147,6 @@ namespace GenAlpha.Core
 
         #endregion
 
-
         #region Command Methods
 
         /// <summary>
@@ -129,7 +156,7 @@ namespace GenAlpha.Core
         {
             ShowStartButton = false;
             stopwatchTimer.Start();
-
+            GetRandomImage();
         }
 
         /// <summary>
@@ -162,9 +189,46 @@ namespace GenAlpha.Core
             Radius = 0;
         }
 
+        /// <summary>
+        /// The command method which checks if the animal was correctly found
+        /// </summary>
+        /// <param name="obj"></param>
+        private void AnimalFound(object obj)
+        {
+            if ((bool)obj)
+            {
+                ImageCovered = false;
+                stopwatchTimer.Stop();
+                Radius = START_RADIUS;
+                lastRadius = START_RADIUS;
+            }
+        }
+
         #endregion
 
         #region Private helpers
+
+        /// <summary>
+        /// Gets a random image and fills the list of possible animal choices and then shuffles the list
+        /// </summary>
+        private void GetRandomImage()
+        {
+            List<AnimalChoiceViewModel> list = new ();
+            for (int i = 0; i < 4; i++)
+            {
+                Random random = new Random();
+                int index = random.Next(imagePaths.Count);
+                AnimalChoiceViewModel possibleChoice = new AnimalChoiceViewModel(Path.GetFileNameWithoutExtension(imagePaths[index]), AnimalFoundCommand);
+                if (i == 0)
+                {
+                    ImagePath = imagePaths[index];
+                    possibleChoice.IsHiddenAnimal = true;
+                }
+                list.Add(possibleChoice);
+            }
+            list.Shuffle();
+            AnimalChoices = new ObservableCollection<AnimalChoiceViewModel>(list);
+        }
 
         /// <summary>
         /// Initializes the commands
@@ -175,6 +239,7 @@ namespace GenAlpha.Core
             MouseEnterCommand = new RelayCommand(MouseEnter);
             MouseMoveCommand = new RelayParameterizedCommand(MouseMoved);
             StartCommand = new RelayCommand(Start);
+            AnimalFoundCommand = new RelayParameterizedCommand(AnimalFound);
         }
 
         /// <summary>
@@ -182,10 +247,11 @@ namespace GenAlpha.Core
         /// </summary>
         private void InitializeProperties()
         {
-            images = Image.GetAllAnimalImages();
-            if (images.Count == 0)
+            imagePaths = Image.GetAllAnimalImagePaths();
+            if (imagePaths.Count == 0)
             {
                 NoImagesFound = true;
+                return;
             }
         }
 
