@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.IO;
+using System.Windows.Input;
 
 namespace GenAlpha.Core
 {
@@ -19,6 +20,11 @@ namespace GenAlpha.Core
         /// </summary>
         public string ChoiceName { get; set; }
 
+        /// <summary>
+        /// The image path
+        /// </summary>
+        public string ImagePath { get; set; }
+
         #endregion
 
         #region Commands
@@ -37,9 +43,10 @@ namespace GenAlpha.Core
         /// </summary>
         /// <param name="name"></param>
         /// <param name="command"></param>
-        public AnimalChoiceViewModel(string name, ICommand command)
+        public AnimalChoiceViewModel(string imagePath, ICommand command)
         {
-            ChoiceName = name;
+            ImagePath = imagePath;
+            ChoiceName = Path.GetFileNameWithoutExtension(imagePath);
             AnimalFoundCommand = command;
         } 
 
