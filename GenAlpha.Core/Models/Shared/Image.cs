@@ -49,18 +49,18 @@ namespace GenAlpha.Core
         }
 
         /// <summary>
-        /// Returns a dictionary containing the animal name and image path
+        /// Returns a list containing the animal image paths
         /// </summary>
         /// <returns></returns>
-        public static Dictionary<string, string> GetAllAnimalImages()
+        public static List<string> GetAllAnimalImagePaths()
         {
-            Dictionary<string, string> images = new Dictionary<string, string>();
+            List<string> images = new List<string>();
             string imagesDirectory = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, ANIMAL_IMAGES);
             if (Directory.Exists(imagesDirectory))
             {
                 foreach (var file in Directory.GetFiles(imagesDirectory))
                 {
-                    images.TryAdd(Path.GetFileNameWithoutExtension(file), file);
+                    images.Add(file);
                 }
             }
             return images;
