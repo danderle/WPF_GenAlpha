@@ -92,14 +92,16 @@ namespace GenAlpha
 
     #endregion
 
+    #region Height and width properties
+
     /// <summary>
     /// Gets the actual height after element is loaded
     /// </summary>
-    public class ActualHeightProperty: BaseAttachedProperties<ActualHeightProperty, double>
+    public class ActualHeightProperty : BaseAttachedProperties<ActualHeightProperty, double>
     {
         public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if(sender is FrameworkElement element)
+            if (sender is FrameworkElement element)
             {
                 element.Loaded += Element_Loaded;
             }
@@ -130,5 +132,6 @@ namespace GenAlpha
             var element = sender as FrameworkElement;
             SetValue(element, element.Width);
         }
-    }
+    } 
+    #endregion
 }
