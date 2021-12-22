@@ -36,6 +36,11 @@ namespace GenAlpha.Core
         #region Public Properties
 
         /// <summary>
+        /// A flag to let us know if the continue button is shown
+        /// </summary>
+        public bool ShowContinueButton { get; set; }
+
+        /// <summary>
         /// A flag to show the start button
         /// </summary>
         public bool ShowStartButton { get; set; } = true;
@@ -83,6 +88,11 @@ namespace GenAlpha.Core
         #endregion
 
         #region Commands
+
+        /// <summary>
+        /// The command to show the next hidden image
+        /// </summary>
+        public ICommand NextHiddenImageCommand { get; set; }
 
         /// <summary>
         /// The mouse move command
@@ -154,9 +164,11 @@ namespace GenAlpha.Core
         /// </summary>
         private void Start()
         {
+            ImageCovered = true;
+            ElapsedTime = 0;
             ShowStartButton = false;
             stopwatchTimer.Start();
-            GetRandomImage();
+            SetRandomImage();
         }
 
         /// <summary>
@@ -195,13 +207,23 @@ namespace GenAlpha.Core
         /// <param name="obj"></param>
         private void AnimalFound(object obj)
         {
-            if ((bool)obj)
+            if (obj.ToString() == ImagePath)
             {
                 ImageCovered = false;
                 stopwatchTimer.Stop();
                 Radius = START_RADIUS;
                 lastRadius = START_RADIUS;
+                ShowContinueButton = true;
             }
+        }
+
+        /// <summary>
+        /// The command method to show the start button
+        /// </summary>
+        private void NextHiddenImage()
+        {
+            ShowStartButton = true;
+            ShowContinueButton = false;
         }
 
         #endregion
@@ -209,24 +231,23 @@ namespace GenAlpha.Core
         #region Private helpers
 
         /// <summary>
-        /// Gets a random image and fills the list of possible animal choices and then shuffles the list
+        /// Sets a random image and fills the list of possible animal choices and then shuffles the list
         /// </summary>
-        private void GetRandomImage()
+        private void SetRandomImage()
         {
             List<AnimalChoiceViewModel> list = new ();
+            Random random = new Random();
+            int index;
             for (int i = 0; i < 4; i++)
             {
-                Random random = new Random();
-                int index = random.Next(imagePaths.Count);
-                AnimalChoiceViewModel possibleChoice = new AnimalChoiceViewModel(Path.GetFileNameWithoutExtension(imagePaths[index]), AnimalFoundCommand);
-                if (i == 0)
-                {
-                    ImagePath = imagePaths[index];
-                    possibleChoice.IsHiddenAnimal = true;
-                }
+                index = random.Next(imagePaths.Count);
+                AnimalChoiceViewModel possibleChoice = new AnimalChoiceViewModel(imagePaths[index], AnimalFoundCommand);
                 list.Add(possibleChoice);
             }
-            list.Shuffle();
+
+            index = random.Next(4);
+            ImagePath = list[index].ImagePath;
+            list[index].IsHiddenAnimal = true;
             AnimalChoices = new ObservableCollection<AnimalChoiceViewModel>(list);
         }
 
@@ -240,6 +261,7 @@ namespace GenAlpha.Core
             MouseMoveCommand = new RelayParameterizedCommand(MouseMoved);
             StartCommand = new RelayCommand(Start);
             AnimalFoundCommand = new RelayParameterizedCommand(AnimalFound);
+            NextHiddenImageCommand = new RelayCommand(NextHiddenImage);
         }
 
         /// <summary>
